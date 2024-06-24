@@ -1,0 +1,22 @@
+.outline-blue-button-container {
+  display: flex;
+  position: relative;
+}
+.outline-blue-button-button {
+  fill: #3372c1;
+  color: #3372c1;
+  cursor: pointer;
+  background: white;
+  transition: all .15s ease-in;
+  padding-top: var(--dl-space-space-halfunit);
+  border-color: #3372c1;
+  border-width: 1px;
+  padding-left: var(--dl-space-space-doubleunit);
+  border-radius: var(--dl-radius-radius-radius5);
+  padding-right: var(--dl-space-space-doubleunit);
+  padding-bottom: var(--dl-space-space-halfunit);
+  background-color: transparent;
+}
+.outline-blue-button-button:hover {
+  transform: scale(1.02);
+}
