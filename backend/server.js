@@ -12,8 +12,8 @@ app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 
 // Пример API роутера
 app.post('/api/data', (req, res) => {
-    const { data } = req.body;
-    console.log('Received data:', data);
+    const { login,password } = req.body;
+    console.log('Received data:',login,password );
     // Обработка данных
     res.json({ message: 'Data received successfully' });
 });
