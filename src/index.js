@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom'
 import {
   BrowserRouter as Router,
@@ -16,6 +16,26 @@ import NotFound from './views/not-found'
 import Register from './views/register'
 
 const App = () => {
+
+  const [state, setState] = useState(null);
+
+  const callBackendAPI = async () => {
+    const response = await fetch('/express_backend');
+    const body = await response.json();
+
+    if (response.status !== 200) {
+      throw Error(body.message)
+    }
+    return body;
+  };
+
+  // получение GET маршрута с сервера Express, который соответствует GET из server.js
+  useEffect(() => {
+    callBackendAPI()
+        .then(res => setState(res.express))
+        .catch(err => console.log(err));
+  }, [])
+
   return (
     <Router>
       <Switch>
