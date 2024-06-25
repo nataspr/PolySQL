@@ -1,14 +1,24 @@
-// server.js
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const pool = require('dbconfig');
+const pool = require('./dbconfig');
 //создание сервера
 const app = express();
-const port = 3001;
+const port = 5000;
 
 app.use(cors());
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '10mb' })); // Увеличиваем лимит размера тела запроса
+app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
+
+// Пример API роутера
+app.post('/api/data', (req, res) => {
+    const { data } = req.body;
+    console.log('Received data:', data);
+    // Обработка данных
+    res.json({ message: 'Data received successfully' });
+});
+
+
 
 app.post('/register', async (req, res) => {
     const { login, password, fio } = req.body;
@@ -26,5 +36,5 @@ app.post('/register', async (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
+    console.log("Server running on http://localhost:${port}",port);
 });

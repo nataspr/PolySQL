@@ -25,7 +25,7 @@ const [isLoginFormVisible, setIsLoginFormVisible] = useState(true);  // По у�
         <meta property="og:title" content="Вход" />
       </Helmet>
       <Header rootClassName="header-root-class-name"></Header>
-      <form className="register-form">
+      <div className="register-form">
         {/* Переключение между формами */}
         <div className="register-contact1 thq-section-padding">
           {isLoginFormVisible ? (
@@ -34,7 +34,7 @@ const [isLoginFormVisible, setIsLoginFormVisible] = useState(true);  // По у�
             <Registration toggleForm={toggleForm} rootClassName="registration-root-class-name" />
           )}
         </div>
-      </form>
+      </div>
       <FooterGray></FooterGray>
     </div>
   )

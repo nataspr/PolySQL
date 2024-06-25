@@ -1,12 +1,11 @@
 module.exports = {
-  reactScriptsVersion: "react-scripts",
-  style: {
-    css: {
-      loaderOptions: () => {
-        return {
-          url: false,
-        };
+  devServer: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5000',
+        changeOrigin: true,
       },
     },
+    allowedHosts: 'all',
   },
 };
