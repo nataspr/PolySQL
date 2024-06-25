@@ -225,12 +225,12 @@
   }
 
   .registration-text04:hover{
-    scale: (1.2);
+    scale: 1.2;
     color:rgb(40, 60, 163);
     cursor: pointer;
   }
   .registration-text04:active{
-    scale:(1);
+    scale: 1;
   }
 
   @media(max-width: 991px) {
