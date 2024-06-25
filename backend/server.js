@@ -19,7 +19,6 @@ app.post('/api/data', (req, res) => {
 });
 
 
-
 app.post('/register', async (req, res) => {
     const { login, password, fio } = req.body;
 
