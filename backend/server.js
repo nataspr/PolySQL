@@ -10,6 +10,16 @@ app.use(cors());
 app.use(bodyParser.json({ limit: '10mb' })); // Увеличиваем лимит размера тела запроса
 app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 
+// Пример API роутера
+app.post('/api/data', (req, res) => {
+    const { data } = req.body;
+    console.log('Received data:', data);
+    // Обработка данных
+    res.json({ message: 'Data received successfully' });
+});
+
+
+
 app.post('/register', async (req, res) => {
     const { login, password, fio } = req.body;
 
