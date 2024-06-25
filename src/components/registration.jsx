@@ -5,6 +5,35 @@ import PropTypes from 'prop-types'
 import './registration.css'
 
 const Registration = (props) => {
+  //для работы с формой, отправить ее компоненты на сервер для занесения в бд
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const data = {
+      login: event.target[3].value,
+      password: event.target[5].value,
+      fio: `${event.target[0].value} ${event.target[1].value}`
+    };
+    try {
+      const response = await fetch('http://localhost/register.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Registration successful:', result.message);
+      } else {
+        console.error('Registration failed');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+
   return (
     <div className={`registration-registration thq-flex-row thq-section-max-width ${props.rootClassName} `}>
       <h1 className="registration-text">{props.heading}</h1>
