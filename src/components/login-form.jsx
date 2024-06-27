@@ -6,6 +6,7 @@ import './login-form.css';
 const LoginForm = (props) => {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
+  const [loginSuccess, setLoginSuccess] = useState(null); // Для хранения состояния входа
 
   const sendData = async (event) => {
     console.log('УРА ВЫ В ФУНКЦИИ');
@@ -20,6 +21,20 @@ const LoginForm = (props) => {
 
       const result = await response.json();
       console.log('Server response:', result);
+
+      if (response.ok) {
+        setLoginSuccess(result.success);
+        if (result.success) {
+          console.log('Login successful');
+          // Выполняем дополнительные действия при успешном входе
+        } else {
+          console.log('Invalid credentials');
+          // Обрабатываем ошибку входа
+        }
+      } else {
+        console.log('Error during login');
+        setLoginSuccess(false);
+      }
     } catch (error) {
       console.error('Error:', error);
     }
@@ -74,6 +89,8 @@ const LoginForm = (props) => {
               </button>
             </div>
           </form>
+          {loginSuccess === true && <p>Login successful</p>}
+          {loginSuccess === false && <p>Login failed</p>}
         </div>
       </div>
   );

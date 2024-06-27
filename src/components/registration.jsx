@@ -9,10 +9,17 @@ const Registration = (props) => {
   const [fio, setFio] = useState('');
   const [password, setPassword] = useState('');
   const [login, setLogin] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   //для работы с формой, отправить ее компоненты на сервер для занесения в бд
   const handleSubmit = async (event) => {
-    event.preventDefault();
+    //event.preventDefault();
+    //если введены неправильные пароли, то отмена
+    if (password !== confirmPassword) {
+      setError('Пароли не совпадают');
+      return;
+    }
+
     const data = {
       login: event.target[3].value,
       password: event.target[5].value,
@@ -120,8 +127,8 @@ const Registration = (props) => {
         <input
           type="password"
           required="true"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
           placeholder={props.textInputPlaceholder2}
           className="registration-text-input5 thq-grid-2"
         />
