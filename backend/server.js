@@ -7,6 +7,7 @@ const pool = require('./dbconfig');
 const app = express();
 const port = 5000;
 
+//подключение к приложени.
 app.use(cookieParser());
 app.use(cors());
 app.use(bodyParser.json({ limit: '10mb' })); // Увеличиваем лимит размера тела запроса
