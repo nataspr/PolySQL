@@ -18,14 +18,17 @@ app.post('/api/login', async (req, res) => {
 
     try {
         const result = await pool.query(
-            'SELECT * FROM users WHERE login = $1 AND password = $2',
+            'SELECT * FROM USERS.USERS WHERE login = $1 AND password = $2',
             [login, password]
         );
 
         if (result.rows.length > 0) {
+            console.log('Login successful:', result.rows[0]);
             res.status(200).json({ message: 'Login successful', user: result.rows[0] });
+            console.info("success: " + JSON.stringify(result));
         } else {
             res.status(401).json({ message: 'Invalid credentials' });
+            console.error("failure");
         }
     } catch (error) {
         console.error('Error during login:', error);
@@ -42,7 +45,7 @@ app.post('/api/register', async (req, res) => {
 
     try {
         const result = await pool.query(
-            'INSERT INTO users (login, password, fio) VALUES ($1, $2, $3) RETURNING *',
+            'INSERT INTO users.users (login, password, fio) VALUES ($1, $2, $3) RETURNING *',
             [login, password, fio]
         );
         res.status(201).json({ message: 'User registered successfully', user: result.rows[0] });
