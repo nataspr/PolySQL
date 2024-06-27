@@ -8,10 +8,9 @@ const LoginForm = (props) => {
   const [password, setPassword] = useState('');
 
   const sendData = async (event) => {
-    event.preventDefault();
     console.log('УРА ВЫ В ФУНКЦИИ');
     try {
-      const response = await fetch('/api/data', {
+      const response = await fetch('/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

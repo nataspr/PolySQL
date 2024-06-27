@@ -10,18 +10,35 @@ app.use(cors());
 app.use(bodyParser.json({ limit: '10mb' })); // Увеличиваем лимит размера тела запроса
 app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 
-// Пример API роутера
-app.post('/api/data', (req, res) => {
-    const { login,password } = req.body;
-    console.log('Received data:',login,password );
-    // Обработка данных
-    res.json({ message: 'Data received successfully' });
+//API роутеры
+// Обработка данных из формы входа
+app.post('/api/login', async (req, res) => {
+    const { login, password } = req.body;
+    console.log('Received login data:', login, password);
+
+    try {
+        const result = await pool.query(
+            'SELECT * FROM users WHERE login = $1 AND password = $2',
+            [login, password]
+        );
+
+        if (result.rows.length > 0) {
+            res.status(200).json({ message: 'Login successful', user: result.rows[0] });
+        } else {
+            res.status(401).json({ message: 'Invalid credentials' });
+        }
+    } catch (error) {
+        console.error('Error during login:', error);
+        res.status(500).json({ message: 'Error during login' });
+    }
 });
 
 
 
-app.post('/register', async (req, res) => {
+// Обработка данных из формы регистрации
+app.post('/api/register', async (req, res) => {
     const { login, password, fio } = req.body;
+    console.log('Received registration data:', login, password, fio);
 
     try {
         const result = await pool.query(
