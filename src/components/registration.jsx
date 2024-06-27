@@ -1,20 +1,32 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 import PropTypes from 'prop-types'
 
 import './registration.css'
 
 const Registration = (props) => {
+
+  const [fio, setFio] = useState('');
+  const [password, setPassword] = useState('');
+  const [login, setLogin] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
   //для работы с формой, отправить ее компоненты на сервер для занесения в бд
   const handleSubmit = async (event) => {
-    event.preventDefault();
+    //event.preventDefault();
+    //если введены неправильные пароли, то отмена
+    if (password !== confirmPassword) {
+      setError('Пароли не совпадают');
+      return;
+    }
+
     const data = {
       login: event.target[3].value,
       password: event.target[5].value,
       fio: `${event.target[0].value} ${event.target[1].value}`
     };
     try {
-      const response = await fetch('http://localhost/register.php', {
+      const response = await fetch('/api/register', { // измените URL на правильный
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -41,7 +53,7 @@ const Registration = (props) => {
         <span className="registration-text02">Уже зарегистрированы? </span>
         <span className="registration-text04" onClick={props.toggleForm}>Войдите</span>
       </span>
-      <form className="registration-form thq-flex-column">
+      <form className="registration-form thq-flex-column" onSubmit={handleSubmit}>
         <label
           htmlFor="contact-form-7-first-name"
           className=" thq-body-small">
@@ -50,6 +62,8 @@ const Registration = (props) => {
         <div className="registration-fio">
           <input
             type="text"
+            value={fio}
+            onChange={(e) => setFio(e.target.value)}
             required="true"
             placeholder={props.textInputPlaceholder3}
             className="registration-text-input thq-grid-2"
@@ -83,6 +97,8 @@ const Registration = (props) => {
         </label>
         <input
           type="text"
+          value={login}
+          onChange={(e) => setLogin(e.target.value)}
           id="contact-form-7-first-name"
           required="true"
           placeholder={props.textInputPlaceholder}
@@ -96,6 +112,8 @@ const Registration = (props) => {
         </label>
         <input
           type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           required="true"
           placeholder={props.textInputPlaceholder1}
           className="registration-text-input4 thq-grid-2"
@@ -109,6 +127,8 @@ const Registration = (props) => {
         <input
           type="password"
           required="true"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
           placeholder={props.textInputPlaceholder2}
           className="registration-text-input5 thq-grid-2"
         />
