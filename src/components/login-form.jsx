@@ -9,7 +9,7 @@ const LoginForm = (props) => {
   const [loginSuccess, setLoginSuccess] = useState(null); // Для хранения состояния входа
 
   const sendData = async (event) => {
-    console.log('УРА ВЫ В ФУНКЦИИ');
+    //console.log('Вы в функции');
     try {
       const response = await fetch('/api/login', {
         method: 'POST',
@@ -27,6 +27,7 @@ const LoginForm = (props) => {
         if (result.success) {
           console.log('Login successful');
           // Выполняем дополнительные действия при успешном входе
+          props.setIsLoggedIn(true);
         } else {
           console.log('Invalid credentials');
           // Обрабатываем ошибку входа
@@ -89,8 +90,6 @@ const LoginForm = (props) => {
               </button>
             </div>
           </form>
-          {loginSuccess === true && <p>Login successful</p>}
-          {loginSuccess === false && <p>Login failed</p>}
         </div>
       </div>
   );
@@ -110,6 +109,10 @@ LoginForm.propTypes = {
   text1: PropTypes.string,
   textInputPlaceholder: PropTypes.string,
   text: PropTypes.string,
+};
+
+LoginForm.propTypes = {
+  setIsLoggedIn: PropTypes.func.isRequired,
 };
 
 export default LoginForm;

@@ -6,11 +6,12 @@ import Header from '../components/header'
 import LoginForm from '../components/login-form'
 import Registration from '../components/registration'
 import FooterGray from '../components/footer-gray'
+import HeaderFull from '../components/header-full'
 import './register.css'
 
 const Register = () => {
 const [isLoginFormVisible, setIsLoginFormVisible] = useState(true);  // По умолчанию форма входа видна
-
+const [isLoggedIn, setIsLoggedIn] = useState(false);
 
 // Для переключения на форму регистрации
   const toggleForm = () => {
@@ -24,19 +25,22 @@ const [isLoginFormVisible, setIsLoginFormVisible] = useState(true);  // По у�
         <title>Вход</title>
         <meta property="og:title" content="Вход" />
       </Helmet>
-      <Header rootClassName="header-root-class-name"></Header>
+        {isLoggedIn ? <HeaderFull /> : <Header rootClassName="header-root-class-name" />}
+
       <div className="register-form">
         {/* Переключение между формами */}
         <div className="register-contact1 thq-section-padding">
           {isLoginFormVisible ? (
-            <LoginForm toggleForm={toggleForm} />
+            <LoginForm toggleForm={toggleForm} setIsLoggedIn={setIsLoggedIn}/>
           ) : (
             <Registration toggleForm={toggleForm} rootClassName="registration-root-class-name" />
           )}
         </div>
+
       </div>
       <FooterGray></FooterGray>
     </div>
+
   )
 }
 
