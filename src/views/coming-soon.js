@@ -20,7 +20,7 @@ const ComingSoon = (props) => {
             <h1 className="coming-soon-text HeadingOne">Вы работаете с</h1>
             <h1 className="coming-soon-text1">PolySQL</h1>
             <p className="coming-soon-text2 Lead">
-              The Пока что страница, на которую Вы перешли, не функциональна,
+              Пока что страница, на которую Вы перешли, не функциональна,
               попробуйте вернуться сюда позже!
             </p>
           </div>

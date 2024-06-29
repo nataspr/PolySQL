@@ -151,3 +151,106 @@
   fill: var(--dl-color-secondary-300);
   color: var(--dl-color-secondary-300);
 }
+.tasks-test {
+  flex: 0 0 auto;
+  width: 95%;
+  height: auto;
+  margin: var(--dl-space-space-unitandahalfunit);
+  display: flex;
+  padding: var(--dl-space-space-unitandahalfunit);
+  position: relative;
+  align-self: center;
+  box-shadow: 1px 5px 5px 0px #d4d4d4;
+  margin-top: 0px;
+  min-height: 150px;
+  align-items: center;
+  margin-left: var(--dl-space-space-unitandahalfunit);
+  margin-right: var(--dl-space-space-unitandahalfunit);
+  margin-bottom: var(--dl-space-space-unitandahalfunit);
+  flex-direction: column;
+  justify-content: center;
+}
+@media(max-width: 479px) {
+  .tasks-theme-container {
+    width: 100%;
+  }
+}
+
+
+.next-next {
+  width: 7em;
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+}
+.next-button {
+  color: var(--dl-color-gray-white);
+  width: 100%;
+  height: 3em;
+  display: flex;
+  outline: none;
+  align-self: center;
+  background: linear-gradient( 310deg ,#4054B7,#808FBF);
+  box-shadow: 0 4px 7px -1px rgb(0 0 0 / 11%), 0 2px 4px -1px rgb(0 0 0 / 7%);
+  transition: all .15s ease-in;
+  align-items: center;
+  border-width: 0px;
+  border-radius: var(--dl-radius-radius-radius40);
+  justify-content: center;
+}
+.next-button:hover {
+  cursor: pointer;
+  transform: scale(1.02);
+}
+
+
+.answer-answer {
+  gap: var(--dl-space-space-unit);
+  flex: 0 0 auto;
+  width: 100%;
+  height: auto;
+  display: flex;
+  position: relative;
+  align-items: center;
+}
+.answer-radiobutton {
+  width: var(--dl-size-size-unit);
+  height: var(--dl-size-size-unit);
+  border-color: var(--dl-color-secondary-500);
+  border-width: 1px;
+}
+
+@media(max-width: 479px) {
+  .answer-answer {
+    justify-content: flex-start;
+  }
+  .answer-root-class-name {
+    align-self: center;
+  }
+}
+
+
+.end-of-test-end-of-test {
+  display: flex;
+  position: relative;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+.end-of-test-text {
+  fill: var(--dl-color-secondary-300);
+  color: var(--dl-color-secondary-300);
+  font-size: 1.2em;
+  align-self: center;
+  font-style: normal;
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: var(--dl-space-space-halfunit);
+}
+
+@media(max-width: 767px) {
+  .end-of-test-root-class-name {
+    display: none;
+  }
+}

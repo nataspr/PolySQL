@@ -3,7 +3,7 @@
   position: relative;
 }
 .outline-black-button-button {
-  color: var(--dl-color-secondary-700);
+  color: #557db1;
   cursor: pointer;
   outline: none;
   min-width: 150px;
