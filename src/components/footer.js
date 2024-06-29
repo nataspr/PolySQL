@@ -3,13 +3,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import './footer.css'
+import {Link} from "react-router-dom";
 
 const Footer = (props) => {
   return (
     <footer className={`footer-footer ${props.rootClassName} `}>
       <div className="footer-container">
         <div className="footer-container1">
-          <span className="footer-text">PolySQL</span>
+          <Link to="./" className="footer-text">PolySQL</Link>
           <span className="">Copyright © 2024 PolySQL by SPbPU.</span>
         </div>
         <div className="footer-container2">

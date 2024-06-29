@@ -19,21 +19,12 @@ const [isLoggedIn, setIsLoggedIn] = useState(false);
     setIsLoginFormVisible(!isLoginFormVisible);
   };
 
-useEffect(() => {
-    // Проверка наличия куки
-    const userId = Cookies.get('user_id');
-    if (userId) {
-        setIsLoggedIn(true);
-    }
-}, []);
-
   return (
     <div className="register-container">
       <Helmet>
         <title>Вход</title>
         <meta property="og:title" content="Вход" />
       </Helmet>
-        {isLoggedIn ? <HeaderFull /> : <Header rootClassName="header-root-class-name" />}
 
       <div className="register-form">
         {/* Переключение между формами */}
@@ -44,7 +35,7 @@ useEffect(() => {
             <Registration toggleForm={toggleForm} rootClassName="registration-root-class-name" />
           )}
         </div>
-
+          <div className="register-container1"></div>
       </div>
       <FooterGray></FooterGray>
     </div>

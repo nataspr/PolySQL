@@ -1,15 +1,16 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import './footer-gray.css'
 
 const FooterGray = (props) => {
   return (
     <footer className="footer-gray-footer">
-      <div className="footer-gray-divider"></div>
       <div className="footer-gray-container">
         <div className="footer-gray-container1">
           <div className="footer-gray-container2">
-            <span className="footer-gray-text">PolySQL</span>
+
+            <Link to="./" className="footer-gray-text">PolySQL</Link>
             <span className="footer-gray-text01">Социальные сети</span>
             <div className="footer-gray-container3">
               <a
