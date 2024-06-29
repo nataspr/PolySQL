@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import Component3 from './component3.jsx';
 import './login-form.css';
 
@@ -8,7 +8,7 @@ const LoginForm = (props) => {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const [loginSuccess, setLoginSuccess] = useState(null); // Для хранения состояния входа
-  const history = useHistory();  // Хук для навигации
+  const navigate = useNavigate();
 
   const sendData = async (event) => {
     //console.log('Вы в функции');
@@ -30,7 +30,7 @@ const LoginForm = (props) => {
           console.log('Login successful');
           // Выполняем дополнительные действия при успешном входе
           props.setIsLoggedIn(true);
-          history.push('../views/profile'); //переход на страницу Профиля
+          navigate('/profile');
         } else {
           console.log('Invalid credentials');
           // Обрабатываем ошибку входа

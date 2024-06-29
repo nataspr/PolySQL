@@ -11,15 +11,32 @@ import Footer from '../components/footer'
 import HomeHero from '../components/home-hero'
 import CardSection from '../components/home-features';
 import './home.css'
+import HeaderFull from "../components/header-full";
+import React, {useEffect, useState} from "react";
+import Cookies from "js-cookie";
 
 const Home = (props) => {
+  // для установки авторизации пользователя
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    // Проверка наличия авторизационного кука
+    const user_id = Cookies.get('user_id');
+    if (user_id) {
+      setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
+    }
+  }, []);
+
+
   return (
     <div className="home-container">
       <Helmet>
         <title>PolySQL</title>
         <meta property="og:title" content="PolySQL" />
       </Helmet>
-      <Header/>
+      {!isAuthenticated ? <Header /> : <HeaderFull />}
       <HomeHero/>
       <CardSection/>
 

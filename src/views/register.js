@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { Helmet } from 'react-helmet'
 import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 import Header from '../components/header'
 import LoginForm from '../components/login-form'
@@ -13,18 +14,48 @@ import './register.css'
 const Register = () => {
 const [isLoginFormVisible, setIsLoginFormVisible] = useState(true);  // По умолчанию форма входа видна
 const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const navigate = useNavigate();
+
 
 // Для переключения на форму регистрации
   const toggleForm = () => {
     setIsLoginFormVisible(!isLoginFormVisible);
   };
 
-  return (
+    // для установки авторизации пользователя
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    useEffect(() => {
+        // Проверка наличия авторизационного кука
+        const user_id = Cookies.get('user_id');
+        if (user_id) {
+            setIsAuthenticated(true);
+            // Перенаправление на страницу профиля
+            navigate('/profile');
+        } else {
+            setIsAuthenticated(false);
+        }
+    }, []);
+
+
+
+    return (
     <div className="register-container">
       <Helmet>
         <title>Вход</title>
         <meta property="og:title" content="Вход" />
       </Helmet>
+
+        {/*можно удалить при необходимости*/}
+        {/*{!isAuthenticated ? (*/}
+        {/*    <>*/}
+        {/*        /!*<div className="just_f"></div>*!/*/}
+        {/*        <Header />*/}
+
+        {/*    </>*/}
+        {/*) : (*/}
+        {/*    <HeaderFull />*/}
+        {/*)}*/}
 
       <div className="register-form">
         {/* Переключение между формами */}

@@ -10,8 +10,8 @@ const FooterGray = (props) => {
         <div className="footer-gray-container1">
           <div className="footer-gray-container2">
 
-            <Link to="./" className="footer-gray-text">PolySQL</Link>
-            <Link to="./coming-soon" className="footer-gray-text01">Социальные сети</Link>
+            <Link to="/" className="footer-gray-text">PolySQL</Link>
+            <Link to="/coming-soon" className="footer-gray-text01">Социальные сети</Link>
             <div className="footer-gray-container3">
               <a
                 href="https://aaa.com"
@@ -49,25 +49,25 @@ const FooterGray = (props) => {
           <div className="footer-gray-container4">
             <div className="footer-gray-container5">
               <span className="footer-gray-text02 Large">Компания</span>
-              <Link to="./" className="footer-gray-text03 Large">О нас</Link>
-              <Link to="./" className="footer-gray-text04 Large">О проекте</Link>
+              <Link to="/" className="footer-gray-text03 Large">О нас</Link>
+              <Link to="/" className="footer-gray-text04 Large">О проекте</Link>
               <a href="https://www.spbstu.ru"  className="footer-gray-text05 Large">Политех</a>
             </div>
             <div className="footer-gray-container6">
               <span className="footer-gray-text06">Страницы</span>
-              <Link to="./register" className="footer-gray-text07 Large">Вход</Link>
-              <Link to="./register" className="footer-gray-text08 Large">Регистрация</Link>
-              <Link to="./" className="footer-gray-text09 Large">Главная</Link>
+              <Link to="/register" className="footer-gray-text07 Large">Вход</Link>
+              <Link to="/register" className="footer-gray-text08 Large">Регистрация</Link>
+              <Link to="/" className="footer-gray-text09 Large">Главная</Link>
             </div>
             <div className="footer-gray-container7">
-              <Link to="./coming-soon" className="footer-gray-text10 Large">Помощь</Link>
-              <Link to="./coming-soon" className="footer-gray-text11 Large">Связаться с нами</Link>
-              <Link to="./coming-soon" className="footer-gray-text12 Large">Соглашения</Link>
+              <Link to="/coming-soon" className="footer-gray-text10 Large">Помощь</Link>
+              <Link to="/coming-soon" className="footer-gray-text11 Large">Связаться с нами</Link>
+              <Link to="/coming-soon" className="footer-gray-text12 Large">Соглашения</Link>
             </div>
             <div className="footer-gray-container8">
               <span className="footer-gray-text13 Large">Продукты</span>
               <a href="https://www.postgresql.org" className="footer-gray-text14 Large">PostgreSQL</a>
-              <Link to="./tasks" className="footer-gray-text15 Large">Практика</Link>
+              <Link to="/tasks" className="footer-gray-text15 Large">Практика</Link>
             </div>
           </div>
         </div>

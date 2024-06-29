@@ -10,7 +10,7 @@ const Footer = (props) => {
     <footer className={`footer-footer ${props.rootClassName} `}>
       <div className="footer-container">
         <div className="footer-container1">
-          <Link to="./" className="footer-text">PolySQL</Link>
+          <Link to="/" className="footer-text">PolySQL</Link>
           <span className="">Copyright © 2024 PolySQL by SPbPU</span>
         </div>
         <div className="footer-container2">
@@ -28,7 +28,7 @@ const Footer = (props) => {
           <div className="footer-container5">
             <span className="footer-text12 Large">Продукты</span>
             <a href="https://www.postgresql.org" className="footer-gray-text14 Large">PostgreSQL</a>
-            <Link to="./tasks" className="footer-gray-text15 Large">Практика</Link>
+            <Link to="/tasks" className="footer-gray-text15 Large">Практика</Link>
           </div>
         </div>
       </div>
