@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const pool = require('./dbconfig');
 //создание сервера
 const app = express();
-const port = 5001;
+const port = 5002;
 
 //подключение к приложени.
 app.use(cookieParser());

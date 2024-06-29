@@ -5,6 +5,7 @@ import {
   Route,
   Switch,
   Redirect,
+  Navigate
 } from 'react-router-dom'
 
 import './style.css'

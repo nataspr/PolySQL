@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Helmet } from 'react-helmet'
+import Cookies from 'js-cookie';
 
 import Header from '../components/header'
 import LoginForm from '../components/login-form'
@@ -18,6 +19,13 @@ const [isLoggedIn, setIsLoggedIn] = useState(false);
     setIsLoginFormVisible(!isLoginFormVisible);
   };
 
+useEffect(() => {
+    // Проверка наличия куки
+    const userId = Cookies.get('user_id');
+    if (userId) {
+        setIsLoggedIn(true);
+    }
+}, []);
 
   return (
     <div className="register-container">
