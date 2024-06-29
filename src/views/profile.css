@@ -241,8 +241,8 @@
 }
 .profile-textinput:focus {
   outline: 0;
-  box-shadow: 0 0 0 2px #e9aede;
-  border-color: var(--dl-color-pink-200);
+  box-shadow: 0 0 0 2px #acc6e8;
+  border-color: #7DB1FF;
 }
 .profile-text21 {
   color: var(--dl-color-secondary-500);
@@ -262,8 +262,8 @@
 }
 .profile-textinput1:focus {
   outline: 0;
-  box-shadow: 0 0 0 2px #e9aede;
-  border-color: var(--dl-color-pink-200);
+  box-shadow: 0 0 0 2px #acc6e8;
+  border-color: #7DB1FF;
 }
 .profile-text22 {
   color: var(--dl-color-secondary-500);
@@ -282,8 +282,8 @@
 }
 .profile-textarea:focus {
   outline: 0;
-  box-shadow: 0 0 0 2px #e9aede;
-  border-color: var(--dl-color-pink-200);
+  box-shadow: 0 0 0 2px #acc6e8;
+  border-color: #7DB1FF;
 }
 .profile-container10 {
   display: flex;

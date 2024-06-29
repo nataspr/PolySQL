@@ -5,42 +5,42 @@ import { Helmet } from 'react-helmet'
 import HeaderFull from '../components/header-full'
 import OutlineBlueButton from '../components/outline-blue-button'
 import NextButton from '../components/next-button'
-import BlogCard from '../components/blog-card'
 import PrimaryBlueButton from '../components/primary-blue-button'
 import Footer from '../components/footer'
 import './profile.css'
+import {Link} from "react-router-dom";
 
 const Profile = (props) => {
   return (
     <div className="profile-container">
       <Helmet>
-        <title>Profile - Soft UI Pro</title>
-        <meta property="og:title" content="Profile - Soft UI Pro" />
+        <title>Профиль</title>
+        <meta property="og:title" content="Профиль" />
       </Helmet>
       <HeaderFull></HeaderFull>
       <div className="profile-profile">
         <img
           alt="image"
-          src="https://sun9-70.userapi.com/impg/CJIJGXF2jVuvX9eEh3U1hkSItSX-aARfL4ZHpA/ThAAqaXREmU.jpg?size=673x673&amp;quality=95&amp;sign=83f9d61900a23b2e4b80616717934094&amp;type=album"
+          src="https://sun9-75.userapi.com/n4BmOcIjKJmDE0KHYjcpWW-EcYGoYveZgTp6Hg/T3yF_eWqfCU.jpg"
           className="profile-image"
         />
         <div className="profile-container01">
           <div className="profile-container02">
-            <h4 className="profile-text">Лихачева Анастасия</h4>
+            <h4 className="profile-text">Имя Фамилия</h4>
             <OutlineBlueButton button="Изменить"></OutlineBlueButton>
           </div>
           <div className="profile-container03">
             <span className="profile-text01">
+              <span>Тем пройдено: </span>
               <span className="profile-text02">2</span>
-              <span> Темы пройдено</span>
             </span>
             <span className="profile-text04">
+              <span>Тестов выполнено: </span>
               <span className="profile-text05">5</span>
-              <span> Тестов выполнено</span>
             </span>
             <span>
+              <span>Практик сделано: </span>
               <span className="profile-text08">2</span>
-              <span> Практики сделано</span>
             </span>
           </div>
           <span className="Medium">
@@ -48,50 +48,10 @@ const Profile = (props) => {
             это сейчас не так важно. Еще возможно будут отображаться пройденные
             темы и тп.
           </span>
-          <NextButton button="Продолжить проходить курс"></NextButton>
+          <Link to="/tasks"><NextButton button="Продолжить проходить курс"></NextButton></Link>
         </div>
       </div>
-      <div className="profile-blog-posts">
-        <h1 className="profile-text11 HeadingTwo">
-          <span></span>
-          <span>Check my latest blogposts</span>
-          <br></br>
-        </h1>
-        <div className="profile-container04">
-          <BlogCard></BlogCard>
-          <BlogCard
-            imageSrc="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/color-clock.jpg"
-            description="Venture investment in U.S. startups rose sequentially in the second quarter of 2017, boosted by large, ate-stage financings"
-          ></BlogCard>
-          <BlogCard
-            title="MateLabs machine learning"
-            imageSrc="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/color-wall.jpg"
-            description="If you’ve ever wanted to train a machine learning model and integrate it with IFTTT, you now can with"
-          ></BlogCard>
-          <div className="profile-container05">
-            <div className="profile-card">
-              <div className="profile-container06">
-                <h1 className="profile-text14">Flexible work hours</h1>
-                <span className="profile-text15">
-                  <span className="profile-text16">
-                    Rather than worrying about switching offices every couple
-                    years, you stay in the same place.
-                  </span>
-                </span>
-                <div className="profile-container07">
-                  <button className="profile-button button">
-                    <span className="profile-text17">Read more</span>
-                    <svg viewBox="0 0 1024 1024" className="profile-icon">
-                      <path d="M512 170l342 342-342 342-60-60 238-240h-520v-84h520l-238-240z"></path>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-              <div className="profile-container08"></div>
-            </div>
-          </div>
-        </div>
-      </div>
+
       <div className="profile-contact">
         <div className="profile-container09">
           <div className="profile-form">
@@ -117,7 +77,7 @@ const Profile = (props) => {
               <label className="profile-text22 Label">Моё сообщение</label>
               <textarea
                 rows="8"
-                placeholder="Вы замечали, что..."
+                placeholder="Я заметил(а), что..."
                 className="profile-textarea textarea Small"
               ></textarea>
             </form>
@@ -133,11 +93,6 @@ const Profile = (props) => {
               <span className="profile-text24">
                 Заполните форму и наша команда постарается дать Вам ответ в
                 течение 24 часов.
-                <span
-                  dangerouslySetInnerHTML={{
-                    __html: ' ',
-                  }}
-                />
               </span>
               <div className="profile-container13">
                 <div className="profile-container14">
@@ -168,13 +123,6 @@ const Profile = (props) => {
                       Peter the Great St.Petersburg Polytechnic University
                     </span>
                     <span className="Small">,</span>
-                    <span className="profile-text28">
-                      <span
-                        dangerouslySetInnerHTML={{
-                          __html: ' ',
-                        }}
-                      />
-                    </span>
                     <span className="profile-text29">195251</span>
                   </span>
                 </div>
