@@ -16,7 +16,9 @@ const TestContainer = (props) => {
             </h1>
             <span className="test-container-text3">{props.text}</span>
             <div className="test-container-answers">
-                <Answer rootClassName="answer-root-class-name" className=""></Answer>
+                <Answer rootClassName="answer-root-class-name" text={"Элемент массива"} className=""></Answer>
+                <Answer rootClassName="answer-root-class-name" text={"Элемент массива"} className=""></Answer>
+                <Answer rootClassName="answer-root-class-name" text={"Элемент массива"} className=""></Answer>
             </div>
             <div className="test-container-buttons">
                 <div className="end-end">
