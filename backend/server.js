@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const pool = require('./dbconfig');
+const Cookies = require("js-cookie");
 //создание сервера
 const app = express();
 const port = 5002;
@@ -34,11 +35,15 @@ app.post('/api/login', async (req, res) => {
                 [login, password]
             );
             const myUser = myUserResult.rows[0];
+            // Очистка всех куков
+            res.clearCookie('user_id', { path: '/' });
+            res.clearCookie('login', { path: '/' });
+            res.clearCookie('fio', { path: '/' });
 
-            // Установить cookies, которе не видны для пользователя
-            res.cookie('user_id', myUser.user_id, { httpOnly: true });
-            res.cookie('login', myUser.login, { httpOnly: true });
-            res.cookie('fio', myUser.fio, { httpOnly: true });
+            // Установить новые куки, доступные на стороне клиента
+            res.cookie('user_id', myUser.user_id, { path: '/' });
+            res.cookie('login', myUser.login, { path: '/' });
+            res.cookie('fio', myUser.fio, { path: '/' });
             // Вывод установленных cookies в консоль
             console.log('Cookies set:');
             console.log('user_id:', myUser.user_id);

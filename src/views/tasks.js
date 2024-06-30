@@ -16,10 +16,14 @@ const Tasks = (props) => {
     useEffect(() => {
         // Проверка наличия авторизационного кука
         const user_id = Cookies.get('user_id');
-        if (parseInt(user_id, 10) > 0) {
+        console.log(user_id);
+        if (user_id) {
             setIsAuthenticated(true);
+            console.log(parseInt(user_id, 10));
+            console.log(setIsAuthenticated);
         } else {
             setIsAuthenticated(false);
+            console.log(parseInt(user_id, 10));
         }
     }, []);
 

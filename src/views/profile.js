@@ -8,9 +8,22 @@ import NextButton from '../components/next-button'
 import PrimaryBlueButton from '../components/primary-blue-button'
 import Footer from '../components/footer'
 import './profile.css'
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import Cookies from "js-cookie";
 
 const Profile = (props) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Очистка всех куков
+    Cookies.remove('user_id', { path: '/' });
+    Cookies.remove('login', { path: '/' });
+    Cookies.remove('fio', { path: '/' });
+
+    // Перенаправление на другую страницу, например, страницу входа
+    navigate('/register');
+  };
+
   return (
     <div className="profile-container">
       <Helmet>
@@ -27,7 +40,12 @@ const Profile = (props) => {
         <div className="profile-container01">
           <div className="profile-container02">
             <h4 className="profile-text">Имя Фамилия</h4>
-            <OutlineBlueButton button="Изменить"></OutlineBlueButton>
+            <div className="outline-blue-button-container">
+              <button className="outline-blue-button-button button ButtonSmall" onClick={handleLogout}>
+                Выйти
+              </button>
+            </div>
+            {/*<OutlineBlueButton button="Выйти" onClick={handleLogout}></OutlineBlueButton>*/}
           </div>
           <div className="profile-container03">
             <span className="profile-text01">
