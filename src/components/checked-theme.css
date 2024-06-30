@@ -1,6 +1,7 @@
 .checked-theme-container {
   display: flex;
   position: relative;
+  width:100%;
 }
 .checked-theme-button {
   width: 100%;
