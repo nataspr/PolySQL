@@ -28,7 +28,7 @@ const [isLoggedIn, setIsLoggedIn] = useState(false);
     useEffect(() => {
         // Проверка наличия авторизационного кука
         const user_id = Cookies.get('user_id');
-        if (user_id) {
+        if (user_id && parseInt(user_id, 10) > 0) {
             setIsAuthenticated(true);
             // Перенаправление на страницу профиля
             navigate('/profile');

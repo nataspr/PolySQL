@@ -87,6 +87,17 @@ app.post('/api/register', async (req, res) => {
     }
 });
 
+//обработка данных для получение списка названий тем
+app.get('/api/themes', async (req, res) => {
+    try {
+        const result = await pool.query('SELECT theory_name FROM USERS.THEORY');
+        res.json(result.rows);
+    } catch (error) {
+        console.error('Error fetching themes:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
+
 app.listen(port, () => {
     console.log("Server running on http://localhost:${port}",port);
 });
