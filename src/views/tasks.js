@@ -16,7 +16,7 @@ const Tasks = (props) => {
     useEffect(() => {
         // Проверка наличия авторизационного кука
         const user_id = Cookies.get('user_id');
-        if (user_id) {
+        if (parseInt(user_id, 10) > 0) {
             setIsAuthenticated(true);
         } else {
             setIsAuthenticated(false);

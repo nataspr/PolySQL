@@ -1,14 +1,30 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {useNavigate} from 'react-router-dom';
 import Component3 from './component3.jsx';
 import './login-form.css';
+import Cookies from "js-cookie";
 
 const LoginForm = (props) => {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const [loginSuccess, setLoginSuccess] = useState(null); // Для хранения состояния входа
   const navigate = useNavigate();
+  // для установки авторизации пользователя
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    // Проверка наличия авторизационного кука
+    const user_id = Cookies.get('user_id');
+    if (parseInt(user_id, 10) > 0) {
+      setIsAuthenticated(true);
+      // Перенаправление на страницу профиля
+      navigate('/profile');
+    } else {
+      setIsAuthenticated(false);
+    }
+  }, []);
+
 
   const sendData = async (event) => {
     //console.log('Вы в функции');
