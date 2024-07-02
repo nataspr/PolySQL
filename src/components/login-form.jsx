@@ -27,7 +27,9 @@ const LoginForm = (props) => {
 
 
   const sendData = async (event) => {
-    //console.log('Вы в функции');
+    // обязательно, чтобы не происходило обновление страницы при нажатии на кнопки!
+    event.preventDefault();
+    // console.log('Вы в функции');
     try {
       const response = await fetch('/api/login', {
         method: 'POST',

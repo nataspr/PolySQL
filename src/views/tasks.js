@@ -27,15 +27,17 @@ const Tasks = (props) => {
         }
     }, []);
 
-// Состояние для выбранной темы
+    // Состояние для выбранной темы
     const [selectedTheme, setSelectedTheme] = useState(null);
     const [isExpanded, setIsExpanded] = useState(false);
 
+    // Изменение выбранной темы
     const handleThemeSelect = (theme) => {
         setSelectedTheme(theme);
         //setIsExpanded(true);
     };
 
+    // Кнопка для скрытия боковой панели
     const handleIconClick = () => {
         setIsExpanded(!isExpanded);
     };
@@ -46,6 +48,7 @@ const Tasks = (props) => {
                 <title>PolySQL Практика</title>
                 <meta property="og:title" content="PolySQL Практика" />
             </Helmet>
+            {/*Для вывода нужной шапки*/}
             {!isAuthenticated ? (
                 <>
                     <div className="just_f"></div>
@@ -58,7 +61,7 @@ const Tasks = (props) => {
                 <ProgressPanel isHidden={isExpanded} onThemeSelect={handleThemeSelect} />
                 <ThemePanel isExpanded={isExpanded} onIconClick={handleIconClick} selectedTheme={selectedTheme} />
             </div>
-            <Footer rootClassName="footer-root-class-name2" />
+            <Footer/>
         </div>
     );
 }
