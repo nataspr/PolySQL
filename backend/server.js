@@ -92,14 +92,49 @@ app.post('/api/register', async (req, res) => {
     }
 });
 
-//обработка данных для получение списка названий тем
+// Обработка данных для получения списка теории и названия темы
 app.get('/api/themes', async (req, res) => {
+    const user_id = req.cookies.user_id;
+
     try {
-        const result = await pool.query('SELECT theory_name FROM USERS.THEORY');
+        const query = `
+            WITH user_tasks AS (
+                SELECT
+                    t.theory_id,
+                    t.task_id,
+                    ct.complete_flag
+                FROM
+                     USERS.TASKS t
+                LEFT JOIN
+                    USERS.COMPLETED_TASKS ct ON t.task_id = ct.task_id AND ct.user_id = $1
+            ),
+            theory_status AS (
+                SELECT
+                    theory_id,
+                    BOOL_AND(complete_flag) AS is_checked
+                FROM
+                    user_tasks
+                GROUP BY
+                    theory_id
+            )
+            SELECT
+                th.theory_id AS id,
+                th.theory_name AS name,
+                th.text_on_page,
+                COALESCE(ts.is_checked, false) AS isChecked
+            FROM
+                USERS.THEORY th
+            LEFT JOIN
+                theory_status ts ON th.theory_id = ts.theory_id
+            ORDER BY
+                th.theory_id;
+        `;
+
+        const result = await pool.query(query, [user_id]);
         res.json(result.rows);
-    } catch (error) {
-        console.error('Error fetching themes:', error);
-        res.status(500).json({ message: 'Internal Server Error' });
+    } catch (err) {
+        console.error('Ошибка выполнения запроса:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 });
 

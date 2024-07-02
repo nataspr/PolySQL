@@ -27,32 +27,40 @@ const Tasks = (props) => {
         }
     }, []);
 
+// Состояние для выбранной темы
+    const [selectedTheme, setSelectedTheme] = useState(null);
+    const [isExpanded, setIsExpanded] = useState(false);
 
+    const handleThemeSelect = (theme) => {
+        setSelectedTheme(theme);
+        //setIsExpanded(true);
+    };
 
-  const [isExpanded, setIsExpanded] = useState(false);
+    const handleIconClick = () => {
+        setIsExpanded(!isExpanded);
+    };
 
-  return (
-    <div className="tasks-container">
-      <Helmet>
-        <title>PolySQL Практика</title>
-        <meta property="og:title" content="PolySQL Практика" />
-      </Helmet>
-        {!isAuthenticated ? (
-            <>
-                <div className="just_f"></div>
-                <Header />
-
-            </>
-        ) : (
-            <HeaderFull />
-        )}
-      <div className="tasks-container1">
-        <ProgressPanel isHidden={isExpanded} />
-        <ThemePanel isExpanded={isExpanded} onIconClick={() => setIsExpanded(!isExpanded)} />
-      </div>
-      <Footer rootClassName="footer-root-class-name2"></Footer>
-    </div>
-  )
+    return (
+        <div className="tasks-container">
+            <Helmet>
+                <title>PolySQL Практика</title>
+                <meta property="og:title" content="PolySQL Практика" />
+            </Helmet>
+            {!isAuthenticated ? (
+                <>
+                    <div className="just_f"></div>
+                    <Header />
+                </>
+            ) : (
+                <HeaderFull />
+            )}
+            <div className="tasks-container1">
+                <ProgressPanel isHidden={isExpanded} onThemeSelect={handleThemeSelect} />
+                <ThemePanel isExpanded={isExpanded} onIconClick={handleIconClick} selectedTheme={selectedTheme} />
+            </div>
+            <Footer rootClassName="footer-root-class-name2" />
+        </div>
+    );
 }
 
 export default Tasks

@@ -11,7 +11,7 @@ const TestContainer = (props) => {
     return (
         <div className={`test-container-test-container ${props.rootClassName} `}>
             <h1 className="test-container-text">
-                <span className="test-container-text1">Задание 1</span>
+                <span className="test-container-text1">Задание</span>
                 <br className=""></br>
             </h1>
             <span className="test-container-text3">{props.text}</span>
