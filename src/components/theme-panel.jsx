@@ -32,8 +32,8 @@ const ThemePanel = ({ isExpanded, onIconClick, selectedTheme }) => {
                 <h1 className="tasks-text2">{selectedTheme ? selectedTheme.name : 'Выберите тему'}</h1>
             </div>
             <div className="tasks-content">
-                <div dangerouslySetInnerHTML={{__html: cleanHTML}}/>
-                <a href="https://example.com" target="_blank" rel="noreferrer noopener" className="tasks-link">
+                <div className={`Correct-format ${isExpanded ? 'active' : ''}`} dangerouslySetInnerHTML={{__html: cleanHTML}}/>
+                <a href="https://example.com" target="_blank" rel="noreferrer noopener" className={`tasks-link ${isExpanded ? 'active' : ''}`}>
                     -- Презентация к теме.
                 </a>
             </div>

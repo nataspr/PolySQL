@@ -1,4 +1,42 @@
 
+.Correct-format{
+  line-height: 1.8;
+  font-weight: 500;
+  text-align: justify;
+  width: 100%;
+  align-self: center;
+}
+.Correct-format.active{
+  padding: 0 4em;
+  line-height: 1.8;
+  font-weight: 500;
+  text-align: justify;
+  width: 80%;
+  align-self: center;
+}
+
+ul {
+  margin-left: 3em;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+h2 {
+  color: #557db1;
+  font-size: 20px;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+.keyword {
+  font-weight: bold;
+  color: #3C678B;
+}
+.code {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  color: #3C678B;
+}
 .tasks-container {
   width: 100%;
   height: auto;
@@ -23,7 +61,6 @@
 /* Для прогресса и темы */
 .progress-panel{
   flex: 0 0 20%; /* Начальная ширина 20% */
-  height: 100%;
   overflow: hidden; 
   display: flex;
   box-shadow: 5px 5px 10px 0px #d4d4d4;
@@ -151,6 +188,9 @@
 .tasks-link {
   fill: var(--dl-color-secondary-300);
   color: var(--dl-color-secondary-300);
+}
+.tasks-link.active{
+  padding: 0 12em;
 }
 .tasks-test {
   flex: 0 0 auto;
