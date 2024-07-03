@@ -131,6 +131,7 @@ app.get('/api/themes', async (req, res) => {
         `;
 
         const result = await pool.query(query, [user_id]);
+
         res.json(result.rows);
     } catch (err) {
         console.error('Ошибка выполнения запроса:', err);
@@ -161,6 +162,7 @@ app.get('/api/questions/', async (req, res) => {
         `;
 
         const result = await pool.query(query, [theory_id]);
+        console.log(result);
         res.json(result.rows);
     } catch (err) {
         console.error('Ошибка выполнения запроса:', err);

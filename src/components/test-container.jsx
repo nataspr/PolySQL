@@ -1,5 +1,5 @@
-import React from 'react'
-
+//import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types'
 
 import Answer from './answer'
@@ -7,9 +7,16 @@ import Next from './next'
 import './test-container.css'
 
 const TestContainer = ({ rootClassName, onEndTest, questions }) => {
+    const formRef = useRef(null); //ссфлка на форму
+    //очистка формы
+    const handleClear = () => {
+        if (formRef.current) {
+            formRef.current.reset();
+        }
+    };
     return (
-        // TODO два вложенных цикла, которые будут генерировать все вопросы и ответы к ним
-        <form className={`test-container-test-container ${rootClassName} `}>
+
+        <form ref={formRef} className={`test-container-test-container ${rootClassName} `}>
             {questions.map((question, index) => (
                 <div key={index} className="test-container-question">
                     <div className="test-container-text">{`Вопрос ${index + 1}`}</div>
@@ -26,10 +33,10 @@ const TestContainer = ({ rootClassName, onEndTest, questions }) => {
             ))}
             <div className="test-container-buttons">
                 <div className="end-end">
-                    <button type="button" onClick={onEndTest} className="end-button button ButtonSmall"> Очистить
+                    <button type="button" onClick={onEndTest} className="end-button button ButtonSmall"> Проверить
                     </button>
                 </div>
-                <button type="submit" className="end-button button ButtonSmall">Проверить</button>
+                <button type="button" onClick={handleClear} className="end-button button ButtonSmall"> Очистить</button>
             </div>
         </form>
     )
