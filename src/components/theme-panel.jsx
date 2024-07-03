@@ -39,6 +39,7 @@ const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions }) => {
             </div>
 
             <div className="tasks-test">
+                {/*TODO неавторизованный пользователь не видит тест*/}
             {testStage === 'start' && (
                     <div className="outline-black-button-container">
                         <button onClick={handleStartTest} className="outline-black-button-button button ButtonSmall">

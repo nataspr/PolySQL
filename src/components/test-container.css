@@ -6,21 +6,24 @@
     flex-direction: column;
 }
 .test-container-text {
-    fill: var(--dl-color-secondary-400);
-    color: var(--dl-color-secondary-400);
+    color: var(--dl-color-theme-neutral-dark);
 
 }
 
 .test-container-text3 {
     fill: var(--dl-color-theme-neutral-dark);
-    color: var(--dl-color-theme-neutral-dark);
+    color: #4C5FB9;
+
 }
 .test-container-answers {
     width: 100%;
+    color: var(--dl-color-theme-neutral-dark);
+    font-weight: 100;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     flex-direction: column;
     justify-content: center;
+    margin-bottom: 1.5em;
 }
 .test-container-buttons {
     gap: var(--dl-space-space-unit);

@@ -24,7 +24,7 @@ const TestContainer = ({ rootClassName, onEndTest, questions }) => {
                     <div className="test-container-answers">
                         {question.answers.map((answer, idx) => (
                             <div key={idx} className="test-container-answer">
-                                <input type="radio" id={`q${index}a${idx}`} name={`question${index}`} value={answer}/>
+                                <input className="custom-radio" type="radio" id={`q${index}a${idx}`} name={`question${index}`} value={answer}/>
                                 <label htmlFor={`q${index}a${idx}`}>{answer}</label>
                             </div>
                         ))}
@@ -32,11 +32,11 @@ const TestContainer = ({ rootClassName, onEndTest, questions }) => {
                 </div>
             ))}
             <div className="test-container-buttons">
+                <button type="button" onClick={handleClear} className="end-button button ButtonSmall"> Очистить</button>
                 <div className="end-end">
                     <button type="button" onClick={onEndTest} className="end-button button ButtonSmall"> Проверить
                     </button>
                 </div>
-                <button type="button" onClick={handleClear} className="end-button button ButtonSmall"> Очистить</button>
             </div>
         </form>
     )
