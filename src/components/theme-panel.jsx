@@ -4,7 +4,7 @@ import TestContainer from "./test-container";
 import EndOfTest from "./end-of-test";
 import DOMPurify from 'dompurify';
 
-const ThemePanel = ({ isExpanded, onIconClick, selectedTheme }) => {
+const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions }) => {
     // Состояния для теста: 'start', 'test', 'end'
     const [testStage, setTestStage] = useState('start');
 
@@ -47,7 +47,7 @@ const ThemePanel = ({ isExpanded, onIconClick, selectedTheme }) => {
                     </div>
                 )}
                 {testStage === 'test' && (
-                    <TestContainer rootClassName="test-container-root-class-name" onEndTest={handleEndTest} />
+                    <TestContainer rootClassName="test-container-root-class-name" onEndTest={handleEndTest} questions={questions}/>
                 )}
                 {testStage === 'end' && <EndOfTest onRestartTest={handleRestartTest} rootClassName="end-of-test-root-class-name" />}
             </div>

@@ -6,26 +6,32 @@ import Answer from './answer'
 import Next from './next'
 import './test-container.css'
 
-const TestContainer = (props) => {
+const TestContainer = ({ rootClassName, onEndTest, questions }) => {
     return (
         // TODO два вложенных цикла, которые будут генерировать все вопросы и ответы к ним
-        <div className={`test-container-test-container ${props.rootClassName} `}>
-            <div className="test-container-text">Вопрос 1</div>
-            <span className="test-container-text3">{props.text}</span>
-            <div className="test-container-answers">
-                <Answer rootClassName="answer-root-class-name" text={"Элемент массива"} className=""></Answer>
-                <Answer rootClassName="answer-root-class-name" text={"Элемент массива"} className=""></Answer>
-                <Answer rootClassName="answer-root-class-name" text={"Элемент массива"} className=""></Answer>
-            </div>
+        <form className={`test-container-test-container ${rootClassName} `}>
+            {questions.map((question, index) => (
+                <div key={index} className="test-container-question">
+                    <div className="test-container-text">{`Вопрос ${index + 1}`}</div>
+                    <span className="test-container-text3">{question.task_text}</span>
+                    <div className="test-container-answers">
+                        {question.answers.map((answer, idx) => (
+                            <div key={idx} className="test-container-answer">
+                                <input type="radio" id={`q${index}a${idx}`} name={`question${index}`} value={answer}/>
+                                <label htmlFor={`q${index}a${idx}`}>{answer}</label>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            ))}
             <div className="test-container-buttons">
                 <div className="end-end">
-                    {/*TODO при нажатии на кнопку очистить - моментально стираются ответы*/}
-                    <button onClick={props.onEndTest} className="end-button button ButtonSmall"> Очистить</button>
+                    <button type="button" onClick={onEndTest} className="end-button button ButtonSmall"> Очистить
+                    </button>
                 </div>
-                {/*TODO при нажатии на кнопку проверить - подсвечиваются правильные ответы и выводится вывод об ответаъ*/}
-                <Next button="Проверить"></Next>
+                <button type="submit" className="end-button button ButtonSmall">Проверить</button>
             </div>
-        </div>
+        </form>
     )
 }
 
@@ -36,9 +42,20 @@ TestContainer.defaultProps = {
 }
 
 TestContainer.propTypes = {
-    text: PropTypes.string,
-    text2: PropTypes.string,
-    rootClassName: PropTypes.string,
+   text: PropTypes.string,
+  text2: PropTypes.string,
+ rootClassName: PropTypes.string,
 }
 
+TestContainer.propTypes = {
+    rootClassName: PropTypes.string,
+    onEndTest: PropTypes.func.isRequired,
+    questions: PropTypes.arrayOf(
+        PropTypes.shape({
+            task_id: PropTypes.number.isRequired,
+            task_text: PropTypes.string.isRequired,
+            answers: PropTypes.arrayOf(PropTypes.string).isRequired,
+        })
+    ).isRequired,
+};
 export default TestContainer

@@ -138,6 +138,37 @@ app.get('/api/themes', async (req, res) => {
     }
 });
 
+//вывод из базы вопросов теста для определенной темы и ответов к ним
+// Добавление маршрута для получения вопросов и ответов по theory_id
+app.get('/api/questions/', async (req, res) => {
+    const theory_id = req.cookies.theory_id;
+
+    try {
+        const query = `
+            SELECT 
+                t.theory_id, 
+                t.task_id, 
+                t.task_text, 
+                array_agg(a.answer) AS answers
+            FROM 
+                USERS.TASKS t
+            LEFT JOIN 
+                USERS.ANSWERS a ON t.task_id = a.task_id
+            WHERE 
+                t.theory_id = $1
+            GROUP BY 
+                t.theory_id, t.task_id, t.task_text;
+        `;
+
+        const result = await pool.query(query, [theory_id]);
+        res.json(result.rows);
+    } catch (err) {
+        console.error('Ошибка выполнения запроса:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+//вывод правильного ответа в зависимости от темы
+
 app.listen(port, () => {
     console.log("Server running on http://localhost:${port}",port);
 });
