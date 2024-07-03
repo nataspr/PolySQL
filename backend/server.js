@@ -169,7 +169,36 @@ app.get('/api/questions/', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
 //вывод правильного ответа в зависимости от темы
+// Добавление маршрута для получения списка правильных ответов по theory_id
+app.get('/api/correct-answers/', async (req, res) => {
+    const theory_id = req.cookies.theory_id;
+
+    try {
+        const query = `
+            SELECT 
+                t.theory_id, 
+                t.task_id, 
+                t.task_text, 
+                array_agg(ca.correct_answer) AS correct_answers
+            FROM 
+                USERS.TASKS t
+            LEFT JOIN 
+                USERS.CORRECT_ANSWERS ca ON t.task_id = ca.task_id
+            WHERE 
+                t.theory_id = $1
+            GROUP BY 
+                t.theory_id, t.task_id, t.task_text;
+        `;
+
+        const result = await pool.query(query, [theory_id]);
+        res.json(result.rows);
+    } catch (err) {
+        console.error('Ошибка выполнения запроса:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
 
 app.listen(port, () => {
     console.log("Server running on http://localhost:${port}",port);
