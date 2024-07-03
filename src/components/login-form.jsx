@@ -50,34 +50,35 @@ const LoginForm = (props) => {
           props.setIsLoggedIn(true);
           navigate('/profile');
         } else {
-          console.log('Invalid credentials');
           // Обрабатываем ошибку входа
+          console.log('Invalid credentials');
+          setWarning('Ошибка данных');
+
         }
       } else {
         console.log('Error during login');
+        setWarning("Ошибка входа!")
         setLoginSuccess(false);
       }
     } catch (error) {
       console.error('Error:', error);
+      setWarning("Ошибка входа!")
     }
   };
 
+  // для надписи об ошибках
+  const [warning, setWarning] = useState('');
+
   return (
-      <div className="login-form-login-form">
+      <div className="login-form">
         <div className="login-form-registration thq-flex-row thq-section-max-width">
-          <h1 className="login-form-text">
-            <span>Откройте мир баз данных прямо сейчас</span>
-            <br></br>
-          </h1>
-          <span className="login-form-text3">{props.text}</span>
+          <h1> Откройте мир баз данных прямо сейчас </h1>
+          <span className="login-form-text3"> {props.text}</span>
           <form className="login-form-form thq-flex-column" onSubmit={sendData}>
-            <label
-                htmlFor="contact-form-7-first-name"
-                className="login-form-text4 thq-body-small"
-            >
+
+            <label htmlFor="contact-form-7-first-name" className="login-form-text4 thq-body-small">
               {props.text1}
             </label>
-
             <input
                 type="text"
                 value={login}
@@ -87,10 +88,8 @@ const LoginForm = (props) => {
                 placeholder={props.textInputPlaceholder}
                 className="login-form-text-input thq-grid-2"
             />
-            <label
-                htmlFor="contact-form-7-email"
-                className="login-form-text4 thq-body-small"
-            >
+
+            <label htmlFor="contact-form-7-email" className="login-form-text4 thq-body-small">
               {props.text2}
             </label>
             <input
@@ -101,7 +100,7 @@ const LoginForm = (props) => {
                 placeholder={props.textInputPlaceholder1}
                 className="login-form-text-input1 thq-grid-2"
             />
-            <Component3 type="submit" rootClassName="component3-root-class-name1" />
+            <Component3 type="submit" rootClassName="component3-root-class-name1"/>
             <div className="login-form-container">
               <button className="login-form-button" type="submit" onClick={props.toggleForm}>
               <span className="login-form-text6">
@@ -110,6 +109,7 @@ const LoginForm = (props) => {
               </span>
               </button>
             </div>
+            <div className={"WarningMessage"}>{warning}</div>
           </form>
         </div>
       </div>
@@ -119,8 +119,8 @@ const LoginForm = (props) => {
 LoginForm.defaultProps = {
   textInputPlaceholder1: 'Пароль',
   text2: 'Введите пароль',
-  text1: 'Введите свой логин',
-  textInputPlaceholder: 'Введите email',
+  text1: 'Введите логин',
+  textInputPlaceholder: 'Email',
   text: 'Получите доступ к эксклюзивным сделкам и персонализированным предложениям, войдя в свою учетную запись.',
 };
 

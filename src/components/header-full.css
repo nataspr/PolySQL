@@ -7,6 +7,7 @@
   padding-left: var(--dl-space-space-unitandahalfunit);
   padding-right: var(--dl-space-space-unitandahalfunit);
   justify-content: center;
+  background-color: #FFFFFF;
 }
 .header-full-nav {
   flex: 0 0 auto;

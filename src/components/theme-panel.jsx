@@ -29,7 +29,7 @@ const ThemePanel = ({ isExpanded, onIconClick, selectedTheme }) => {
                 <svg onClick={onIconClick} viewBox="0 0 1024 1024" className="tasks-icon">
                     <path d="M470 554v-84h426v84h-426zM470 384v-86h426v86h-426zM128 128h768v86h-768v-86zM128 896v-86h768v86h-768zM128 512l170-170v340zM470 726v-86h426v86h-426z"></path>
                 </svg>
-                <h1 className="tasks-text2">{selectedTheme ? selectedTheme.name : 'Выберите тему'}</h1>
+                <h1 className="tasks-text02">{selectedTheme ? selectedTheme.name : 'Выберите тему'}</h1>
             </div>
             <div className="tasks-content">
                 <div className={`Correct-format ${isExpanded ? 'active' : ''}`} dangerouslySetInnerHTML={{__html: cleanHTML}}/>

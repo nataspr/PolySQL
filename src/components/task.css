@@ -16,6 +16,7 @@
   flex-direction: column;
   background-color: var(--dl-color-gray-900);
 }
+
 .task-text {
   fill: var(--dl-color-gray-black);
   color: var(--dl-color-gray-black);

@@ -8,10 +8,9 @@
 .test-container-text {
     fill: var(--dl-color-secondary-400);
     color: var(--dl-color-secondary-400);
+
 }
-.test-container-text1 {
-    font-size: 0.5em;
-}
+
 .test-container-text3 {
     fill: var(--dl-color-theme-neutral-dark);
     color: var(--dl-color-theme-neutral-dark);

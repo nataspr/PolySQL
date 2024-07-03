@@ -6,6 +6,8 @@
   width: 100%;
   align-self: center;
 }
+
+
 .Correct-format.active{
   padding: 0 4em;
   line-height: 1.8;
@@ -92,7 +94,12 @@ h2 {
   z-index: 100;
 }
 
-
+.WarningMessage{
+  align-self: center;
+  color: darkred;
+  font-weight: 600;
+  margin-top: 0.7em;
+}
 
 
 .tasks-progress-container {
@@ -109,7 +116,7 @@ h2 {
 .tasks-text {
   fill: var(--dl-color-secondary-blue);
   color: rgb(75, 124, 165);
-  font-size: 1.2em;
+  font-size: 1em;
   align-self: center;
   font-style: normal;
   text-align: center;
@@ -171,9 +178,14 @@ h2 {
   fill: var(--dl-color-secondary-300);
 }
 .tasks-text2 {
-  font-size: 1.5em;
+  font-size: 1em;
   font-style: normal;
   font-weight: 600;
+}
+.tasks-text02{
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1.5em;
 }
 .tasks-content {
   flex: 0 0 auto;

@@ -39,107 +39,101 @@ const Registration = (props) => {
         console.log('Registration successful:', result.message);
       } else {
         console.error('Registration failed');
+        setWarning("Что-то пошло не так...");
       }
     } catch (error) {
       console.error('Error:', error);
+      setWarning("Кажется, такой аккаунт уже существует!");
+      // TODO добавить проверку на совпадение паролей
+      // TODO добавить проверку на существования пользователя с таким аккаунтом
     }
   };
 
+  // для надписи об ошибках
+  const [warning, setWarning] = useState('');
+
 
   return (
-    <div className={`registration-registration thq-flex-row thq-section-max-width ${props.rootClassName} `}>
-      <h1 className="registration-text">{props.heading}</h1>
+    <div className={`registration thq-flex-row thq-section-max-width ${props.rootClassName} `}>
+      <h1>{props.heading}</h1>
       <span className="registration-text01">
-        <span className="registration-text02">Уже зарегистрированы? </span>
+        <span>Уже зарегистрированы? </span>
         <span className="registration-text04" onClick={props.toggleForm}>Войдите</span>
       </span>
       <form className="registration-form thq-flex-column" onSubmit={handleSubmit}>
-        <label
-          htmlFor="contact-form-7-first-name"
-          className=" thq-body-small">
+        <label htmlFor="contact-form-7-first-name" className=" thq-body-small">
           {props.text}
         </label>
         <div className="registration-fio">
           <input
-            type="text"
-            value={fio}
-            onChange={(e) => setFio(e.target.value)}
-            required="true"
-            placeholder={props.textInputPlaceholder3}
-            className="registration-text-input thq-grid-2"
+              type="text"
+              value={fio}
+              onChange={(e) => setFio(e.target.value)}
+              required="true"
+              placeholder={props.textInputPlaceholder3}
+              className="registration-text-input thq-grid-2"
           />
           <input
-            type="text"
-            required="true"
-            placeholder={props.textInputPlaceholder4}
-            className="registration-text-input1 thq-grid-2"
+              type="text"
+              required="true"
+              placeholder={props.textInputPlaceholder4}
+              className="registration-text-input thq-grid-2"
           />
         </div>
-        <label
-          htmlFor="contact-form-7-first-name"
-          className="thq-body-small"
-        >
+        <label htmlFor="contact-form-7-first-name" className="thq-body-small">
           {props.text1}
         </label>
         <input
-          type="date"
-          max="2024-07-10"
-          //min="2020-01-01"
-          //value="2000-01-01"
-          required="true"
-          className="registration-text-input2"
+            type="date"
+            max="2024-07-10"
+            //min="2020-01-01"
+            value="2000-01-01"
+            required="true"
+            className="registration-text-input2"
         />
-        <label
-          htmlFor="contact-form-7-first-name"
-          className="thq-body-small"
-        >
+        <label htmlFor="contact-form-7-first-name" className="thq-body-small">
           {props.text2}
         </label>
         <input
-          type="text"
-          value={login}
-          onChange={(e) => setLogin(e.target.value)}
-          id="contact-form-7-first-name"
-          required="true"
-          placeholder={props.textInputPlaceholder}
-          className="registration-text-input3 thq-grid-2"
+            type="text"
+            value={login}
+            onChange={(e) => setLogin(e.target.value)}
+            id="contact-form-7-first-name"
+            required="true"
+            placeholder={props.textInputPlaceholder}
+            className="registration-text-input2 thq-grid-2"
         />
-        <label
-          htmlFor="contact-form-7-email"
-          className="thq-body-small"
-        >
+        <label htmlFor="contact-form-7-first-name" className="thq-body-small">
           {props.text3}
         </label>
         <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required="true"
-          placeholder={props.textInputPlaceholder1}
-          className="registration-text-input4 thq-grid-2"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required="true"
+            placeholder={props.textInputPlaceholder1}
+            className="registration-text-input2 thq-grid-2"
         />
-        <label
-          htmlFor="contact-form-7-email"
-          className=" thq-body-small"
-        >
+        <label htmlFor="contact-form-7-first-name" className="thq-body-small">
           {props.text4}
         </label>
         <input
-          type="password"
-          required="true"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          placeholder={props.textInputPlaceholder2}
-          className="registration-text-input5 thq-grid-2"
+            type="password"
+            required="true"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder={props.textInputPlaceholder2}
+            className="registration-text-input2 thq-grid-2"
         />
-        <span className="">{props.text5}</span>
+        <span>{props.text5}</span>
         <div className="registration-container">
           <div className="registration-container1">
             <button className="registration-button">
-                <span className="">Создать аккаунт</span>
+              <span className="">Создать аккаунт</span>
             </button>
           </div>
         </div>
+        <div className={"WarningMessage"}>{warning}</div>
       </form>
     </div>
   )

@@ -3,17 +3,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import Answer from './answer'
-import End from './end'
 import Next from './next'
 import './test-container.css'
 
 const TestContainer = (props) => {
     return (
+        // TODO два вложенных цикла, которые будут генерировать все вопросы и ответы к ним
         <div className={`test-container-test-container ${props.rootClassName} `}>
-            <h1 className="test-container-text">
-                <span className="test-container-text1">Задание</span>
-                <br className=""></br>
-            </h1>
+            <div className="test-container-text">Вопрос 1</div>
             <span className="test-container-text3">{props.text}</span>
             <div className="test-container-answers">
                 <Answer rootClassName="answer-root-class-name" text={"Элемент массива"} className=""></Answer>
@@ -22,9 +19,11 @@ const TestContainer = (props) => {
             </div>
             <div className="test-container-buttons">
                 <div className="end-end">
-                    <button onClick={props.onEndTest} className="end-button button ButtonSmall"> Закончить </button>
+                    {/*TODO при нажатии на кнопку очистить - моментально стираются ответы*/}
+                    <button onClick={props.onEndTest} className="end-button button ButtonSmall"> Очистить</button>
                 </div>
-                <Next className="" button="Вперёд"></Next>
+                {/*TODO при нажатии на кнопку проверить - подсвечиваются правильные ответы и выводится вывод об ответаъ*/}
+                <Next button="Проверить"></Next>
             </div>
         </div>
     )

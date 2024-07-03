@@ -1,4 +1,4 @@
-.registration-registration {
+.registration {
   gap: 0;
   width: 60%;
   position: relative;
@@ -8,27 +8,15 @@
   justify-content: center;
   background-color: var(--dl-color-gray-900);
 }
-.registration-text {
-  fill: var(--dl-color-secondary-blue);
-  color: var(--dl-color-secondary-blue);
-  width: 100%;
-  font-size: 1.6em;
-  font-style: normal;
-  text-align: center;
-  font-weight: 600;
-  line-height: 1.3;
-}
+
 .registration-text01 {
-  fill: var(--dl-color-theme-neutral-dark);
-  color: var(--dl-color-theme-neutral-dark);
-  font-size: 1.1em;
-}
-.registration-text02 {
   color: var(--dl-color-secondary-400);
+  width: 90%;
+  font-weight: 200;
+  line-height: 1.3;
+  text-align: center;
 }
-.registration-text03 {
-  color: var(--dl-color-secondary-400);
-}
+
 .registration-text04 {
   color: var(--dl-color-secondary-blue);
   cursor: pointer;
@@ -70,28 +58,13 @@
   padding-bottom: var(--dl-space-space-halfunit);
   text-transform: capitalize;
 }
-.registration-text-input1 {
-  fill: var(--dl-color-secondary-400);
-  color: var(--dl-color-secondary-400);
-  width: 48%;
-  height: 45px;
-  text-align: center;
-  padding-top: var(--dl-space-space-halfunit);
-  border-color: var(--dl-color-secondary-500);
-  border-width: 1px;
-  padding-left: var(--dl-space-space-unitandahalfunit);
-  border-radius: var(--dl-radius-radius-radius40);
-  padding-right: var(--dl-space-space-unitandahalfunit);
-  padding-bottom: var(--dl-space-space-halfunit);
-  text-transform: capitalize;
+
+.registration-text-input:focus {
+  outline: 0;
+  box-shadow: 0 0 0 2px #acc6e8;
+  border-color: #7DB1FF;
 }
-.registration-text06 {
-  fill: var(--dl-color-secondary-400);
-  color: var(--dl-color-secondary-400);
-  font-size: 1.1em;
-  text-align: center;
-  font-family: "Open Sans";
-}
+
 .registration-text-input2 {
   fill: var(--dl-color-secondary-400);
   color: var(--dl-color-secondary-400);
@@ -107,72 +80,19 @@
   padding-bottom: var(--dl-space-space-halfunit);
   text-transform: capitalize;
 }
-.registration-text07 {
-  fill: var(--dl-color-secondary-400);
+.registration-text-input2:focus {
+  outline: 0;
+  box-shadow: 0 0 0 2px #acc6e8;
+  border-color: #7DB1FF;
+}
+
+.thq-body-small {
   color: var(--dl-color-secondary-400);
-  font-size: 1.1em;
+  font-size: 1em;
   text-align: center;
   font-family: "Open Sans";
 }
-.registration-text-input3 {
-  fill: var(--dl-color-secondary-400);
-  color: var(--dl-color-secondary-400);
-  width: 100%;
-  height: 45px;
-  text-align: center;
-  padding-top: var(--dl-space-space-halfunit);
-  border-color: var(--dl-color-secondary-500);
-  border-width: 1px;
-  padding-left: var(--dl-space-space-unitandahalfunit);
-  border-radius: var(--dl-radius-radius-radius40);
-  padding-right: var(--dl-space-space-unitandahalfunit);
-  padding-bottom: var(--dl-space-space-halfunit);
-  text-transform: capitalize;
-}
-.registration-text08 {
-  fill: var(--dl-color-secondary-400);
-  color: var(--dl-color-secondary-400);
-  font-size: 1.1em;
-  text-align: center;
-  font-family: "Open Sans";
-}
-.registration-text-input4 {
-  fill: var(--dl-color-secondary-400);
-  color: var(--dl-color-secondary-400);
-  width: 100%;
-  height: 45px;
-  text-align: center;
-  padding-top: var(--dl-space-space-halfunit);
-  border-color: var(--dl-color-secondary-500);
-  border-width: 1px;
-  padding-left: var(--dl-space-space-unitandahalfunit);
-  border-radius: var(--dl-radius-radius-radius40);
-  padding-right: var(--dl-space-space-unitandahalfunit);
-  padding-bottom: var(--dl-space-space-halfunit);
-  text-transform: capitalize;
-}
-.registration-text09 {
-  fill: var(--dl-color-secondary-400);
-  color: var(--dl-color-secondary-400);
-  font-size: 1.1em;
-  text-align: center;
-  font-family: "Open Sans";
-}
-.registration-text-input5 {
-  fill: var(--dl-color-secondary-400);
-  color: var(--dl-color-secondary-400);
-  width: 100%;
-  height: 45px;
-  text-align: center;
-  padding-top: var(--dl-space-space-halfunit);
-  border-color: var(--dl-color-secondary-500);
-  border-width: 1px;
-  padding-left: var(--dl-space-space-unitandahalfunit);
-  border-radius: var(--dl-radius-radius-radius40);
-  padding-right: var(--dl-space-space-unitandahalfunit);
-  padding-bottom: var(--dl-space-space-halfunit);
-  text-transform: capitalize;
-}
+
 .registration-container {
   gap: var(--dl-space-space-fourunits);
   flex: 0 0 auto;
@@ -183,6 +103,7 @@
   align-items: center;
   justify-content: center;
 }
+
 .registration-container1 {
   width: 100%;
   display: flex;
@@ -219,7 +140,7 @@
   background-color: var(--dl-color-gray-900);
 }
 @media(max-width: 991px) {
-  .registration-registration {
+  .registration {
     align-items: center;
     flex-direction: column;
   }
@@ -228,15 +149,15 @@
   }
 }
 @media(max-width: 767px) {
-  .registration-registration {
+  .registration {
     padding: var(--dl-space-space-doubleunit);
   }
 }
 @media(max-width: 479px) {
-  .registration-registration {
+  .registration{
     padding: var(--dl-space-space-halfunit);
   }
-  .registration-text01 {
+  h1{
     text-align: center;
   }
   .registration-form {
