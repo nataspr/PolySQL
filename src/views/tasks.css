@@ -1,12 +1,14 @@
 
 .Correct-format{
   line-height: 1.8;
-  font-weight: 500;
+  font-weight: 300;
   text-align: justify;
-  width: 100%;
   align-self: center;
-}
+  font-size: 1.2em;
+  width: 100%;
+  color: #191818;
 
+}
 
 .Correct-format.active{
   padding: 0 4em;
@@ -14,21 +16,49 @@
   font-weight: 500;
   text-align: justify;
   width: 80%;
-  align-self: center;
 }
 
 ul {
   margin-left: 3em;
 }
 
+
+ul {
+  display: block;
+}
+
+ul li {
+  display: block;
+  position: relative;
+  line-height: 2em;
+}
+
+ul li:not(:last-child) {
+}
+
+ul li:before {
+  content: "";
+  position: absolute;
+  top: 1.2em;
+  left: -30px;
+  margin-top: -.65em;
+  background: #557db1;
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+}
+
+
 body {
   font-family: Arial, sans-serif;
 }
 h2 {
   color: #557db1;
-  font-size: 20px;
+  font-size: 2em;
   margin-top: 1em;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.6em;
+  text-align: left;
+  line-height: 1.2;
 }
 .keyword {
   font-weight: bold;
@@ -38,6 +68,8 @@ h2 {
   font-family: 'Courier New', Courier, monospace;
   font-weight: bold;
   color: #3C678B;
+  margin: 2em;
+  font-size: 0.9em;
 }
 .tasks-container {
   width: 100%;
@@ -200,6 +232,7 @@ h2 {
 .tasks-link {
   fill: var(--dl-color-secondary-300);
   color: var(--dl-color-secondary-300);
+  font-size: 1.2em;
 }
 .tasks-link.active{
   padding: 0 12em;
