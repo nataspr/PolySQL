@@ -46,7 +46,7 @@ const Profile = (props) => {
     Cookies.remove('login', { path: '/' });
     Cookies.remove('fio', { path: '/' });
 
-    // Перенаправление на другую страницу, например, страницу входа
+    // Перенаправление на страницу входа
     navigate('/register');
   };
 
