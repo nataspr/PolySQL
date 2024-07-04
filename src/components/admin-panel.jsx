@@ -24,7 +24,6 @@ const AdminPanel = () => {
 
     //все данные должны быть введены
     const handleSave = () => {
-            alert('УРА');
             // Отправка данных на сервер
             fetch('/api/admin/add', {
                 method: 'POST',

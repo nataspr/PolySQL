@@ -142,6 +142,7 @@ app.get('/api/themes', async (req, res) => {
 
         const result = await pool.query(query, [user_id]);
 
+        console.log(result.rows);
         res.json(result.rows);
     } catch (err) {
         console.error('Ошибка выполнения запроса:', err);

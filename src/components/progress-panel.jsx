@@ -12,6 +12,7 @@ const ProgressPanel = ({isHidden, onThemeSelect }) => {
                 const response = await fetch('/api/themes');
                 const data = await response.json();
                 setThemes(data);
+                console.log(data);
             } catch (error) {
                 console.error('Ошибка при получении данных:', error);
             }
@@ -29,7 +30,7 @@ const ProgressPanel = ({isHidden, onThemeSelect }) => {
             <NameOfTheme
                 key={theme.id}
                 text={theme.name}
-                isChecked={theme.isChecked}
+                isChecked={theme.ischecked}
                 onClick={() => onThemeSelect(theme)} // Использование стрелочной функции для передачи функции обратного вызова
             />
         ))}
