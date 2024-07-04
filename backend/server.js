@@ -259,6 +259,44 @@ app.post('/api/submit-answers', async (req, res) => {
 });
 
 //вывод сформулированных заданий по практике
+app.get('/api/get-practice-text', async (req, res) => {
+    const theory_id = req.cookies.theory_id;
+
+    if (!theory_id) {
+        return res.status(400).json({ error: 'Theory ID not found in cookies' });
+    }
+
+    try {
+        const query = `
+            SELECT 
+                p.practice_id,
+                p.practice_text,
+                p.theory_id
+            FROM 
+                USERS.PRACTICE p
+            WHERE 
+                p.theory_id = $1;
+        `;
+        const result = await pool.query(query, [theory_id]);
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Practice text not found for theory ID' });
+        }
+
+        const practices = result.rows.map(row => ({
+            practice_id: row.practice_id,
+            practice_text: row.practice_text,
+            theory_id: row.theory_id
+        }));
+
+        res.json({ practices });
+        // const practiceText = result.rows[0].practice_text;
+        // res.json({ practiceText });
+    } catch (err) {
+        console.error('Error executing query:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
 
 app.listen(port, () => {
     console.log("Server running on http://localhost:${port}",port);
