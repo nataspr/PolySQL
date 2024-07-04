@@ -1,8 +1,8 @@
 .task-container {
   flex: 0 0 auto;
-  width: 95%;
+  width: 100%;
   height: auto;
-  margin: var(--dl-space-space-unitandahalfunit);
+  margin-bottom: var(--dl-space-space-unitandahalfunit);
   display: flex;
   padding: var(--dl-space-space-unitandahalfunit);
   position: relative;
@@ -10,9 +10,6 @@
   box-shadow: 5px 5px 5px 0px #d4d4d4;
   margin-top: 0px;
   align-items: flex-start;
-  margin-left: var(--dl-space-space-unitandahalfunit);
-  margin-right: var(--dl-space-space-unitandahalfunit);
-  margin-bottom: var(--dl-space-space-unitandahalfunit);
   flex-direction: column;
   background-color: var(--dl-color-gray-900);
 }

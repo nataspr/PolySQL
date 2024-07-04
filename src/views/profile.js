@@ -33,9 +33,7 @@ const Profile = (props) => {
         <HeaderFull></HeaderFull>
         <ProfileCard user={"Имя Фамилия"} onClick={handleLogout}/>
 
-        {/*<Contact/>*/}
-        <AdminPanel/>
-
+          {parseInt(Cookies.get('user_id'), 10)===1 ?  <AdminPanel/> : <Contact/>}
 
         <Footer rootClassName="footer-root-class-name1"></Footer>
       </div>

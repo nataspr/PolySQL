@@ -5,6 +5,7 @@ import EndOfTest from "./end-of-test";
 import DOMPurify from 'dompurify';
 import Header from "./header";
 import HeaderFull from "./header-full";
+import Cookies from "js-cookie";
 
 const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions, testStage, setTestStage, isAuthenticated  }) => {
     // Состояния для теста: 'start', 'test', 'end'
@@ -71,17 +72,26 @@ const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions, testSta
                 </svg>
                 <h1 className="tasks-text02">{selectedTheme ? selectedTheme.name : 'Выберите тему'}</h1>
             </div>
-            <div className="tasks-content">
-                <div className={`Correct-format ${isExpanded ? 'active' : ''}`} dangerouslySetInnerHTML={{__html: cleanHTML}}/>
-                <a href="https://example.com" target="_blank" rel="noreferrer noopener" className={`tasks-link ${isExpanded ? 'active' : ''}`}>
-                    -- Презентация к теме.
-                </a>
+            <div className={`tasks-content ${isExpanded ? 'active' : ''}`}>
+                <div className="Correct-format" dangerouslySetInnerHTML={{__html: cleanHTML}}/>
+
+                {parseInt(Cookies.get('theory_id'), 10) === 1 ?
+                    <a href="https://docs.google.com/document/d/1XL8Fx-vugpEJc-fCnilrROmHaMJvkuZr-_yG6C53pb4/edit?usp=sharing" target="_blank" rel="noreferrer noopener"
+                       className={`tasks-link ${isExpanded ? 'active' : ''}`}>
+                        -- SQL-скрипт к базе данных Cruise.
+                    </a>
+                    :
+                    <a href="https://example.com" target="_blank" rel="noreferrer noopener"
+                       className={`tasks-link ${isExpanded ? 'active' : ''}`}>
+                        -- Презентация к теме.
+                    </a>
+                }
             </div>
 
             {/*Для вывода теста*/}
-            {isAuthenticated && (
+            {isAuthenticated && parseInt(Cookies.get('theory_id'), 10) !== 1 && (
                 <div className="tasks-test">
-                    {testStage === 'start'&& (
+                    {testStage === 'start' && (
                         <div className="outline-black-button-container">
                             <button onClick={handleStartTest} className="outline-black-button-button button ButtonSmall">
                                 Начать тест по теме
@@ -95,8 +105,8 @@ const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions, testSta
                                                        correctAnswersCount={testResult ? testResult.correctAnswersCount : 0}/>}
                 </div>
             )}
-            <div>
-                {selectedTheme && practices.map(practice => (
+            <div className={"TaskContainer"}>
+                {selectedTheme && parseInt(Cookies.get('theory_id'), 10) !== 1 && practices.map(practice => (
                     <Task
                         key={practice.practice_id}
                         taskNumber={practice.practice_id}

@@ -8,14 +8,34 @@
   color: #191818;
 
 }
-
-.Correct-format.active{
-  padding: 0 4em;
+.TaskContainer{
+  width: 100%;
+  padding-right:  var(--dl-space-space-unitandahalfunit);
+  padding-left:  var(--dl-space-space-unitandahalfunit);
+  padding-bottom:  var(--dl-space-space-unitandahalfunit);
+}
+h1{
+  font-size: 2em;
+  line-height: 1.25;
+  background-image: linear-gradient(310deg, rgb(64, 84, 183), rgb(128, 143, 191));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.tasks-content.active{
+  padding: 3em 4em;
   line-height: 1.8;
   font-weight: 500;
   text-align: justify;
   width: 80%;
+  align-self: center;
 }
+/*.Correct-format.active{*/
+/*  padding: 0 4em;*/
+/*  line-height: 1.8;*/
+/*  font-weight: 500;*/
+/*  text-align: justify;*/
+/*  width: 80%;*/
+/*}*/
 
 ul {
   margin-left: 3em;
@@ -41,7 +61,7 @@ ul li:before {
   top: 1.2em;
   left: -30px;
   margin-top: -.65em;
-  background: var(--dl-color-secondary-300);
+  background-image: linear-gradient(310deg, rgb(64, 84, 183), rgb(128, 143, 191));
   height: 12px;
   width: 12px;
   border-radius: 50%;
@@ -52,29 +72,50 @@ body {
   font-family: Arial, sans-serif;
 }
 h2 {
-  color: #557db1;
   font-size: 1.3em;
   margin-top: 1em;
   margin-bottom: 0.6em;
   text-align: left;
   line-height: 1.2;
+  background-image: linear-gradient(310deg, rgb(128, 143, 191), rgb(64, 84, 183));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .keyword {
   font-weight: bold;
-  color: #5164BA;
+  background-image: linear-gradient(310deg, rgb(85, 102, 151), rgb(64, 84, 183));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 strong{
-  color: #5164BA;
+  background-image: linear-gradient(310deg, rgb(85, 102, 151), rgb(64, 84, 183));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
 }
+  i{
+    background-image: linear-gradient(310deg, rgb(51, 66, 131), rgb(6, 26, 89));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
 h3 {
-  color: #5164BA;
+  background-image: linear-gradient(310deg, rgb(128, 143, 191), rgb(75, 100, 163));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .code {
   font-family: 'Courier New', Courier, monospace;
   font-weight: bold;
-  color: var(--dl-color-secondary-300);
-  margin: 1em;
-  font-size: 0.9em;
+  background-image: linear-gradient(310deg, rgb(6, 26, 89), rgb(103, 119, 191));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+  margin-left: 1em;
+
+  font-size: 1em;
+  line-height: 1.7;
 }
 
 table{
@@ -241,6 +282,7 @@ th{
   fill: var(--dl-color-secondary-300);
 }
 .tasks-text2 {
+  text-align: left;
   font-size: 1em;
   font-style: normal;
   font-weight: 600;
@@ -253,20 +295,20 @@ th{
 .tasks-content {
   flex: 0 0 auto;
   width: 100%;
-  display: flex;
-  padding: var(--dl-space-space-doubleunit);
+  padding: 2em 4em;
   min-height: 30%;
-  align-items: flex-start;
-  flex-direction: column;
-  justify-content: space-between;
+  align-self: center;
+
 }
 .tasks-link {
-  fill: var(--dl-color-secondary-300);
-  color: var(--dl-color-secondary-300);
+  font-weight: bold;
+  background-image: linear-gradient(310deg, rgb(85, 102, 151), rgb(64, 84, 183));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   font-size: 1.2em;
 }
 .tasks-link.active{
-  padding: 0 12em;
+  padding: 0 4em;
 }
 .tasks-test {
   flex: 0 0 auto;
@@ -345,6 +387,34 @@ th{
   .answer-root-class-name {
     align-self: center;
   }
+  .progress-panel{
+    flex: 0 0 60%; /* Начальная ширина 20% */
+  }
+  body{
+    font-size: 12px;
+  }
+}
+@media(max-width: 900px) {
+  .progress-panel{
+    flex: 0 0 40%; /* Начальная ширина 20% */
+  }
+  .tasks-content.active {
+    padding: 2em 0;
+    line-height: 1.8;
+    font-weight: 500;
+    text-align: justify;
+    width: 60%;
+    align-self: center;
+  }
+  .tasks-content{
+    padding: 1em 0.5em;
+    text-align: left;
+    width: 70%;
+    align-self: flex-start;
+  }
+  .tasks-link.active{
+    padding: 0 1em;
+  }
 }
 
 
@@ -370,6 +440,21 @@ th{
   .end-of-test-root-class-name {
     display: none;
   }
+  .tasks-content.active {
+    padding: 2em 0;
+    line-height: 1.8;
+    font-weight: 500;
+    text-align: justify;
+    width: 95%;
+    align-self: center;
+  }
+  .tasks-link.active{
+    padding: 0 1em;
+  }
+  .progress-panel{
+    flex: 0 0 40%; /* Начальная ширина 20% */
+  }
+
 }
 
 .just_f{

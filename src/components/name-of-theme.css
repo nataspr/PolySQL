@@ -20,20 +20,24 @@
   background-color: transparent;
 }
 .checked-theme-button:focus {
-  border-color: #67748E;
   border-width: 10px;
   padding-left: var(--dl-space-space-unit);
   border-top-width: 0px;
   border-left-width: 10px;
   border-right-width: 0px;
   border-bottom-width: 0px;
+  outline: 0;
+  box-shadow: 0 0 10px 0 #acc6e8;
+  border-color: #334283;
 }
 .checked-theme-button:hover {
   background-color: var(--dl-color-gray-800);
 }
 .checked-theme-button:active {
   background-color: var(--dl-color-gray-700);
+
 }
+
 .checked-theme-icon {
   width: 30px;
   height: 100%;

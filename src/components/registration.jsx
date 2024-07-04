@@ -53,7 +53,7 @@ const Registration = (props) => {
 
   return (
     <div className={`registration thq-flex-row thq-section-max-width ${props.rootClassName} `}>
-      <h1>{props.heading}</h1>
+      <div className={"text-h1"}>{props.heading}</div>
       <span className="registration-text01">
         <span>Уже зарегистрированы? </span>
         <span className="registration-text04" onClick={props.toggleForm}>Войдите</span>

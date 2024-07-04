@@ -39,7 +39,7 @@ const Progress = () => {
               className="progress-done"
               style={{ width: `${progress}%` }}
           >
-            {progress}%
+            {Math.round(progress)}%
           </div>
         </div>
       </div>

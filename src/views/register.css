@@ -8,6 +8,17 @@
     justify-content: space-between;
     background-color: var(--dl-color-gray-900);
 }
+.text-h1{
+    font-size: 2em;
+    text-align: center;
+    line-height: 1.25;
+    width: 85%;
+    font-weight: 600;
+    margin-bottom: 0.4em;
+    background-image: linear-gradient(310deg, rgb(64, 84, 183), rgb(128, 143, 191));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 .register-form {
     width: 100%;
     display: flex;
@@ -21,13 +32,7 @@
     background-size: cover;
     background-image: url('https://i.pinimg.com/564x/3c/bf/fd/3cbffdfa98e53cd7d3ce774775f8d1c8.jpg');
 }
-h1{
-    text-align: center;
-    line-height: 1.3;
-    width: 85%;
-    margin-bottom: 0.4em;
-    color: #495CB8;
-}
+
 @media(max-width: 479px) {
     .register-container1 {
         display: none;
