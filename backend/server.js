@@ -81,11 +81,21 @@ app.post('/api/register', async (req, res) => {
         }
 
         // Вставка нового пользователя
-        const result = await pool.query(
+        const insertUserResult = await pool.query(
             'INSERT INTO USERS.USERS (login, password, fio) VALUES ($1, $2, $3) RETURNING *',
             [login, password, fio]
         );
-        res.status(201).json({ message: 'User registered successfully', user: result.rows[0] });
+        const newUser = insertUserResult.rows[0];
+
+        // Вставка записей в таблицу completed_tasks для нового пользователя
+        await pool.query(
+            'INSERT INTO USERS.COMPLETED_TASKS (user_id, task_id) ' +
+            'SELECT $1, t.task_id ' +
+            'FROM USERS.TASKS t',
+            [newUser.user_id]
+        );
+
+        res.status(201).json({ message: 'User registered successfully', user: newUser });
     } catch (error) {
         console.error('Error inserting user:', error);
         res.status(500).json({ message: 'Error registering user' });
