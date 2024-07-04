@@ -1,5 +1,5 @@
 import Task from './task'
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import TestContainer from "./test-container";
 import EndOfTest from "./end-of-test";
 import DOMPurify from 'dompurify';
@@ -9,6 +9,30 @@ const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions }) => {
     const [testStage, setTestStage] = useState('start');
     const [testResult, setTestResult] = useState(null); // Хранение результатов теста
     const [questions_ar, setQuestions] = useState([]);
+    const [practices, setPractices] = useState([]);
+
+    useEffect(() => {
+        // Здесь должен быть ваш запрос к серверу для получения данных о практиках
+        const fetchPractices = async () => {
+            try {
+                const response = await fetch('/api/get-practice');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch practices');
+                }
+                const data = await response.json();
+                if (data.practices) {
+                    setPractices(data.practices);
+                } else {
+                    console.error('Failed to fetch practices:', data.error);
+                }
+            } catch (error) {
+                console.error('Error fetching practices:', error);
+            }
+        };
+
+        fetchPractices();
+    }, []); // Пустой массив зависимостей означает, что useEffect выполняется только один раз при монтировании компонента
+
 
     const handleStartTest = () => {
         setTestStage('test');
@@ -59,8 +83,16 @@ const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions }) => {
                 {testStage === 'end' && <EndOfTest onRestartTest={handleRestartTest} rootClassName="end-of-test-root-class-name" totalQuestions={testResult ? testResult.totalQuestions : 0}
                                                    correctAnswersCount={testResult ? testResult.correctAnswersCount : 0}/>}
             </div>
-            <Task />
-            <Task />
+            <div>
+                {practices.map(practice => (
+                    <Task
+                        key={practice.practice_id}
+                        taskNumber={practice.practice_id}
+                        taskName={`${practice.practice_name}`}
+                        taskDescription={practice.practice_text}
+                    />
+                ))}
+            </div>
         </div>
     );
 };
