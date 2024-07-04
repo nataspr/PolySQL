@@ -228,35 +228,37 @@ app.post('/api/submit-answers', async (req, res) => {
             return acc;
         }, {});
 
-        const userResults = answers.map(answer => ({
-            task_id: answer.task_id,
-            user_answer: answer.answer[0],
-            correct: correctAnswers[answer.task_id].includes(answer.answer[0])
-        }));
-
-        const allCorrect = userResults.every(result => result.correct);
-
-        if (allCorrect) {
-            const updateQuery = `
-                INSERT INTO USERS.COMPLETED_TASKS (user_id, task_id, complete_flag)
-                VALUES ${userResults.map(result => `(${user_id}, ${result.task_id}, true)`).join(', ')}
-                ON CONFLICT (user_id, task_id) DO UPDATE SET complete_flag = true;
-            `;
-            await pool.query(updateQuery);
-        }
+        const userResults = answers.map(answer => {
+            const isCorrect = correctAnswers[answer.task_id].some(correctAnswer => correctAnswer === answer.answer);
+            return {
+                task_id: answer.task_id,
+                user_answer: answer.answer,
+                correct: isCorrect
+            };
+        });
 
         const totalQuestions = userResults.length;
         const correctAnswersCount = userResults.filter(result => result.correct).length;
 
+        // Вставляем или обновляем результаты для каждого вопроса
+        const updateQueries = userResults.map(result => {
+            return pool.query(`
+                INSERT INTO USERS.COMPLETED_TASKS (user_id, task_id, complete_flag)
+                VALUES ($1, $2, $3)
+                ON CONFLICT (user_id, task_id) DO UPDATE SET complete_flag = $3;
+            `, [user_id, result.task_id, result.correct]);
+        });
+
+        await Promise.all(updateQueries);
+
         res.json({ totalQuestions, correctAnswersCount });
-        console.log('ВЫВЕДЕНННЫЕ ЗНАЧЕНИЯ');
-        console.log(totalQuestions);
-        console.log(correctAnswersCount);
     } catch (err) {
         console.error('Ошибка выполнения запроса:', err);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
+//вывод сформулированных заданий по практике
 
 app.listen(port, () => {
     console.log("Server running on http://localhost:${port}",port);
