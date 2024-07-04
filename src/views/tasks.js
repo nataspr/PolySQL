@@ -67,6 +67,7 @@ const Tasks = (props) => {
                 <title>PolySQL Практика</title>
                 <meta property="og:title" content="PolySQL Практика" />
             </Helmet>
+
             {/*Для вывода нужной шапки*/}
             {!isAuthenticated ? (
                 <>

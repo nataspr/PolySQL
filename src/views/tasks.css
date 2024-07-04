@@ -185,7 +185,27 @@ th{
   align-items: flex-start;
   flex-direction: column;
   background-color: var(--dl-color-gray-900);
+  overflow-y: auto; /* Добавляет вертикальную полосу прокрутки */
+  z-index: 10;
 }
+
+/* Дополнительные стили для полосы прокрутки */
+.progress-panel::-webkit-scrollbar {
+  width: 8px;
+}
+
+.progress-panel::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.progress-panel::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+.progress-panel::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 .progress-panel.hidden {
   flex: 0 0 0; /* Уменьшается до нуля */
   opacity: 0;
@@ -261,14 +281,30 @@ th{
 .tasks-name {
   flex: 0 0 auto;
   width: 100%;
-  height: 50px;
+  height: 60px;
   display: flex;
-  box-shadow: 5px 5px 3px 0px #8193A9;
+  box-shadow: 5px 5px 3px 0px rgb(75, 100, 163);
   align-items: center;
   padding-left: var(--dl-space-space-unitandahalfunit);
   justify-content: flex-start;
-
+  position: fixed;
+  z-index: 1;
+  margin-top: -4em;
+  background-color: var(--dl-color-gray-900);
 }
+.tasks-name.NotFixed {
+  flex: 0 0 auto;
+  width: 100%;
+  height: 60px;
+  display: flex;
+  box-shadow: 5px 5px 3px 0px rgb(75, 100, 163);
+  align-items: center;
+  padding-left: var(--dl-space-space-unitandahalfunit);
+  justify-content: flex-start;
+  position: relative;
+  margin: 0;
+}
+
 .tasks-icon {
   transition: all 0.3s ease;
 }
