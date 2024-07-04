@@ -24,22 +24,7 @@ const AdminPanel = () => {
 
     //все данные должны быть введены
     const handleSave = () => {
-        let allFieldsFilled = false;
-        switch (selectedForm) {
-            case 'Новая тема':
-                allFieldsFilled = formData.themeName && formData.theoryText;
-                break;
-            case 'Новый вопрос':
-                allFieldsFilled = formData.themeName && formData.questionText && formData.correctAnswer && formData.answerOptions;
-                break;
-            case 'Новое задание':
-                allFieldsFilled = formData.themeName && formData.taskName && formData.taskText;
-                break;
-            default:
-                break;
-        }
-
-        if (allFieldsFilled) {
+            alert('УРА');
             // Отправка данных на сервер
             fetch('/api/admin/add', {
                 method: 'POST',
@@ -66,9 +51,6 @@ const AdminPanel = () => {
                 .catch((error) => {
                     console.error('Error:', error);
                 });
-        } else {
-            alert('Пожалуйста, заполните все поля перед отправкой');
-        }
     };
 
     const renderForm = () => {
@@ -82,6 +64,7 @@ const AdminPanel = () => {
                             name="themeName"
                             value={formData.themeName}
                             onChange={handleChange}
+                            required
                             placeholder="Введите название новой темы"
                             className="profile-textinput Small input"
                         />
@@ -91,6 +74,7 @@ const AdminPanel = () => {
                             name="theoryText"
                             value={formData.theoryText}
                             onChange={handleChange}
+                            required
                             placeholder="Вставьте текст теории с html-тегами"
                             className="profile-textarea Small textarea"
                         ></textarea>
@@ -105,6 +89,7 @@ const AdminPanel = () => {
                             name="themeName"
                             value={formData.themeName}
                             onChange={handleChange}
+                            required
                             placeholder="Введите тему, к которой относится вопрос"
                             className="profile-textinput Small input"
                         />
@@ -114,6 +99,7 @@ const AdminPanel = () => {
                             name="questionText"
                             value={formData.questionText}
                             onChange={handleChange}
+                            required
                             placeholder="Введите текст вопроса"
                             className="profile-textinput Small input"
                         />
@@ -123,6 +109,7 @@ const AdminPanel = () => {
                             name="correctAnswer"
                             value={formData.correctAnswer}
                             onChange={handleChange}
+                            required
                             placeholder="Введите правильный ответ"
                             className="profile-textinput Small input"
                         />
@@ -132,6 +119,7 @@ const AdminPanel = () => {
                             name="answerOptions"
                             value={formData.answerOptions}
                             onChange={handleChange}
+                            required
                             placeholder="Перечислите ответы через запятую"
                             className="profile-textarea Small textarea"
                         ></textarea>
@@ -146,6 +134,7 @@ const AdminPanel = () => {
                             name="themeName"
                             value={formData.themeName}
                             onChange={handleChange}
+                            required
                             placeholder="Введите тему, к которой относится задание"
                             className="profile-textinput Small input"
                         />
@@ -155,6 +144,7 @@ const AdminPanel = () => {
                             name="taskName"
                             value={formData.taskName}
                             onChange={handleChange}
+                            required
                             placeholder="Введите название задания"
                             className="profile-textinput Small input"
                         />
@@ -164,6 +154,7 @@ const AdminPanel = () => {
                             name="taskText"
                             value={formData.taskText}
                             onChange={handleChange}
+                            required
                             placeholder="Вставьте текст задания"
                             className="profile-textarea Small textarea"
                         ></textarea>

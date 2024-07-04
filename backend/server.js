@@ -357,29 +357,29 @@ app.post('/api/admin/add', async (req, res) => {
         switch (formType) {
             case 'Новая тема':
                 await pool.query(
-                    'INSERT INTO theory (theory_name, text_on_page) VALUES ($1, $2)',
+                    'INSERT INTO USERS.THEORY (theory_name, text_on_page) VALUES ($1, $2)',
                     [data.themeName, data.theoryText]
                 );
                 break;
             case 'Новый вопрос':
                 const theoryResult = await pool.query(
-                    'SELECT theory_id FROM theory WHERE theory_name = $1',
+                    'SELECT theory_id FROM USERS.THEORY WHERE theory_name = $1',
                     [data.themeName]
                 );
                 if (theoryResult.rows.length > 0) {
                     const theory_id = theoryResult.rows[0].theory_id;
                     const taskResult = await pool.query(
-                        'INSERT INTO tasks (task_text, theory_id) VALUES ($1, $2) RETURNING task_id',
+                        'INSERT INTO USERS.TASKS (task_text, theory_id) VALUES ($1, $2) RETURNING task_id',
                         [data.questionText, theory_id]
                     );
                     const task_id = taskResult.rows[0].task_id;
                     await pool.query(
-                        'INSERT INTO correct_answers (correct_answer, task_id) VALUES ($1, $2)',
+                        'INSERT INTO USERS.CORRECT_ANSWERS (correct_answer, task_id) VALUES ($1, $2)',
                         [data.correctAnswer, task_id]
                     );
                     const answers = data.answerOptions.split(',').map(answer => answer.trim());
                     await Promise.all(answers.map(answer =>
-                        pool.query('INSERT INTO answers (answer, task_id) VALUES ($1, $2)', [answer, task_id])
+                        pool.query('INSERT INTO USERS.ANSWERS (answer, task_id) VALUES ($1, $2)', [answer, task_id])
                     ));
                 } else {
                     res.status(404).send({ message: 'Theory not found' });
@@ -388,13 +388,13 @@ app.post('/api/admin/add', async (req, res) => {
                 break;
             case 'Новое задание':
                 const theoryResultTask = await pool.query(
-                    'SELECT theory_id FROM theory WHERE theory_name = $1',
+                    'SELECT theory_id FROM USERS.THEORY WHERE theory_name = $1',
                     [data.themeName]
                 );
                 if (theoryResultTask.rows.length > 0) {
                     const theory_id_task = theoryResultTask.rows[0].theory_id;
                     await pool.query(
-                        'INSERT INTO practice (practice_name, practice_text, theory_id) VALUES ($1, $2, $3)',
+                        'INSERT INTO USERS.PRACTICE (practice_name, practice_text, theory_id) VALUES ($1, $2, $3)',
                         [data.taskName, data.taskText, theory_id_task]
                     );
                 } else {
