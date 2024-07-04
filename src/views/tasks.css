@@ -14,13 +14,7 @@
   padding-left:  var(--dl-space-space-unitandahalfunit);
   padding-bottom:  var(--dl-space-space-unitandahalfunit);
 }
-h1{
-  font-size: 2em;
-  line-height: 1.25;
-  background-image: linear-gradient(310deg, rgb(64, 84, 183), rgb(128, 143, 191));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
+
 .tasks-content.active{
   padding: 3em 4em;
   line-height: 1.8;
@@ -71,7 +65,15 @@ ul li:before {
 body {
   font-family: Arial, sans-serif;
 }
-h2 {
+.theme-container h1{
+  font-size: 2em;
+  line-height: 1.25;
+  background-image: linear-gradient(310deg, rgb(64, 84, 183), rgb(128, 143, 191));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.theme-container h2 {
   font-size: 1.3em;
   margin-top: 1em;
   margin-bottom: 0.6em;
@@ -81,6 +83,17 @@ h2 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+.theme-container i{
+  background-image: linear-gradient(310deg, rgb(51, 66, 131), rgb(6, 26, 89));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.theme-container h3 {
+  background-image: linear-gradient(310deg, rgb(128, 143, 191), rgb(75, 100, 163));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .keyword {
   font-weight: bold;
   background-image: linear-gradient(310deg, rgb(85, 102, 151), rgb(64, 84, 183));
@@ -93,17 +106,8 @@ strong{
   -webkit-text-fill-color: transparent;
   font-weight: bold;
 }
-  i{
-    background-image: linear-gradient(310deg, rgb(51, 66, 131), rgb(6, 26, 89));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
 
-h3 {
-  background-image: linear-gradient(310deg, rgb(128, 143, 191), rgb(75, 100, 163));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
+
 .code {
   font-family: 'Courier New', Courier, monospace;
   font-weight: bold;

@@ -22,23 +22,18 @@ const Progress = () => {
       }
     };
 
-    // Fetch progress initially
     fetchProgress();
 
-    // Set up an interval to fetch progress periodically
     const interval = setInterval(fetchProgress, 10000); // обновлять прогресс каждые 10 секунд
 
-    // Clean up the interval on component unmount
     return () => clearInterval(interval);
   }, []);
 
   return (
       <div className="tasks-container3">
         <div className="progress">
-          <div
-              className="progress-done"
-              style={{ width: `${progress}%` }}
-          >
+          <div className="progress-done"
+               style={{ width: `${progress}%` }}>
             {Math.round(progress)}%
           </div>
         </div>
