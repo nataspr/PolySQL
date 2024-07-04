@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 
 import { Helmet } from 'react-helmet'
 
@@ -13,6 +13,32 @@ import ProfileCard from "../components/profile-card";
 
 const Profile = (props) => {
   const navigate = useNavigate();
+  //данные для передачи в профиль карточку
+    const [completedThemes, setCompletedThemes] = useState(0);
+    const [completedTests, setCompletedTests] = useState(0);
+    const userFio = Cookies.get('fio');
+
+    useEffect(() => {
+        const fetchProgress = async () => {
+            try {
+                const response = await fetch('/api/user-progress');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user progress');
+                }
+                const data = await response.json();
+                if (data) {
+                    setCompletedThemes(data.completed_theories);
+                    setCompletedTests(data.completed_theories); // выполненные тесты = выполненные темы (практики не учитывать)
+                } else {
+                    console.error('Failed to fetch progress:', data.error);
+                }
+            } catch (error) {
+                console.error('Error fetching progress:', error);
+            }
+        };
+
+        fetchProgress();
+    }, []);
 
   const handleLogout = () => {
     // Очистка всех куков
@@ -31,7 +57,13 @@ const Profile = (props) => {
           <meta property="og:title" content="Профиль"/>
         </Helmet>
         <HeaderFull></HeaderFull>
-        <ProfileCard user={"Имя Фамилия"} onClick={handleLogout}/>
+          {/*передача данных в карточку профиля*/}
+          <ProfileCard
+              user={userFio}
+              completedThemes={completedThemes}
+              completedTests={completedTests}
+              onClick={handleLogout}
+          />
 
           {parseInt(Cookies.get('user_id'), 10)===1 ?  <AdminPanel/> : <Contact/>}
 
