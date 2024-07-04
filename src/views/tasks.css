@@ -41,7 +41,7 @@ ul li:before {
   top: 1.2em;
   left: -30px;
   margin-top: -.65em;
-  background: #557db1;
+  background: var(--dl-color-secondary-300);
   height: 12px;
   width: 12px;
   border-radius: 50%;
@@ -72,7 +72,7 @@ h3 {
 .code {
   font-family: 'Courier New', Courier, monospace;
   font-weight: bold;
-  color: #3C678B;
+  color: var(--dl-color-secondary-300);
   margin: 1em;
   font-size: 0.9em;
 }

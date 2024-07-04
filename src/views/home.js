@@ -12,6 +12,7 @@ import HomeHero from '../components/home-hero'
 import CardSection from '../components/home-features';
 import './home.css'
 import HeaderFull from "../components/header-full";
+import HomeTestimonials from "../components/home-testimonials";
 import React, {useEffect, useState} from "react";
 import Cookies from "js-cookie";
 
@@ -121,106 +122,7 @@ const Home = (props) => {
       </section>
 
 
-      <section className="home-testimonials">
-        <div className="home-container11">
-          <div className="home-container12">
-            <div className="home-container13">
-              <h2 className="home-text35 HeadingOne">Учитесь с нами</h2>
-              <p className="home-text36 Lead">
-                Мы ждём Вас с любым уровнем знаний! 
-              </p>
-              <p className="home-text37 Body">
-                &quot;Take up one idea. Make that one idea your life - think of
-                it, dream of it, live on that idea. Let the brain, muscles,
-                nerves, every part of your body, be full of that idea, and just
-                leave every other idea alone. This is the way to success. A
-                single rose can be my garden... a single friend, my world.&quot;
-              </p>
-              <p className="home-text38">Екатерина Евгеньевна Андрианова</p>
-              <p className="home-text39 Small">Ст. преподаватель, СПбПУ</p>
-              <div className="home-container14">
-                <img
-                  alt="image"
-                  src="https://sun9-35.userapi.com/impg/z4lZnm22Ch10akJ6QWcpNVEn-PxioSUSh5mVDw/EXHFlcptfPw.jpg?size=2333x2333&amp;quality=95&amp;sign=d6a9f39daaa3467d611a1887becb855a&amp;type=album"
-                  className="home-image04"
-                />
-                <div className="home-container15"></div>
-                <img
-                  alt="image"
-                  src="https://sun9-70.userapi.com/impg/CJIJGXF2jVuvX9eEh3U1hkSItSX-aARfL4ZHpA/ThAAqaXREmU.jpg?size=673x673&amp;quality=95&amp;sign=83f9d61900a23b2e4b80616717934094&amp;type=album"
-                  className="home-image05"
-                />
-                <div className="home-container16"></div>
-                <img
-                  alt="image"
-                  src="https://play.teleporthq.io/static/svg/default-img.svg"
-                  className="home-image06"
-                />
-              </div>
-            </div>
-          </div>
-
-
-          <div className="home-logos">
-            <div className="home-container17">
-              <div className="home-container18">
-                <div className="home-container19">
-                  <img src="https://www.sheremetev.info/wp-content/uploads/2020/04/mysql_png23.png"
-                    className="home-image-logo"
-                  />
-                </div>
-                <div className="home-container20">
-                  <img src="https://www.anti-malware.ru/files/images/company-logo/oracle_logo.jpg"
-                    className="home-image-logo"
-                  />
-                </div>
-                <div className="home-container21">
-                  <img src="https://db-service.ru/uploads/s/b/f/v/bfvt1aldvf1l/img/autocrop/a7f780e7831e43bfc5689cf492a960ac.png"
-                    className="home-image-logo"
-                  />
-                </div>
-              </div>
-              <div className="home-container22">
-                <div className="home-container23">
-                  <img src="https://w7.pngwing.com/pngs/63/19/png-transparent-mongodb-database-nosql-postgresql-mongo-text-logo-business.png"
-                    className="home-image-logo2"
-                  />
-                </div>
-                <div className="home-container24">
-                  <img src="https://w7.pngwing.com/pngs/330/298/png-transparent-postgresql-hd-logo.png"
-                    className="home-image-logo"
-                  />
-                </div>
-                <div className="home-container25">
-                  <img src="https://i.pinimg.com/originals/0b/ba/6d/0bba6dbc8bcb42b7e37fc6831f9274dd.png"
-                    className="home-image12"
-                  />
-                </div>
-              </div>
-              <div className="home-container26">
-                <div className="home-container27">
-                  <img src="https://w7.pngwing.com/pngs/230/99/png-transparent-redis-original-wordmark-logo-icon.png"
-                    className="home-image-logo"
-                  />
-                </div>
-                <div className="home-container28">
-                  <img  src="https://kursus-komputer.net/wp-content/uploads/2019/11/belajar-firebase-300x225.png"
-                    className="home-image-logo2"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <img
-          alt="image"
-          src="/bottom.svg"
-          loading="lazy"
-          className="home-bottom-wave-image"
-        />
-        <img alt="image" src="/waves-white.svg" className="home-image15" />
-        <img alt="image" src="/top.svg" className="home-top-wave-image" />
-      </section>
+      <HomeTestimonials/>
 
       <section className="home-contaier" id="aboutProject">
         <div className="home-container29">
