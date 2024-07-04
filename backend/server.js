@@ -259,7 +259,7 @@ app.post('/api/submit-answers', async (req, res) => {
 });
 
 //вывод сформулированных заданий по практике
-app.get('/api/get-practice-text', async (req, res) => {
+app.get('/api/get-practice', async (req, res) => {
     const theory_id = req.cookies.theory_id;
 
     if (!theory_id) {
@@ -271,6 +271,7 @@ app.get('/api/get-practice-text', async (req, res) => {
             SELECT 
                 p.practice_id,
                 p.practice_text,
+                p.practice_name,
                 p.theory_id
             FROM 
                 USERS.PRACTICE p
@@ -286,6 +287,7 @@ app.get('/api/get-practice-text', async (req, res) => {
         const practices = result.rows.map(row => ({
             practice_id: row.practice_id,
             practice_text: row.practice_text,
+            practice_name: row.practice_name,
             theory_id: row.theory_id
         }));
 
