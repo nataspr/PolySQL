@@ -8,7 +8,7 @@ const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions }) => {
     // Состояния для теста: 'start', 'test', 'end'
     const [testStage, setTestStage] = useState('start');
     const [testResult, setTestResult] = useState(null); // Хранение результатов теста
-    const [questions, setQuestions] = useState([]);
+    const [questions_ar, setQuestions] = useState([]);
 
     const handleStartTest = () => {
         setTestStage('test');
@@ -54,7 +54,7 @@ const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions }) => {
                     </div>
                 )}
                 {testStage === 'test' && (
-                    <TestContainer rootClassName="test-container-root-class-name" onEndTest={handleEndTest} questions={questions}  onTestResult={handleTestResult}/>
+                    <TestContainer rootClassName="test-container-root-class-name" onEndTest={handleEndTest} questions_ar={questions}  onTestResult={handleTestResult}/>
                 )}
                 {testStage === 'end' && <EndOfTest onRestartTest={handleRestartTest} rootClassName="end-of-test-root-class-name" totalQuestions={testResult ? testResult.totalQuestions : 0}
                                                    correctAnswersCount={testResult ? testResult.correctAnswersCount : 0}/>}

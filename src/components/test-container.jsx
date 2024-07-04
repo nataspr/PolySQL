@@ -6,20 +6,14 @@ import Answer from './answer'
 import Next from './next'
 import './test-container.css'
 
-const TestContainer = ({ rootClassName, onEndTest, questions, onTestResult  }) => {
-    const formRef = useRef(null); //ссфлка на форму
-    //очистка формы
-    const handleClear = () => {
-        if (formRef.current) {
-            formRef.current.reset();
-        }
-    };
+const TestComponent = ({ questions_ar, onTestResult, onEndTest, rootClassName }) => {
+    const formRef = useRef(null);
 
     // Обработка отправки формы
     const handleSubmit = async (event) => {
         event.preventDefault();
         const formData = new FormData(formRef.current);
-        const answers = questions.map((question, index) => ({
+        const answers = questions_ar.map((question, index) => ({
             task_id: question.task_id,
             answer: formData.get(`question${index}`)
         }));
@@ -33,22 +27,26 @@ const TestContainer = ({ rootClassName, onEndTest, questions, onTestResult  }) =
         });
 
         const result = await response.json();
+        console.log('Результат теста');
         console.log(result);
         onTestResult(result); // Передаем результат теста в родительский компонент
         onEndTest(); // Переключаем состояние теста на завершенный
     };
 
-    return (
+    const handleClear = () => {
+        formRef.current.reset();
+    };
 
+    return (
         <form ref={formRef} className={`test-container-test-container ${rootClassName}`} onSubmit={handleSubmit}>
-            {questions.map((question, index) => (
+            {questions_ar.map((question, index) => (
                 <div key={index} className="test-container-question">
                     <div className="test-container-text">{`Вопрос ${index + 1}`}</div>
                     <span className="test-container-text3">{question.task_text}</span>
                     <div className="test-container-answers">
                         {question.answers.map((answer, idx) => (
                             <div key={idx} className="test-container-answer">
-                                <input className="custom-radio" type="radio" id={`q${index}a${idx}`} name={`question${index}`} value={answer}/>
+                                <input className="custom-radio" type="radio" id={`q${index}a${idx}`} name={`question${index}`} value={answer} />
                                 <label htmlFor={`q${index}a${idx}`}>{answer}</label>
                             </div>
                         ))}
@@ -58,35 +56,11 @@ const TestContainer = ({ rootClassName, onEndTest, questions, onTestResult  }) =
             <div className="test-container-buttons">
                 <button type="button" onClick={handleClear} className="end-button button ButtonSmall"> Очистить</button>
                 <div className="end-end">
-                    <button type="button" onClick={onEndTest} className="end-button button ButtonSmall"> Проверить
-                    </button>
+                    <button type="submit" className="end-button button ButtonSmall"> Проверить</button>
                 </div>
             </div>
         </form>
-    )
-}
-
-TestContainer.defaultProps = {
-    text: 'Решите уравнение или выберите правильный ответ\n',
-    text2: 'Вариант1',
-    rootClassName: '',
-}
-
-TestContainer.propTypes = {
-   text: PropTypes.string,
-  text2: PropTypes.string,
- rootClassName: PropTypes.string,
-}
-
-TestContainer.propTypes = {
-    rootClassName: PropTypes.string,
-    onEndTest: PropTypes.func.isRequired,
-    questions: PropTypes.arrayOf(
-        PropTypes.shape({
-            task_id: PropTypes.number.isRequired,
-            task_text: PropTypes.string.isRequired,
-            answers: PropTypes.arrayOf(PropTypes.string).isRequired,
-        })
-    ).isRequired,
+    );
 };
-export default TestContainer
+
+export default TestComponent;
