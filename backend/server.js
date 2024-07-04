@@ -349,6 +349,71 @@ app.get('/api/user-progress', async (req, res) => {
     }
 });
 
+//обработка данных от администратора (вставка теории итд)
+app.post('/api/admin/add', async (req, res) => {
+    const { formType, data } = req.body;
+
+    try {
+        switch (formType) {
+            case 'Новая тема':
+                await pool.query(
+                    'INSERT INTO theory (theory_name, text_on_page) VALUES ($1, $2)',
+                    [data.themeName, data.theoryText]
+                );
+                break;
+            case 'Новый вопрос':
+                const theoryResult = await pool.query(
+                    'SELECT theory_id FROM theory WHERE theory_name = $1',
+                    [data.themeName]
+                );
+                if (theoryResult.rows.length > 0) {
+                    const theory_id = theoryResult.rows[0].theory_id;
+                    const taskResult = await pool.query(
+                        'INSERT INTO tasks (task_text, theory_id) VALUES ($1, $2) RETURNING task_id',
+                        [data.questionText, theory_id]
+                    );
+                    const task_id = taskResult.rows[0].task_id;
+                    await pool.query(
+                        'INSERT INTO correct_answers (correct_answer, task_id) VALUES ($1, $2)',
+                        [data.correctAnswer, task_id]
+                    );
+                    const answers = data.answerOptions.split(',').map(answer => answer.trim());
+                    await Promise.all(answers.map(answer =>
+                        pool.query('INSERT INTO answers (answer, task_id) VALUES ($1, $2)', [answer, task_id])
+                    ));
+                } else {
+                    res.status(404).send({ message: 'Theory not found' });
+                    return;
+                }
+                break;
+            case 'Новое задание':
+                const theoryResultTask = await pool.query(
+                    'SELECT theory_id FROM theory WHERE theory_name = $1',
+                    [data.themeName]
+                );
+                if (theoryResultTask.rows.length > 0) {
+                    const theory_id_task = theoryResultTask.rows[0].theory_id;
+                    await pool.query(
+                        'INSERT INTO practice (practice_name, practice_text, theory_id) VALUES ($1, $2, $3)',
+                        [data.taskName, data.taskText, theory_id_task]
+                    );
+                } else {
+                    res.status(404).send({ message: 'Theory not found' });
+                    return;
+                }
+                break;
+            default:
+                res.status(400).send({ message: 'Invalid form type' });
+                return;
+        }
+
+        res.status(200).send({ message: 'Data successfully saved' });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).send({ message: 'Server error' });
+    }
+});
+
 app.listen(port, () => {
     console.log("Server running on http://localhost:${port}",port);
 });

@@ -4,6 +4,72 @@ import OutlineWhiteButtonWide from './outline-white-button-wide';
 
 const AdminPanel = () => {
     const [selectedForm, setSelectedForm] = useState(null);
+    const [formData, setFormData] = useState({
+        themeName: '',
+        theoryText: '',
+        questionText: '',
+        correctAnswer: '',
+        answerOptions: '',
+        taskName: '',
+        taskText: ''
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
+    //все данные должны быть введены
+    const handleSave = () => {
+        let allFieldsFilled = false;
+        switch (selectedForm) {
+            case 'Новая тема':
+                allFieldsFilled = formData.themeName && formData.theoryText;
+                break;
+            case 'Новый вопрос':
+                allFieldsFilled = formData.themeName && formData.questionText && formData.correctAnswer && formData.answerOptions;
+                break;
+            case 'Новое задание':
+                allFieldsFilled = formData.themeName && formData.taskName && formData.taskText;
+                break;
+            default:
+                break;
+        }
+
+        if (allFieldsFilled) {
+            // Отправка данных на сервер
+            fetch('/api/admin/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ formType: selectedForm, data: formData })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                    alert('Данные успешно сохранены');
+                    // Очистка формы после успешной отправки
+                    setFormData({
+                        themeName: '',
+                        theoryText: '',
+                        questionText: '',
+                        correctAnswer: '',
+                        answerOptions: '',
+                        taskName: '',
+                        taskText: ''
+                    });
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        } else {
+            alert('Пожалуйста, заполните все поля перед отправкой');
+        }
+    };
 
     const renderForm = () => {
         switch (selectedForm) {
@@ -13,12 +79,18 @@ const AdminPanel = () => {
                         <label className="text20 Label">Название темы</label>
                         <input
                             type="text"
+                            name="themeName"
+                            value={formData.themeName}
+                            onChange={handleChange}
                             placeholder="Введите название новой темы"
                             className="profile-textinput Small input"
                         />
                         <label className="text20 Label">Текст теории</label>
                         <textarea
                             rows="8"
+                            name="theoryText"
+                            value={formData.theoryText}
+                            onChange={handleChange}
                             placeholder="Вставьте текст теории с html-тегами"
                             className="profile-textarea Small textarea"
                         ></textarea>
@@ -30,24 +102,36 @@ const AdminPanel = () => {
                         <label className="text20 Label">Название темы</label>
                         <input
                             type="text"
+                            name="themeName"
+                            value={formData.themeName}
+                            onChange={handleChange}
                             placeholder="Введите тему, к которой относится вопрос"
                             className="profile-textinput Small input"
                         />
                         <label className="text20 Label">Текст вопроса</label>
                         <input
                             type="text"
-                            placeholder="Введите данные"
+                            name="questionText"
+                            value={formData.questionText}
+                            onChange={handleChange}
+                            placeholder="Введите текст вопроса"
                             className="profile-textinput Small input"
                         />
                         <label className="text20 Label">Правильный ответ на вопрос</label>
                         <input
                             type="text"
-                            placeholder="Введите ответ"
+                            name="correctAnswer"
+                            value={formData.correctAnswer}
+                            onChange={handleChange}
+                            placeholder="Введите правильный ответ"
                             className="profile-textinput Small input"
                         />
                         <label className="text20 Label">Все варианты ответа на вопрос</label>
                         <textarea
                             rows="8"
+                            name="answerOptions"
+                            value={formData.answerOptions}
+                            onChange={handleChange}
                             placeholder="Перечислите ответы через запятую"
                             className="profile-textarea Small textarea"
                         ></textarea>
@@ -59,18 +143,27 @@ const AdminPanel = () => {
                         <label className="text20 Label">Название темы</label>
                         <input
                             type="text"
+                            name="themeName"
+                            value={formData.themeName}
+                            onChange={handleChange}
                             placeholder="Введите тему, к которой относится задание"
                             className="profile-textinput Small input"
                         />
                         <label className="text20 Label">Название задания</label>
                         <input
                             type="text"
-                            placeholder="Введите название"
+                            name="taskName"
+                            value={formData.taskName}
+                            onChange={handleChange}
+                            placeholder="Введите название задания"
                             className="profile-textinput Small input"
                         />
                         <label className="text20 Label">Текст задания</label>
                         <textarea
                             rows="8"
+                            name="taskText"
+                            value={formData.taskText}
+                            onChange={handleChange}
                             placeholder="Вставьте текст задания"
                             className="profile-textarea Small textarea"
                         ></textarea>
@@ -98,7 +191,7 @@ const AdminPanel = () => {
                     </form>
                     <div className="container10">
                         <div className="container11">
-                            <PrimaryBlueButton button="Сохранить"></PrimaryBlueButton>
+                            <PrimaryBlueButton button="Сохранить" onClick={handleSave}></PrimaryBlueButton>
                         </div>
                     </div>
                 </div>
