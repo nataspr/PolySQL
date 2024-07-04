@@ -12,11 +12,6 @@ const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions, testSta
     const [questions_ar, setQuestions] = useState([]);
     const [practices, setPractices] = useState([]);
 
-
-
-
-
-
     useEffect(() => {
         if (!selectedTheme) {
             return;

@@ -16,8 +16,7 @@ const Registration = (props) => {
     //event.preventDefault();
     //если введены неправильные пароли, то отмена
     if (password !== confirmPassword) {
-      setError('Пароли не совпадают');
-      return;
+      setWarning("Пароли не совпадают");
     }
 
     const data = {
@@ -44,7 +43,6 @@ const Registration = (props) => {
     } catch (error) {
       console.error('Error:', error);
       setWarning("Кажется, такой аккаунт уже существует!");
-      // TODO добавить проверку на совпадение паролей
       // TODO добавить проверку на существования пользователя с таким аккаунтом
     }
   };
@@ -125,6 +123,7 @@ const Registration = (props) => {
             placeholder={props.textInputPlaceholder2}
             className="registration-text-input2 thq-grid-2"
         />
+
         <span>{props.text5}</span>
         <div className="registration-container">
           <div className="registration-container1">
@@ -149,7 +148,7 @@ Registration.defaultProps = {
   text3: 'Введите пароль',
   text5: 'Присоединяйтесь к нам, чтобы открыть для себя специальные предложения, персональные рекомендации и инсайдерские советы для вашего путешествия в PostgreSQL.',
   textInputPlaceholder4: 'Фамилия',
-  heading: 'Зарегистрируйтесь для доступа к эксклюзивным предложениям',
+  heading: 'Зарегистрируйтесь для доступа к эксклюзивным предложениям на PolySQL',
   textInputPlaceholder: 'Введите email',
   text2: 'Введите свой логин',
   textInputPlaceholder2: 'Повторите пароль',

@@ -72,7 +72,7 @@ const LoginForm = (props) => {
   return (
       <div className="login-form">
         <div className="login-form-registration thq-flex-row thq-section-max-width">
-          <h1> Откройте мир баз данных прямо сейчас </h1>
+          <h1> Откройте мир баз данных с PolySQL прямо сейчас </h1>
           <span className="login-form-text3"> {props.text}</span>
           <form className="login-form-form thq-flex-column" onSubmit={sendData}>
 
