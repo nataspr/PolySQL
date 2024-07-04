@@ -5,21 +5,24 @@ const Progress = (props) => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    let counter = 0;
-    const target = 80; //значение прогресса
-    const increment = 1; 
-    const intervalTime = 50; // Interval time in milliseconds
-
-    const interval = setInterval(() => {
-      if (counter < target) {
-        counter += increment;
-        setProgress(counter);
-      } else {
-        clearInterval(interval);
+    const fetchProgress = async () => {
+      try {
+        const response = await fetch('/api/user-progress');
+        if (!response.ok) {
+          throw new Error('Failed to fetch user progress');
+        }
+        const data = await response.json();
+        if (data.progress !== undefined) {
+          setProgress(data.progress);
+        } else {
+          console.error('Failed to fetch progress:', data.error);
+        }
+      } catch (error) {
+        console.error('Error fetching progress:', error);
       }
-    }, intervalTime);
+    };
 
-    return () => clearInterval(interval);
+    fetchProgress();
   }, []);
 
   return (

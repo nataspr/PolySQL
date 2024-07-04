@@ -81,7 +81,7 @@ const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions, testSta
             {/*Для вывода теста*/}
             {isAuthenticated && (
                 <div className="tasks-test">
-                {testStage === 'start'&& (
+                    {testStage === 'start'&& (
                         <div className="outline-black-button-container">
                             <button onClick={handleStartTest} className="outline-black-button-button button ButtonSmall">
                                 Начать тест по теме

@@ -300,6 +300,45 @@ app.get('/api/get-practice', async (req, res) => {
     }
 });
 
+//прогресс в зависимости от пользователя
+app.get('/api/user-progress', async (req, res) => {
+    const user_id = req.cookies.user_id;
+
+    if (!user_id) {
+        return res.status(400).json({ error: 'User ID not found in cookies' });
+    }
+
+    try {
+        const query = `
+            WITH completed_theories AS (
+                SELECT t.theory_id
+                FROM USERS.THEORY t
+                JOIN USERS.TASKS ta ON t.theory_id = ta.theory_id
+                LEFT JOIN USERS.COMPLETED_TASKS ct ON ta.task_id = ct.task_id AND ct.user_id = $1
+                GROUP BY t.theory_id
+                HAVING COUNT(ta.task_id) = COUNT(ct.complete_flag) AND BOOL_AND(ct.complete_flag)
+            )
+            SELECT 
+                (SELECT COUNT(*) FROM USERS.THEORY) AS total_theories,
+                (SELECT COUNT(*) FROM completed_theories) AS completed_theories
+        `;
+
+        const result = await pool.query(query, [user_id]);
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'No progress data found for user' });
+        }
+
+        const { total_theories, completed_theories } = result.rows[0];
+        const progress = (completed_theories / total_theories) * 100;
+
+        res.json({ total_theories, completed_theories, progress });
+    } catch (err) {
+        console.error('Error executing query:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
 app.listen(port, () => {
     console.log("Server running on http://localhost:${port}",port);
 });
