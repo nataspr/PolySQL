@@ -200,6 +200,64 @@ app.get('/api/correct-answers/', async (req, res) => {
     }
 });
 
+// Добавление маршрута для обработки ответов пользователя
+app.post('/api/submit-answers', async (req, res) => {
+    const { answers } = req.body;
+    const theory_id = req.cookies.theory_id;
+    const user_id = req.cookies.user_id;
+
+    try {
+        const query = `
+            SELECT 
+                t.task_id, 
+                array_agg(ca.correct_answer) AS correct_answers
+            FROM 
+                USERS.TASKS t
+            LEFT JOIN 
+                USERS.CORRECT_ANSWERS ca ON t.task_id = ca.task_id
+            WHERE 
+                t.theory_id = $1
+            GROUP BY 
+                t.task_id;
+        `;
+
+        const result = await pool.query(query, [theory_id]);
+
+        const correctAnswers = result.rows.reduce((acc, row) => {
+            acc[row.task_id] = row.correct_answers;
+            return acc;
+        }, {});
+
+        const userResults = answers.map(answer => ({
+            task_id: answer.task_id,
+            user_answer: answer.answer[0],
+            correct: correctAnswers[answer.task_id].includes(answer.answer[0])
+        }));
+
+        const allCorrect = userResults.every(result => result.correct);
+
+        if (allCorrect) {
+            const updateQuery = `
+                INSERT INTO USERS.COMPLETED_TASKS (user_id, task_id, complete_flag)
+                VALUES ${userResults.map(result => `(${user_id}, ${result.task_id}, true)`).join(', ')}
+                ON CONFLICT (user_id, task_id) DO UPDATE SET complete_flag = true;
+            `;
+            await pool.query(updateQuery);
+        }
+
+        const totalQuestions = userResults.length;
+        const correctAnswersCount = userResults.filter(result => result.correct).length;
+
+        res.json({ totalQuestions, correctAnswersCount });
+        console.log('ВЫВЕДЕНННЫЕ ЗНАЧЕНИЯ');
+        console.log(totalQuestions);
+        console.log(correctAnswersCount);
+    } catch (err) {
+        console.error('Ошибка выполнения запроса:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
 app.listen(port, () => {
     console.log("Server running on http://localhost:${port}",port);
 });

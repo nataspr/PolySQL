@@ -7,6 +7,8 @@ import DOMPurify from 'dompurify';
 const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions }) => {
     // Состояния для теста: 'start', 'test', 'end'
     const [testStage, setTestStage] = useState('start');
+    const [testResult, setTestResult] = useState(null); // Хранение результатов теста
+    const [questions, setQuestions] = useState([]);
 
     const handleStartTest = () => {
         setTestStage('test');
@@ -18,6 +20,10 @@ const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions }) => {
 
     const handleRestartTest = () => {
         setTestStage('test');
+    };
+
+    const handleTestResult = (result) => {
+        setTestResult(result);
     };
 
     // Очистка текста для безопасной вставки кода из базы данных
@@ -48,9 +54,10 @@ const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions }) => {
                     </div>
                 )}
                 {testStage === 'test' && (
-                    <TestContainer rootClassName="test-container-root-class-name" onEndTest={handleEndTest} questions={questions}/>
+                    <TestContainer rootClassName="test-container-root-class-name" onEndTest={handleEndTest} questions={questions}  onTestResult={handleTestResult}/>
                 )}
-                {testStage === 'end' && <EndOfTest onRestartTest={handleRestartTest} rootClassName="end-of-test-root-class-name" />}
+                {testStage === 'end' && <EndOfTest onRestartTest={handleRestartTest} rootClassName="end-of-test-root-class-name" totalQuestions={testResult ? testResult.totalQuestions : 0}
+                                                   correctAnswersCount={testResult ? testResult.correctAnswersCount : 0}/>}
             </div>
             <Task />
             <Task />

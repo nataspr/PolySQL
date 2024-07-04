@@ -6,7 +6,7 @@ import Answer from './answer'
 import Next from './next'
 import './test-container.css'
 
-const TestContainer = ({ rootClassName, onEndTest, questions }) => {
+const TestContainer = ({ rootClassName, onEndTest, questions, onTestResult  }) => {
     const formRef = useRef(null); //ссфлка на форму
     //очистка формы
     const handleClear = () => {
@@ -14,9 +14,33 @@ const TestContainer = ({ rootClassName, onEndTest, questions }) => {
             formRef.current.reset();
         }
     };
+
+    // Обработка отправки формы
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const formData = new FormData(formRef.current);
+        const answers = questions.map((question, index) => ({
+            task_id: question.task_id,
+            answer: formData.get(`question${index}`)
+        }));
+
+        const response = await fetch('/api/submit-answers', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ answers })
+        });
+
+        const result = await response.json();
+        console.log(result);
+        onTestResult(result); // Передаем результат теста в родительский компонент
+        onEndTest(); // Переключаем состояние теста на завершенный
+    };
+
     return (
 
-        <form ref={formRef} className={`test-container-test-container ${rootClassName} `}>
+        <form ref={formRef} className={`test-container-test-container ${rootClassName}`} onSubmit={handleSubmit}>
             {questions.map((question, index) => (
                 <div key={index} className="test-container-question">
                     <div className="test-container-text">{`Вопрос ${index + 1}`}</div>
