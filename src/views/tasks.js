@@ -31,6 +31,9 @@ const Tasks = (props) => {
     const [selectedTheme, setSelectedTheme] = useState(null);
     const [isExpanded, setIsExpanded] = useState(false);
     const [questions, setQuestions] = useState([]);
+    const [testStage, setTestStage] = useState('start'); // для сброса теста при смене темы
+
+
     // Изменение выбранной темы
     const handleThemeSelect = async (theme) => {
         setSelectedTheme(theme);
@@ -40,6 +43,8 @@ const Tasks = (props) => {
         // Записываем новое значение theory_id в куку theme_id
         Cookies.set('theory_id', theme.id);
         //setIsExpanded(true);
+
+        setTestStage('start'); // сброс состояния теста
 
         // Запрос за вопросами и ответами для выбранной темы
         try {
@@ -73,7 +78,15 @@ const Tasks = (props) => {
             )}
             <div className="tasks-container1">
                 <ProgressPanel isHidden={isExpanded} onThemeSelect={handleThemeSelect} />
-                <ThemePanel isExpanded={isExpanded} onIconClick={handleIconClick} selectedTheme={selectedTheme} questions={questions}/>
+                <ThemePanel
+                    isExpanded={isExpanded}
+                    onIconClick={handleIconClick}   // Иконка для скрытия панели
+                    selectedTheme={selectedTheme}   // Выбранная тема
+                    questions={questions}   // база вопросов
+                    testStage={testStage} // состояние теста
+                    setTestStage={setTestStage} // функция для изменения состояния теста
+                    isAuthenticated = {isAuthenticated} // для проверки авторизованности пользователя
+                />
             </div>
             <Footer/>
         </div>

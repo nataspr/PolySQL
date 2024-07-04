@@ -95,7 +95,7 @@ const Registration = (props) => {
           {props.text2}
         </label>
         <input
-            type="text"
+            type="email"
             value={login}
             onChange={(e) => setLogin(e.target.value)}
             id="contact-form-7-first-name"

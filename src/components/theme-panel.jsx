@@ -3,19 +3,25 @@ import React, {useEffect, useState} from 'react';
 import TestContainer from "./test-container";
 import EndOfTest from "./end-of-test";
 import DOMPurify from 'dompurify';
+import Header from "./header";
+import HeaderFull from "./header-full";
 
-const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions }) => {
+const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions, testStage, setTestStage, isAuthenticated  }) => {
     // Состояния для теста: 'start', 'test', 'end'
-    const [testStage, setTestStage] = useState('start');
     const [testResult, setTestResult] = useState(null); // Хранение результатов теста
     const [questions_ar, setQuestions] = useState([]);
     const [practices, setPractices] = useState([]);
+
+
+
+
+
 
     useEffect(() => {
         if (!selectedTheme) {
             return;
         }
-        // Здесь должен быть ваш запрос к серверу для получения данных о практиках
+        // запрос к серверу для получения данных о практиках
         const fetchPractices = async () => {
             try {
                 const response = await fetch('/api/get-practice', {
@@ -77,21 +83,23 @@ const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions }) => {
                 </a>
             </div>
 
-            <div className="tasks-test">
-                {/*TODO неавторизованный пользователь не видит тест*/}
-            {testStage === 'start' && (
-                    <div className="outline-black-button-container">
-                        <button onClick={handleStartTest} className="outline-black-button-button button ButtonSmall">
-                            Начать тест по теме
-                        </button>
-                    </div>
-                )}
-                {testStage === 'test' && (
-                    <TestContainer rootClassName="test-container-root-class-name" onEndTest={handleEndTest} questions_ar={questions}  onTestResult={handleTestResult}/>
-                )}
-                {testStage === 'end' && <EndOfTest onRestartTest={handleRestartTest} rootClassName="end-of-test-root-class-name" totalQuestions={testResult ? testResult.totalQuestions : 0}
-                                                   correctAnswersCount={testResult ? testResult.correctAnswersCount : 0}/>}
-            </div>
+            {/*Для вывода теста*/}
+            {isAuthenticated && (
+                <div className="tasks-test">
+                {testStage === 'start'&& (
+                        <div className="outline-black-button-container">
+                            <button onClick={handleStartTest} className="outline-black-button-button button ButtonSmall">
+                                Начать тест по теме
+                            </button>
+                        </div>
+                    )}
+                    {testStage === 'test' && (
+                        <TestContainer rootClassName="test-container-root-class-name" onEndTest={handleEndTest} questions_ar={questions}  onTestResult={handleTestResult}/>
+                    )}
+                    {testStage === 'end' && <EndOfTest onRestartTest={handleRestartTest} rootClassName="end-of-test-root-class-name" totalQuestions={testResult ? testResult.totalQuestions : 0}
+                                                       correctAnswersCount={testResult ? testResult.correctAnswersCount : 0}/>}
+                </div>
+            )}
             <div>
                 {selectedTheme && practices.map(practice => (
                     <Task
