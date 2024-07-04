@@ -65,7 +65,7 @@ const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions, testSta
     const cleanHTML = DOMPurify.sanitize(selectedTheme ? selectedTheme.text_on_page : 'Выберите тему, чтобы увидеть её содержание');
     return (
         <div className={`theme-container ${isExpanded ? 'active' : ''}`}>
-            <div className="tasks-name">
+            <div className={`tasks-name ${isAuthenticated ? 'NotFixed' : 'NotFixed'}`}>
                 {/*Кнопка для скрытия боковой панели*/}
                 <svg onClick={onIconClick} viewBox="0 0 1024 1024" className="tasks-icon">
                     <path d="M470 554v-84h426v84h-426zM470 384v-86h426v86h-426zM128 128h768v86h-768v-86zM128 896v-86h768v86h-768zM128 512l170-170v340zM470 726v-86h426v86h-426z"></path>

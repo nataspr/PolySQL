@@ -54,13 +54,16 @@ const TestComponent = ({ questions_ar, onTestResult, onEndTest, rootClassName })
                 </div>
             ))}
             <div className="test-container-buttons">
-                <button type="button" onClick={handleClear} className="end-button button ButtonSmall"> Очистить</button>
                 <div className="end-end">
-                    <button type="submit" className="end-button button ButtonSmall"> Проверить</button>
+                    <button type="button" onClick={handleClear} className="end-button button ButtonSmall"> Очистить
+                    </button>
                 </div>
-            </div>
+                    <div className="end-end">
+                        <button type="submit" className="next-button button ButtonSmall"> Проверить</button>
+                    </div>
+                </div>
         </form>
-    );
+);
 };
 
 export default TestComponent;
