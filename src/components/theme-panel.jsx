@@ -12,10 +12,18 @@ const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions }) => {
     const [practices, setPractices] = useState([]);
 
     useEffect(() => {
+        if (!selectedTheme) {
+            return;
+        }
         // Здесь должен быть ваш запрос к серверу для получения данных о практиках
         const fetchPractices = async () => {
             try {
-                const response = await fetch('/api/get-practice');
+                const response = await fetch('/api/get-practice', {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'theory-id': selectedTheme.id // идентификатор выбранной темы
+                    }
+                });
                 if (!response.ok) {
                     throw new Error('Failed to fetch practices');
                 }
@@ -31,7 +39,8 @@ const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions }) => {
         };
 
         fetchPractices();
-    }, []); // Пустой массив зависимостей означает, что useEffect выполняется только один раз при монтировании компонента
+    }, [selectedTheme]); // Пустой массив зависимостей означает, что useEffect выполняется только один раз при монтировании компонента
+    //есть зависимость от selectedTheme
 
 
     const handleStartTest = () => {
@@ -84,7 +93,7 @@ const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions }) => {
                                                    correctAnswersCount={testResult ? testResult.correctAnswersCount : 0}/>}
             </div>
             <div>
-                {practices.map(practice => (
+                {selectedTheme && practices.map(practice => (
                     <Task
                         key={practice.practice_id}
                         taskNumber={practice.practice_id}
