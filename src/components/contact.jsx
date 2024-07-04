@@ -7,7 +7,7 @@ const Contact = () => {
         <div className="contact">
             <div className="container09">
                 <div className="form">
-                    <h2 className="HeadingOne">Скажите Привет!</h2>
+                    <div className="HeadingOne head2">Скажите Привет!</div>
                     <span className="text19 Lead">
               Мы будем рады получить от Вас обратную связь.
             </span>
@@ -41,7 +41,7 @@ const Contact = () => {
                 </div>
                 <div className="info">
                     <div className="container12">
-                        <h3 className="HeadingTwo">Контактная информация</h3>
+                        <div className="HeadingTwo head3">Контактная информация</div>
                         <span className="text24">
                 Заполните форму и наша команда постарается дать Вам ответ в
                 течение 24 часов.

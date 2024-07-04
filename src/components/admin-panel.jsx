@@ -7,13 +7,13 @@ const AdminPanel = () => {
 
     const renderForm = () => {
         switch (selectedForm) {
-            case 'тема':
+            case 'Новая тема':
                 return (
                     <>
                         <label className="text20 Label">Название темы</label>
                         <input
                             type="text"
-                            placeholder="Введите данные"
+                            placeholder="Введите название новой темы"
                             className="profile-textinput Small input"
                         />
                         <label className="text20 Label">Текст теории</label>
@@ -24,13 +24,13 @@ const AdminPanel = () => {
                         ></textarea>
                     </>
                 );
-            case 'вопрос':
+            case 'Новый вопрос':
                 return (
                     <>
                         <label className="text20 Label">Название темы</label>
                         <input
                             type="text"
-                            placeholder="Введите данные"
+                            placeholder="Введите тему, к которой относится вопрос"
                             className="profile-textinput Small input"
                         />
                         <label className="text20 Label">Текст вопроса</label>
@@ -42,7 +42,7 @@ const AdminPanel = () => {
                         <label className="text20 Label">Правильный ответ на вопрос</label>
                         <input
                             type="text"
-                            placeholder="Введите данные"
+                            placeholder="Введите ответ"
                             className="profile-textinput Small input"
                         />
                         <label className="text20 Label">Все варианты ответа на вопрос</label>
@@ -53,34 +53,32 @@ const AdminPanel = () => {
                         ></textarea>
                     </>
                 );
-            case 'задание':
+            case 'Новое задание':
                 return (
                     <>
                         <label className="text20 Label">Название темы</label>
                         <input
                             type="text"
-                            placeholder="Введите данные"
+                            placeholder="Введите тему, к которой относится задание"
+                            className="profile-textinput Small input"
+                        />
+                        <label className="text20 Label">Название задания</label>
+                        <input
+                            type="text"
+                            placeholder="Введите название"
                             className="profile-textinput Small input"
                         />
                         <label className="text20 Label">Текст задания</label>
-                        <input
-                            type="text"
-                            placeholder="Введите данные"
-                            className="profile-textinput Small input"
-                        />
-                        <label className="text20 Label">Текст теории/Задания</label>
                         <textarea
                             rows="8"
-                            placeholder="Вставьте текст теории с html-тегами"
+                            placeholder="Вставьте текст задания"
                             className="profile-textarea Small textarea"
                         ></textarea>
                     </>
                 );
             default:
                 return (
-                    <h2 className="HeadingOne">
-                        Выберите тип задания
-                    </h2>
+                    <div className="HeadingOne head2"></div>
                 );
         }
     };
@@ -89,9 +87,9 @@ const AdminPanel = () => {
         <div className="contact">
             <div className="container09">
                 <div className="form">
-                    <h2 className="HeadingOne">
-                        {selectedForm ? `Новое ${selectedForm}` : 'Выберите тип задания'}
-                    </h2>
+                    <div className="HeadingOne head2">
+                        {selectedForm ? `${selectedForm}` : 'Выберите тип задания'}
+                    </div>
                     <span className="text19 Lead">
                         Заполните все поля данной формы, чтобы создание произошло корректно
                     </span>
@@ -106,14 +104,14 @@ const AdminPanel = () => {
                 </div>
                 <div className="info">
                     <div className="container12">
-                        <h3 className="HeadingTwo">Добавление заданий</h3>
+                        <div className="HeadingTwo head3">Создание новых заданий</div>
                         <span className="text24">
                             Выберите, какой именно тип данных хотите добавить на наш учебный сайт, и в скором времени Вы увидите его на странице уроков!
                         </span>
                         <div className="buttons-container">
-                            <OutlineWhiteButtonWide text="Новая тема" onClick={() => setSelectedForm('тема')} />
-                            <OutlineWhiteButtonWide text="Новый вопрос" onClick={() => setSelectedForm('вопрос')} />
-                            <OutlineWhiteButtonWide text="Новое задание" onClick={() => setSelectedForm('задание')} />
+                            <OutlineWhiteButtonWide text="Новая тема" onClick={() => setSelectedForm('Новая тема')} />
+                            <OutlineWhiteButtonWide text="Новый вопрос" onClick={() => setSelectedForm('Новый вопрос')} />
+                            <OutlineWhiteButtonWide text="Новое задание" onClick={() => setSelectedForm('Новое задание')} />
                         </div>
                     </div>
                     <img alt="image" src="/wave-1.svg" className="profile-image1" />

@@ -93,9 +93,12 @@ td{
 }
 th{
   background-color: #3C678B;
-  font-size: 1.3em;
+  font-size: 1.1em;
   color: white;
-  padding: 12px 2px;
+  font-weight: 600;
+  padding: 12px 70px;
+  border-color: white;
+  border-width: 1px;
 }
 .noneStyle{
   background-color: white;
