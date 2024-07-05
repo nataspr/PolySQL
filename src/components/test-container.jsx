@@ -2,12 +2,18 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types'
 
-import Answer from './answer'
-import Next from './next'
 import './test-container.css'
 
 const TestComponent = ({ questions_ar, onTestResult, onEndTest, rootClassName }) => {
     const formRef = useRef(null);
+    const tasksTestRef = useRef(null);
+
+    // Функция для прокрутки до верхней точки tasks-test
+    const scrollToTasksTest = () => {
+        if (formRef.current) {
+            formRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    };
 
     // Обработка отправки формы
     const handleSubmit = async (event) => {
@@ -59,7 +65,7 @@ const TestComponent = ({ questions_ar, onTestResult, onEndTest, rootClassName })
                     </button>
                 </div>
                     <div className="end-end">
-                        <button type="submit" className="next-button button ButtonSmall"> Проверить</button>
+                        <button type="submit" className="next-button button ButtonSmall" onClick={scrollToTasksTest}> Проверить</button>
                     </div>
                 </div>
         </form>

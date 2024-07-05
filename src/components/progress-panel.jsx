@@ -2,7 +2,7 @@ import Progress from './progress'
 import NameOfTheme from './name-of-theme'
 import React, {useEffect, useState} from 'react';
 
-const ProgressPanel = ({isHidden, onThemeSelect }) => {
+const ProgressPanel = ({isHidden, onThemeSelect, selectedThemeId, setSelectedThemeId}) => {
     // Для установки темы
     const [themes, setThemes] = useState([]);
 
@@ -30,8 +30,11 @@ const ProgressPanel = ({isHidden, onThemeSelect }) => {
             <NameOfTheme
                 key={theme.id}
                 text={theme.name}
-                isChecked={theme.ischecked}
-                onClick={() => onThemeSelect(theme)} // Использование стрелочной функции для передачи функции обратного вызова
+                isChecked={theme.ischecked || theme.id === selectedThemeId}
+                onClick={() => {
+                    onThemeSelect(theme);
+                    setSelectedThemeId(theme.id);
+                }} // Использование стрелочной функции для передачи функции обратного вызова
             />
         ))}
     </div>

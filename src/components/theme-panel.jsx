@@ -12,6 +12,7 @@ const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions, testSta
     const [testResult, setTestResult] = useState(null); // Хранение результатов теста
     const [questions_ar, setQuestions] = useState([]);
     const [practices, setPractices] = useState([]);
+    const [selectedThemeId, setSelectedThemeId] = useState(null);
 
     useEffect(() => {
         if (!selectedTheme) {
@@ -59,6 +60,8 @@ const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions, testSta
 
     const handleTestResult = (result) => {
         setTestResult(result);
+        // Обновление выбранной темы после теста
+        setSelectedThemeId(selectedTheme.id);
     };
 
     // Очистка текста для безопасной вставки кода из базы данных

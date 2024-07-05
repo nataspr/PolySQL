@@ -19,11 +19,11 @@ const Tasks = (props) => {
         // console.log(user_id);
         if (user_id) {
             setIsAuthenticated(true);
-            console.log(parseInt(user_id, 10));
-            console.log(setIsAuthenticated);
+            // console.log(parseInt(user_id, 10));
+            // console.log(setIsAuthenticated);
         } else {
             setIsAuthenticated(false);
-            console.log(parseInt(user_id, 10));
+            // console.log(parseInt(user_id, 10));
         }
     }, []);
 
@@ -32,7 +32,7 @@ const Tasks = (props) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const [questions, setQuestions] = useState([]);
     const [testStage, setTestStage] = useState('start'); // для сброса теста при смене темы
-
+    const [selectedThemeId, setSelectedThemeId] = useState(null); // id для выбранной темы
 
     // Изменение выбранной темы
     const handleThemeSelect = async (theme) => {
@@ -78,7 +78,12 @@ const Tasks = (props) => {
                 <HeaderFull />
             )}
             <div className="tasks-container1">
-                <ProgressPanel isHidden={isExpanded} onThemeSelect={handleThemeSelect} />
+                <ProgressPanel
+                    isHidden={isExpanded}
+                    onThemeSelect={handleThemeSelect}
+                    setSelectedThemeId={setSelectedThemeId}
+                    selectedThemeId={selectedThemeId}
+                />
                 <ThemePanel
                     isExpanded={isExpanded}
                     onIconClick={handleIconClick}   // Иконка для скрытия панели

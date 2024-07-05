@@ -39,6 +39,7 @@
   width: 28px;
   height: 100%;
   margin-right: var(--dl-space-space-unit);
+  fill:  rgb(64, 84, 183);
 }
 .not-checked-theme-text {
   fill: var(--dl-color-secondary-500);
