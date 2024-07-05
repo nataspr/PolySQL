@@ -2,10 +2,8 @@ import Progress from './progress'
 import NameOfTheme from './name-of-theme'
 import React, {useEffect, useState} from 'react';
 
-const ProgressPanel = ({isHidden, onThemeSelect, selectedThemeId, setSelectedThemeId}) => {
+const ProgressPanel = ({isHidden, onThemeSelect, selectedThemeId, setSelectedThemeId, themes, setThemes}) => {
     // Для установки темы
-    const [themes, setThemes] = useState([]);
-
     useEffect(() => {
         const fetchThemes = async () => {
             try {
@@ -18,7 +16,7 @@ const ProgressPanel = ({isHidden, onThemeSelect, selectedThemeId, setSelectedThe
             }
         };
         fetchThemes();
-    }, []);
+    }, [setThemes]);
 
     return (
     <div className={`progress-panel ${isHidden ? 'hidden' : ''}`}>
@@ -30,7 +28,7 @@ const ProgressPanel = ({isHidden, onThemeSelect, selectedThemeId, setSelectedThe
             <NameOfTheme
                 key={theme.id}
                 text={theme.name}
-                isChecked={theme.ischecked || theme.id === selectedThemeId}
+                isChecked={theme.ischecked}
                 onClick={() => {
                     onThemeSelect(theme);
                     setSelectedThemeId(theme.id);

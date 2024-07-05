@@ -10,11 +10,11 @@ const { Pool } = require('pg');
  });
 
 //настя
-// const pool = new Pool({
-// user: 'postgres',
-// host: 'localhost',
-// database: 'postgres',
-// password: 'ahodut22',
-// port: 5433,
-// });
+const pool = new Pool({
+user: 'postgres',
+host: 'localhost',
+database: 'postgres',
+password: 'ahodut22',
+port: 5433,
+});
 module.exports = pool;

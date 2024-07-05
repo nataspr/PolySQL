@@ -36,7 +36,7 @@ const TestComponent = ({ questions_ar, onTestResult, onEndTest, rootClassName })
         console.log('Результат теста');
         console.log(result);
         onTestResult(result); // Передаем результат теста в родительский компонент
-        onEndTest(); // Переключаем состояние теста на завершенный
+        onEndTest(result); // Переключаем состояние теста на завершенный
     };
 
     const handleClear = () => {

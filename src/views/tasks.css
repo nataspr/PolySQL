@@ -3,7 +3,7 @@
   font-weight: 300;
   text-align: justify;
   align-self: center;
-  font-size: 1.2em;
+  font-size: 1.1em;
   width: 100%;
   color: #191818;
 
@@ -66,7 +66,8 @@ body {
   font-family: Arial, sans-serif;
 }
 .theme-container h1{
-  font-size: 2em;
+  font-size: 1.7em;
+  font-weight: 600;
   line-height: 1.25;
   background-image: linear-gradient(310deg, rgb(64, 84, 183), rgb(128, 143, 191));
   -webkit-background-clip: text;
@@ -74,7 +75,7 @@ body {
 }
 
 .theme-container h2 {
-  font-size: 1.3em;
+  font-size: 1.2em;
   margin-top: 1em;
   margin-bottom: 0.6em;
   text-align: left;
@@ -290,7 +291,6 @@ th{
   position: fixed;
   z-index: 1;
   margin-top: -4em;
-  background-color: var(--dl-color-gray-900);
 }
 .tasks-name.NotFixed {
   flex: 0 0 auto;

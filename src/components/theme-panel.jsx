@@ -7,7 +7,7 @@ import Header from "./header";
 import HeaderFull from "./header-full";
 import Cookies from "js-cookie";
 
-const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions, testStage, setTestStage, isAuthenticated  }) => {
+const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions, testStage, setTestStage, isAuthenticated, handleTestResult   }) => {
     // Состояния для теста: 'start', 'test', 'end'
     const [testResult, setTestResult] = useState(null); // Хранение результатов теста
     const [questions_ar, setQuestions] = useState([]);
@@ -50,18 +50,14 @@ const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions, testSta
         setTestStage('test');
     };
 
-    const handleEndTest = () => {
-        setTestStage('end');
-    };
 
     const handleRestartTest = () => {
         setTestStage('test');
     };
 
-    const handleTestResult = (result) => {
+    const handleTestResultInternal = (result) => {
+        setTestStage('end');
         setTestResult(result);
-        // Обновление выбранной темы после теста
-        setSelectedThemeId(selectedTheme.id);
     };
 
     // Очистка текста для безопасной вставки кода из базы данных
@@ -102,7 +98,7 @@ const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions, testSta
                         </div>
                     )}
                     {testStage === 'test' && (
-                        <TestContainer rootClassName="test-container-root-class-name" onEndTest={handleEndTest} questions_ar={questions}  onTestResult={handleTestResult}/>
+                        <TestContainer rootClassName="test-container-root-class-name" onEndTest={handleTestResultInternal} questions_ar={questions}  onTestResult={handleTestResult}/>
                     )}
                     {testStage === 'end' && <EndOfTest onRestartTest={handleRestartTest} rootClassName="end-of-test-root-class-name" totalQuestions={testResult ? testResult.totalQuestions : 0}
                                                        correctAnswersCount={testResult ? testResult.correctAnswersCount : 0}/>}

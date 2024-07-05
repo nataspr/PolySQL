@@ -49,6 +49,7 @@ const AdminPanel = () => {
                 })
                 .catch((error) => {
                     console.error('Error:', error);
+                    alert('Нельзя создать запись!');
                 });
     };
 
@@ -77,6 +78,11 @@ const AdminPanel = () => {
                             placeholder="Вставьте текст теории с html-тегами"
                             className="profile-textarea Small textarea"
                         ></textarea>
+                        <div className="container10">
+                            <div className="container11">
+                                <PrimaryBlueButton button="Сохранить" onClick={handleSave}></PrimaryBlueButton>
+                            </div>
+                        </div>
                     </>
                 );
             case 'Новый вопрос':
@@ -122,6 +128,11 @@ const AdminPanel = () => {
                             placeholder="Перечислите ответы через запятую"
                             className="profile-textarea Small textarea"
                         ></textarea>
+                        <div className="container10">
+                            <div className="container11">
+                                <PrimaryBlueButton button="Сохранить" onClick={handleSave}></PrimaryBlueButton>
+                            </div>
+                        </div>
                     </>
                 );
             case 'Новое задание':
@@ -157,6 +168,11 @@ const AdminPanel = () => {
                             placeholder="Вставьте текст задания"
                             className="profile-textarea Small textarea"
                         ></textarea>
+                        <div className="container10">
+                            <div className="container11">
+                                <PrimaryBlueButton button="Сохранить" onClick={handleSave}></PrimaryBlueButton>
+                            </div>
+                        </div>
                     </>
                 );
             default:
@@ -169,7 +185,7 @@ const AdminPanel = () => {
     return (
         <div className="contact">
             <div className="container09">
-                <div className="form">
+            <div className="form">
                     <div className="HeadingOne head2">
                         {selectedForm ? `${selectedForm}` : 'Выберите тип задания'}
                     </div>
@@ -179,11 +195,7 @@ const AdminPanel = () => {
                     <form className="form1">
                         {renderForm()}
                     </form>
-                    <div className="container10">
-                        <div className="container11">
-                            <PrimaryBlueButton button="Сохранить" onClick={handleSave}></PrimaryBlueButton>
-                        </div>
-                    </div>
+
                 </div>
                 <div className="info">
                     <div className="container12">

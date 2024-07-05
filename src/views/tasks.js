@@ -34,6 +34,8 @@ const Tasks = (props) => {
     const [testStage, setTestStage] = useState('start'); // для сброса теста при смене темы
     const [selectedThemeId, setSelectedThemeId] = useState(null); // id для выбранной темы
 
+    const [themes, setThemes] = useState([]); // Добавляем состояние для тем
+
     // Изменение выбранной темы
     const handleThemeSelect = async (theme) => {
         setSelectedTheme(theme);
@@ -53,6 +55,16 @@ const Tasks = (props) => {
             setQuestions(data);
         } catch (error) {
             console.error('Ошибка при получении данных:', error);
+        }
+    };
+
+    // Функция для обновления состояния темы
+    const handleTestResult = (result) => {
+        if (result.correctAnswersCount === result.totalQuestions) {
+            const updatedThemes = themes.map(theme =>
+                theme.id === selectedThemeId ? {...theme, ischecked: true} : theme
+            );
+            setThemes(updatedThemes);
         }
     };
 
@@ -83,6 +95,9 @@ const Tasks = (props) => {
                     onThemeSelect={handleThemeSelect}
                     setSelectedThemeId={setSelectedThemeId}
                     selectedThemeId={selectedThemeId}
+
+                    themes={themes}
+                    setThemes={setThemes}
                 />
                 <ThemePanel
                     isExpanded={isExpanded}
@@ -92,6 +107,8 @@ const Tasks = (props) => {
                     testStage={testStage} // состояние теста
                     setTestStage={setTestStage} // функция для изменения состояния теста
                     isAuthenticated = {isAuthenticated} // для проверки авторизованности пользователя
+
+                    handleTestResult={handleTestResult}
                 />
             </div>
             <Footer/>
