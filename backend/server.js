@@ -6,7 +6,7 @@ const pool = require('./dbconfig');
 const Cookies = require("js-cookie");
 //создание сервера
 const app = express();
-const port = 5002;
+const port = 5005;
 
 //подключение к приложени.
 app.use(cookieParser());

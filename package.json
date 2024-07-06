@@ -24,7 +24,7 @@
     "test": "craco test --env=jsdom",
     "eject": "craco eject"
   },
-  "proxy": "http://localhost:5002",
+  "proxy": "http://localhost:5005",
   "engines": {
     "node": "18.x"
   },
