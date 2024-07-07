@@ -85,7 +85,7 @@ const Registration = (props) => {
             type="date"
             max="2024-07-10"
             //min="2020-01-01"
-            value="2000-01-01"
+            //value="2000-01-01"
             required="true"
             className="registration-text-input2"
         />
@@ -99,7 +99,7 @@ const Registration = (props) => {
             id="contact-form-7-first-name"
             required="true"
             placeholder={props.textInputPlaceholder}
-            className="registration-text-input2 thq-grid-2"
+            className="registration-text-input3 thq-grid-2"
         />
         <label htmlFor="contact-form-7-first-name" className="thq-body-small">
           {props.text3}
