@@ -22,7 +22,8 @@
     "server": "node backend/server.js",
     "build": "craco build",
     "test": "craco test --env=jsdom",
-    "eject": "craco eject"
+    "eject": "craco eject",
+    "deploy" : "npm run build&&gh-pages -d build"
   },
   "proxy": "http://localhost:5005",
   "engines": {
@@ -41,6 +42,7 @@
     ]
   },
   "devDependencies": {
+    "gh-pages": "^6.1.1",
     "react-scripts": "^5.0.1"
   },
   "main": "craco.config.js",
