@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/PolySQL/static/css/main.ccc16f71.css",
+    "main.js": "/PolySQL/static/js/main.2530683d.js",
+    "index.html": "/PolySQL/index.html",
+    "main.ccc16f71.css.map": "/PolySQL/static/css/main.ccc16f71.css.map",
+    "main.2530683d.js.map": "/PolySQL/static/js/main.2530683d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ccc16f71.css",
+    "static/js/main.2530683d.js"
+  ]
+}
