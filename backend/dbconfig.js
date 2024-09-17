@@ -11,10 +11,10 @@ const { Pool } = require('pg');
 
 //настя
 const pool = new Pool({
-user: 'spilikh',
-host: 'osokiebag.beget.app',
-database: 'polysql',
-password: '50O0*ppTQZNn',
-port: 5432,
+    user: 'spinat',
+    host: 'slonik.avalon.ru',
+    database: 'dbspinat',
+    password: 'spinat',
+    port: 5433,
 });
 module.exports = pool;
