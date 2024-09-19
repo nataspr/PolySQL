@@ -56,7 +56,7 @@ const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions, testSta
     };
 
     const handleTestResultInternal = (result) => {
-        setTestStage('end');
+        setTestStage('test');
         setTestResult(result);
     };
 
@@ -100,8 +100,8 @@ const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions, testSta
                     {testStage === 'test' && (
                         <TestContainer rootClassName="test-container-root-class-name" onEndTest={handleTestResultInternal} questions_ar={questions}  onTestResult={handleTestResult}/>
                     )}
-                    {testStage === 'end' && <EndOfTest onRestartTest={handleRestartTest} rootClassName="end-of-test-root-class-name" totalQuestions={testResult ? testResult.totalQuestions : 0}
-                                                       correctAnswersCount={testResult ? testResult.correctAnswersCount : 0}/>}
+                    {/*{testStage === 'end' && <EndOfTest onRestartTest={handleRestartTest} rootClassName="end-of-test-root-class-name" totalQuestions={testResult ? testResult.totalQuestions : 0}*/}
+                    {/*                                   correctAnswersCount={testResult ? testResult.correctAnswersCount : 0}/>}*/}
                 </div>
             )}
             <div className={"TaskContainer"}>

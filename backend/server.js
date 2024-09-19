@@ -6,7 +6,7 @@ const pool = require('./dbconfig');
 const Cookies = require("js-cookie");
 //создание сервера
 const app = express();
-const port = 5005;
+const port = 5007;
 
 //подключение к приложени.
 app.use(cookieParser());
@@ -238,12 +238,12 @@ app.post('/api/submit-answers', async (req, res) => {
             acc[row.task_id] = row.correct_answers;
             return acc;
         }, {});
-
+        console.log(answers);
         const userResults = answers.map(answer => {
             const isCorrect = correctAnswers[answer.task_id].some(correctAnswer => correctAnswer === answer.answer);
             return {
                 task_id: answer.task_id,
-                user_answer: answer.answer,
+                user_answer: answer.user_answer,
                 correct: isCorrect
             };
         });
@@ -262,7 +262,7 @@ app.post('/api/submit-answers', async (req, res) => {
 
         await Promise.all(updateQueries);
 
-        res.json({ totalQuestions, correctAnswersCount });
+        res.json({ totalQuestions, correctAnswersCount, correctAnswers });
     } catch (err) {
         console.error('Ошибка выполнения запроса:', err);
         res.status(500).json({ error: 'Internal Server Error' });

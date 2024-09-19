@@ -17,4 +17,14 @@ const pool = new Pool({
     password: 'spinat',
     port: 5433,
 });
+// const pool = new Pool({
+//     connectionString: 'postgres://n_spiridonova:Lk30!^NVf40@212.233.89.90:5433/postgres'
+// });
+// const pool = new Pool({
+//     user: 'spinat',
+//     host: 'slonik.avalon.ru',
+//     database: 'dbspinat',
+//     password: 'spinat',
+//     port: 5433,
+// });
 module.exports = pool;
