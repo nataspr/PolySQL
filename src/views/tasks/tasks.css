@@ -1,17 +1,22 @@
 .correct-answer {
-  background-color: #d4edda;
-  color: #155724;
+  /*background-color: #d4edda;*/
+  color: #13b335;
 }
 
 .incorrect-answer {
-  background-color: #f8d7da;
-  color: #721c24;
+  /*background-color: #f8d7da;*/
+  color: #cc0d1e;
 }
-
+/*.green-text{*/
+/*  color: #13b335;*/
+/*}*/
+/*.red-text{*/
+/*  color: #cc0d1e;*/
+/*}*/
 .answer-explanation {
-  margin-top: 10px;
+  margin: 15px 0px ;
   font-style: italic;
-  color: #333;
+  color: var(--dl-color-secondary-400);
 }
 
 .Correct-format{

@@ -83,10 +83,19 @@ const TestComponent = ({ questions_ar, onTestResult, onEndTest, rootClassName })
             {questions_ar.map((question, index) => (
                 <div key={index} className="test-container-question">
                     <div className="test-container-text">{`Вопрос ${index + 1}`}</div>
+                    {resultData && (
+                        <div className={`answer-explanation ${resultData.correctAnswers[question.task_id][0] === userAnswers[index].answer
+                            ? 'green-text'
+                            : 'red-text'}`}>
+                            {resultData.correctAnswers[question.task_id][0] === userAnswers[index].answer
+                                ? 'Ответ правильный'
+                                : 'Ответ неверный'}
+                        </div>
+                    )}
                     <span className="test-container-text3">{question.task_text}</span>
                     <div className="test-container-answers">
                         {question.answers.map((answer, idx) => (
-                            <div key={idx} className={`test-container-answer ${getAnswerClass(index, idx,question.task_id, answer)}`}>
+                            <div key={idx} className={`test-container-answer`}>
                                 <input
                                     className="custom-radio"
                                     type="radio"
@@ -95,17 +104,12 @@ const TestComponent = ({ questions_ar, onTestResult, onEndTest, rootClassName })
                                     value={idx}
                                     disabled={!!resultData} // Блокируем изменение ответов после проверки
                                 />
-                                <label htmlFor={`q${index}a${idx}`}>{answer}</label>
+                                <label className={`${getAnswerClass(index, idx,question.task_id, answer)}`} htmlFor={`q${index}a${idx}`}>{answer}</label>
                             </div>
                         ))}
+
                     </div>
-                    {resultData && (
-                        <div className="answer-explanation">
-                            {resultData.correctAnswers[question.task_id][0] === userAnswers[index].answer
-                                ? 'Ответ правильный'
-                                : 'Ответ неверный'}
-                        </div>
-                    )}
+
                 </div>
             ))}
 

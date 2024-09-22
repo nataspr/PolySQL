@@ -6,7 +6,7 @@ const pool = require('./dbconfig');
 const Cookies = require("js-cookie");
 //создание сервера
 const app = express();
-const port = 5007;
+const port = 5009;
 
 //подключение к приложени.
 app.use(cookieParser());
@@ -31,7 +31,7 @@ app.post('/api/login', async (req, res) => {
             console.log('Login successful:', user);
 
             const myUserResult = await pool.query(
-                'SELECT user_id, login, fio FROM USERS.USERS WHERE login = $1 AND password = $2',
+                'SELECT * FROM USERS.USERS U JOIN USERS.ROLES R ON U.role_id = R.role_id WHERE login = $1 AND password = $2',
                 [login, password]
             );
             const myUser = myUserResult.rows[0];
@@ -39,16 +39,20 @@ app.post('/api/login', async (req, res) => {
             res.clearCookie('user_id', { path: '/' });
             res.clearCookie('login', { path: '/' });
             res.clearCookie('fio', { path: '/' });
+            res.clearCookie('role_id', { path: '/' });
 
             // Установить новые куки, доступные на стороне клиента
             res.cookie('user_id', myUser.user_id, { path: '/' });
             res.cookie('login', myUser.login, { path: '/' });
             res.cookie('fio', myUser.fio, { path: '/' });
+            res.cookie('role_id', myUser.role_id, { path: '/' });
+
             // Вывод установленных cookies в консоль
             console.log('Cookies set:');
             console.log('user_id:', myUser.user_id);
             console.log('login:', myUser.login);
             console.log('fio:', myUser.fio);
+            console.log('role_id:', myUser.role_id);
 
             res.status(200).json({ success: true, user });
             //res.status(200).json({ message: 'Login successful', user });

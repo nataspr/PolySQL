@@ -32,6 +32,8 @@ const Profile = (props) => {
                 } else {
                     console.error('Failed to fetch progress:', data.error);
                 }
+
+
             } catch (error) {
                 console.error('Error fetching progress:', error);
             }
@@ -65,8 +67,13 @@ const Profile = (props) => {
               onClick={handleLogout}
           />
 
-          {parseInt(Cookies.get('user_id'), 10)===1 ?  <AdminPanel/> : <Contact/>}
-
+          {parseInt(Cookies.get('role_id'), 10) === 3 ? (
+              <AdminPanel />
+          ) : parseInt(Cookies.get('role_id'), 10) === 1 ? (
+              <AdminPanel />
+          ) : (
+              <Contact />
+          )}
         <Footer rootClassName="footer-root-class-name1"></Footer>
       </div>
   )
