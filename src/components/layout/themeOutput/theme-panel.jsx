@@ -7,7 +7,7 @@ import Header from "../header/header";
 import HeaderFull from "../header-full/header-full";
 import Cookies from "js-cookie";
 
-const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions, testStage, setTestStage, isAuthenticated, handleTestResult   }) => {
+const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions, testStage, setTestStage, isAuthenticated, handleTestResult  }) => {
     // Состояния для теста: 'start', 'test', 'end'
     const [testResult, setTestResult] = useState(null); // Хранение результатов теста
     const [questions_ar, setQuestions] = useState([]);
@@ -58,6 +58,8 @@ const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions, testSta
     const handleTestResultInternal = (result) => {
         setTestStage('test');
         setTestResult(result);
+        setSelectedThemeId(selectedTheme.id);
+        handleTestResult(result);
     };
 
     // Очистка текста для безопасной вставки кода из базы данных
@@ -100,7 +102,8 @@ const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions, testSta
                     {testStage === 'test' && (
                         <TestContainer rootClassName="test-container-root-class-name" onEndTest={handleTestResultInternal} questions_ar={questions}  onTestResult={handleTestResult}/>
                     )}
-                    {/*{testStage === 'end' && <EndOfTest onRestartTest={handleRestartTest} rootClassName="end-of-test-root-class-name" totalQuestions={testResult ? testResult.totalQuestions : 0}*/}
+                    {/*{ }*/}
+                    {/*{testStage === 'end' && ()<EndOfTest onRestartTest={handleRestartTest} rootClassName="end-of-test-root-class-name" totalQuestions={testResult ? testResult.totalQuestions : 0}*/}
                     {/*                                   correctAnswersCount={testResult ? testResult.correctAnswersCount : 0}/>}*/}
                 </div>
             )}

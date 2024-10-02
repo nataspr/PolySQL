@@ -1,5 +1,5 @@
 //import React from 'react';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types'
 
 import './test-container.css'
@@ -10,6 +10,31 @@ const TestComponent = ({ questions_ar, onTestResult, onEndTest, rootClassName })
 
     const [userAnswers, setUserAnswers] = useState([]);
     const [resultData, setResultData] = useState(null); // Сохраняем результаты теста (правильные ответы и пояснения)
+    const [explanations, setExplanations] = useState([]); // Сохраняем объяснения ответов
+
+    // Функция для загрузки объяснений из базы данных
+    const fetchExplanations = async () => {
+        try {
+            const response = await fetch('/api/explanations');
+            const explanationData = await response.json();
+            setExplanations(explanationData); // Сохраняем объяснения в стейт
+        } catch (err) {
+            console.error('Ошибка загрузки объяснений:', err);
+        }
+    };
+
+    useEffect(() => {
+        fetchExplanations(); // Загружаем объяснения при монтировании компонента
+    }, []);
+
+    // Функция для получения объяснения ответа
+    const getExplanationForAnswer = (answer, task_id) => {
+        console.log('answer, task_id',answer, task_id);
+        console.log('explanations',explanations);
+        const explanation = explanations.find(exp => (exp.answer === answer) && (exp.task_id === task_id));
+        console.log('explanation ',explanation );
+        return explanation ? explanation.explanation_answer : 'Нет пояснения';
+    };
 
 
     // Функция для прокрутки до верхней точки tasks-test
@@ -44,7 +69,9 @@ const TestComponent = ({ questions_ar, onTestResult, onEndTest, rootClassName })
             answer: question.answers[formData.get(`question${index}`)]
         }));
 
-        console.log('Ответы пользователя', answers_text);
+        console.log('answers_text',answers_text);
+        console.log('result',result);
+
         setUserAnswers(answers_text);
         setResultData(result); // Сохраняем результат
         onTestResult(result); // Передаем результат теста в родительский компонент
@@ -60,13 +87,15 @@ const TestComponent = ({ questions_ar, onTestResult, onEndTest, rootClassName })
     const getAnswerClass = (questionIndex, answerIndex, task_id, currentAnswer) => {
         if (!resultData) return ''; // Пока нет результатов, ничего не подсвечиваем
 
+        console.log('resultData=',resultData);
+        console.log('questions=',questions_ar);
+        console.log('answerIndex=',answerIndex);
         const correctAnswer = resultData.correctAnswers[userAnswers[questionIndex].task_id][0]; // Получаем правильный ответ для данного вопроса
         const userAnswer = userAnswers[questionIndex].answer;
 
         if (correctAnswer === userAnswer && task_id === userAnswers[questionIndex].task_id && currentAnswer === userAnswer) {
             return 'correct-answer'; // Правильный ответ - зеленый
         }
-
         if (task_id === userAnswers[questionIndex].task_id && currentAnswer === userAnswer) {
             console.log('CorrectAnswer:', correctAnswer);
             console.log('userAnswer:', userAnswer);
@@ -87,9 +116,7 @@ const TestComponent = ({ questions_ar, onTestResult, onEndTest, rootClassName })
                         <div className={`answer-explanation ${resultData.correctAnswers[question.task_id][0] === userAnswers[index].answer
                             ? 'green-text'
                             : 'red-text'}`}>
-                            {resultData.correctAnswers[question.task_id][0] === userAnswers[index].answer
-                                ? 'Ответ правильный'
-                                : 'Ответ неверный'}
+                            {getExplanationForAnswer(userAnswers[index].answer, question.task_id)}  {/* Передаем answer_id */}
                         </div>
                     )}
                     <span className="test-container-text3">{question.task_text}</span>
@@ -122,7 +149,7 @@ const TestComponent = ({ questions_ar, onTestResult, onEndTest, rootClassName })
                     </div>
                 </div>
         </form>
-);
+    );
 };
 
 export default TestComponent;

@@ -1,0 +1,67 @@
+.container{
+    top: auto;
+    left: auto;
+    right: 0px;
+    width: 100%;
+    bottom: 0px;
+    height: 100%;
+    opacity: 0.9;
+}
+
+.contact {
+    width: 100%;
+    max-width: 1320px;
+    padding-top: var(--dl-space-space-sixunits);
+    padding-left: var(--dl-space-space-tripleunit);
+    padding-right: var(--dl-space-space-tripleunit);
+    padding-bottom: var(--dl-space-space-sixunits);
+}
+
+.container1 {
+    flex: 0 0 auto;
+    width: 100%;
+    display: flex;
+    box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
+    align-items: stretch;
+    border-radius: var(--dl-radius-radius-radius1);
+    flex-direction: row;
+    background-image: linear-gradient(270deg, #014276, #67748E);
+}
+
+.form {
+    flex: 5;
+    display: flex;
+    align-items: flex-start;
+    /*padding-top: var(--dl-space-space-fourunits);*/
+
+    /*padding-left: var(--dl-space-space-doubleunit);*/
+    /*padding-right: var(--dl-space-space-doubleunit);*/
+    flex-direction: column;
+    /*padding-bottom: var(--dl-space-space-fourunits);*/
+}
+
+.table {
+    width: 100%;
+    border: none;
+    border-radius: var(--dl-radius-radius-radius1);
+}
+.table thead th {
+    padding: 10px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    text-align: left;
+    color: #ffffff;
+    border-top: 2px solid #334283;
+    border-bottom: 2px solid #46538a;
+    border-width: 0px;
+    background-color: transparent;
+}
+.table tbody td {
+    padding: 10px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #334283;
+    border-top: 1px solid #334283;
+    background-color: #eaecef;
+}

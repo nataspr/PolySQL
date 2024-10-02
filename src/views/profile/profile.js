@@ -10,6 +10,7 @@ import './profile.css'
 import {Link, useNavigate} from "react-router-dom";
 import Cookies from "js-cookie";
 import ProfileCard from "../../components/layout/profilePage/profile-card";
+import TeacherPanel from "../../components/layout/adminPage/teacher-panel";
 
 const Profile = (props) => {
   const navigate = useNavigate();
@@ -60,20 +61,33 @@ const Profile = (props) => {
         </Helmet>
         <HeaderFull></HeaderFull>
           {/*передача данных в карточку профиля*/}
-          <ProfileCard
-              user={userFio}
-              completedThemes={completedThemes}
-              completedTests={completedTests}
-              onClick={handleLogout}
-          />
+
 
           {parseInt(Cookies.get('role_id'), 10) === 3 ? (
-              <AdminPanel />
+              <>
+                  <ProfileCard
+                      user={userFio}
+                      completedThemes={completedThemes}
+                      completedTests={completedTests}
+                      onClick={handleLogout}
+                  />
+                  <TeacherPanel />
+                  <AdminPanel />
+              </>
           ) : parseInt(Cookies.get('role_id'), 10) === 1 ? (
               <AdminPanel />
           ) : (
+              <>
+              <ProfileCard
+                  user={userFio}
+                  completedThemes={completedThemes}
+                  completedTests={completedTests}
+                  onClick={handleLogout}
+              />
               <Contact />
+              </>
           )}
+
         <Footer rootClassName="footer-root-class-name1"></Footer>
       </div>
   )

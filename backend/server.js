@@ -6,7 +6,17 @@ const pool = require('./dbconfig');
 const Cookies = require("js-cookie");
 //создание сервера
 const app = express();
-const port = 5009;
+const port = process.env.PORT || 5009;
+
+// const path = require('path');
+//
+// // Обслуживание статических файлов
+// app.use(express.static(path.join(__dirname, 'build')));
+//
+// // Обработка всех маршрутов и возврат index.html
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, '../build', 'index.html'));
+// });
 
 //подключение к приложени.
 app.use(cookieParser());
@@ -179,6 +189,27 @@ app.get('/api/questions/', async (req, res) => {
         const result = await pool.query(query, [theory_id]);
         console.log(result);
         res.json(result.rows);
+    } catch (err) {
+        console.error('Ошибка выполнения запроса:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+app.get('/api/explanations', async (req, res) => {
+    try {
+        const query = `
+            SELECT 
+                a.answer AS answer,
+                a.task_id AS task_id,
+                ea.explanation_answer AS explanation_answer,
+                ea.answer_id AS answer_id
+            FROM 
+                users.explanation_answers ea
+            JOIN 
+                users.answers a ON a.answer_id = ea.answer_id;
+        `;
+
+        const result = await pool.query(query);
+        res.json(result.rows); // Возвращаем результат клиенту
     } catch (err) {
         console.error('Ошибка выполнения запроса:', err);
         res.status(500).json({ error: 'Internal Server Error' });
