@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/PolySQL_r/static/css/main.e3c08ef9.css",
-    "main.js": "/PolySQL_r/static/js/main.5605c76d.js",
-    "static/media/NotoSans-Italic-VariableFont_wdth,wght.ttf": "/PolySQL_r/static/media/NotoSans-Italic-VariableFont_wdth,wght.628d4779d07f4e15066b.ttf",
-    "static/media/NotoSans-VariableFont_wdth,wght.ttf": "/PolySQL_r/static/media/NotoSans-VariableFont_wdth,wght.b1d0ab70303caea663db.ttf",
-    "static/media/OpenSans-VariableFont_wdth,wght.ttf": "/PolySQL_r/static/media/OpenSans-VariableFont_wdth,wght.19ba637387f1d6142f55.ttf",
-    "static/media/waves-white.svg": "/PolySQL_r/static/media/waves-white.eac3c8078f7e1e28ef33f010c9782f40.svg",
-    "static/media/waves-blue.svg": "/PolySQL_r/static/media/waves-blue.89d4c7eb3a79051b719a0b0552e91367.svg",
-    "static/media/iphone-4-1000w.png": "/PolySQL_r/static/media/iphone-4-1000w.be46caa066d220f79e5e.png",
-    "static/media/iphone-2-1000w.png": "/PolySQL_r/static/media/iphone-2-1000w.e6e6d38cb6a1a7a0a67c.png",
-    "static/media/iphone-1-1000w.png": "/PolySQL_r/static/media/iphone-1-1000w.521c0c63b64c01232b65.png",
-    "static/media/iphone-3-1000w.png": "/PolySQL_r/static/media/iphone-3-1000w.c14b325e3696595c7899.png",
-    "static/media/profile2.png": "/PolySQL_r/static/media/profile2.ae465fa27b346ff22ef3.png",
-    "static/media/wave-1.svg": "/PolySQL_r/static/media/wave-1.cac1aff7d511e7496ab0dc74daf0d219.svg",
-    "static/media/top.svg": "/PolySQL_r/static/media/top.a1653e2770aaae3368732a05ef6f3848.svg",
-    "static/media/bottom.svg": "/PolySQL_r/static/media/bottom.a120839848f0cae97791552696ae8d2e.svg",
-    "index.html": "/PolySQL_r/index.html",
-    "main.e3c08ef9.css.map": "/PolySQL_r/static/css/main.e3c08ef9.css.map",
-    "main.5605c76d.js.map": "/PolySQL_r/static/js/main.5605c76d.js.map"
+    "main.css": "/PolySQL/static/css/main.d95675f2.css",
+    "main.js": "/PolySQL/static/js/main.3237daab.js",
+    "static/media/NotoSans-Italic-VariableFont_wdth,wght.ttf": "/PolySQL/static/media/NotoSans-Italic-VariableFont_wdth,wght.628d4779d07f4e15066b.ttf",
+    "static/media/NotoSans-VariableFont_wdth,wght.ttf": "/PolySQL/static/media/NotoSans-VariableFont_wdth,wght.b1d0ab70303caea663db.ttf",
+    "static/media/OpenSans-VariableFont_wdth,wght.ttf": "/PolySQL/static/media/OpenSans-VariableFont_wdth,wght.19ba637387f1d6142f55.ttf",
+    "static/media/waves-white.svg": "/PolySQL/static/media/waves-white.eac3c8078f7e1e28ef33f010c9782f40.svg",
+    "static/media/waves-blue.svg": "/PolySQL/static/media/waves-blue.89d4c7eb3a79051b719a0b0552e91367.svg",
+    "static/media/iphone-4-1000w.png": "/PolySQL/static/media/iphone-4-1000w.be46caa066d220f79e5e.png",
+    "static/media/iphone-2-1000w.png": "/PolySQL/static/media/iphone-2-1000w.e6e6d38cb6a1a7a0a67c.png",
+    "static/media/iphone-1-1000w.png": "/PolySQL/static/media/iphone-1-1000w.521c0c63b64c01232b65.png",
+    "static/media/iphone-3-1000w.png": "/PolySQL/static/media/iphone-3-1000w.c14b325e3696595c7899.png",
+    "static/media/profile2.png": "/PolySQL/static/media/profile2.ae465fa27b346ff22ef3.png",
+    "static/media/wave-1.svg": "/PolySQL/static/media/wave-1.cac1aff7d511e7496ab0dc74daf0d219.svg",
+    "static/media/top.svg": "/PolySQL/static/media/top.a1653e2770aaae3368732a05ef6f3848.svg",
+    "static/media/bottom.svg": "/PolySQL/static/media/bottom.a120839848f0cae97791552696ae8d2e.svg",
+    "index.html": "/PolySQL/index.html",
+    "main.d95675f2.css.map": "/PolySQL/static/css/main.d95675f2.css.map",
+    "main.3237daab.js.map": "/PolySQL/static/js/main.3237daab.js.map"
   },
   "entrypoints": [
-    "static/css/main.e3c08ef9.css",
-    "static/js/main.5605c76d.js"
+    "static/css/main.d95675f2.css",
+    "static/js/main.3237daab.js"
   ]
 }
