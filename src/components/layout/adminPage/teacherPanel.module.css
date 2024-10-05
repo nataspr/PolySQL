@@ -7,7 +7,19 @@
     height: 100%;
     opacity: 0.9;
 }
+.tableRow:hover {
+    background-color: lightblue;
+    cursor: pointer;
+}
 
+.tableRow.selected {
+    background-color: darkblue;
+    color: white;
+}
+.selected {
+    background-color: darkblue;
+    color: white;
+}
 .contact {
     width: 100%;
     max-width: 1320px;
@@ -65,3 +77,4 @@
     border-top: 1px solid #334283;
     background-color: #eaecef;
 }
+

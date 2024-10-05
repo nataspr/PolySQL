@@ -113,6 +113,7 @@ const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions, testSta
                         key={practice.practice_id}
                         taskNumber={practice.practice_id}
                         taskName={`${practice.practice_name}`}
+                        taskComment={`${practice.practice_comment}`}
                         taskDescription={practice.practice_text}
                     />
                 ))}

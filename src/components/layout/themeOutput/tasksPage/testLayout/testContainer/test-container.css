@@ -9,6 +9,11 @@
     color: var(--dl-color-theme-neutral-dark);
 
 }
+option{
+    background-color: transparent;
+    color:#4C5FB9;
+}
+
 .container11{
     gap: 1em;
 }

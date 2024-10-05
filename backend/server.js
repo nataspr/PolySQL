@@ -318,6 +318,7 @@ app.get('/api/get-practice', async (req, res) => {
                 p.practice_id,
                 p.practice_text,
                 p.practice_name,
+                p.comment,
                 p.theory_id
             FROM 
                 USERS.PRACTICE p
@@ -334,6 +335,7 @@ app.get('/api/get-practice', async (req, res) => {
             practice_id: row.practice_id,
             practice_text: row.practice_text,
             practice_name: row.practice_name,
+            practice_comment: row.comment,
             theory_id: row.theory_id
         }));
 
@@ -447,6 +449,77 @@ app.post('/api/admin/add', async (req, res) => {
     } catch (error) {
         console.error('Error:', error);
         res.status(500).send({ message: 'Server error' });
+    }
+});
+
+
+// Обработка данных для получения списка всех пользователей
+app.get('/api/rolesPanel', async (req, res) => {
+    try {
+        const query = `
+            SELECT
+                u.fio as fio,
+                u.login as login,
+                r.role_name as role
+            FROM
+                USERS.USERS u
+            LEFT JOIN
+                USERS.ROLES r ON u.role_id = r.role_id
+            WHERE 
+                r.role_id <> 1
+            ORDER BY
+          
+                u.fio;
+        `;
+
+        const result = await pool.query(query);
+
+        //console.log(result.rows);
+        res.json(result.rows);
+    } catch (err) {
+        console.error('Ошибка выполнения запроса:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+// Обработка данных для получения списка всех ролей
+app.get('/api/rolesList', async (req, res) => {
+    try {
+        const query = `
+            SELECT role_name as role
+            FROM USERS.ROLES 
+        `;
+
+        const result = await pool.query(query);
+
+        //console.log(result.rows);
+        res.json(result.rows);
+    } catch (err) {
+        console.error('Ошибка выполнения запроса:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+
+app.post('/api/updateRoles', async (req, res) => {
+    const updatedRoles = req.body; // Это объект вида {login: "новая роль"}
+
+    try {
+        const queries = Object.keys(updatedRoles).map(login => {
+            const role = updatedRoles[login];
+            return pool.query(`
+                UPDATE USERS.USERS
+                SET role_id = (SELECT role_id FROM USERS.ROLES WHERE role_name = $1)
+                WHERE login = $2
+            `, [role, login]);
+        });
+
+        // Выполняем все запросы параллельно
+        await Promise.all(queries);
+        res.status(200).json({ message: 'Roles updated successfully' });
+    } catch (error) {
+        console.error('Error updating roles:', error);
+        res.status(500).json({ error: 'Failed to update roles' });
     }
 });
 

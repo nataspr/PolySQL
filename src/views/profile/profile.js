@@ -11,6 +11,7 @@ import {Link, useNavigate} from "react-router-dom";
 import Cookies from "js-cookie";
 import ProfileCard from "../../components/layout/profilePage/profile-card";
 import TeacherPanel from "../../components/layout/adminPage/teacher-panel";
+import RolePanel from "../../components/layout/adminPage/role-panel";
 
 const Profile = (props) => {
   const navigate = useNavigate();
@@ -63,8 +64,9 @@ const Profile = (props) => {
           {/*передача данных в карточку профиля*/}
 
 
-          {parseInt(Cookies.get('role_id'), 10) === 3 ? (
+          {parseInt(Cookies.get('role_id'), 10) === 1 ? (
               <>
+                  {/*Для учителя*/}
                   <ProfileCard
                       user={userFio}
                       completedThemes={completedThemes}
@@ -74,8 +76,12 @@ const Profile = (props) => {
                   <TeacherPanel />
                   <AdminPanel />
               </>
-          ) : parseInt(Cookies.get('role_id'), 10) === 1 ? (
-              <AdminPanel />
+          ) : parseInt(Cookies.get('role_id'), 10) === 3 ? (
+              <>
+                  <RolePanel />
+                  <TeacherPanel />
+                  <AdminPanel />
+              </>
           ) : (
               <>
               <ProfileCard

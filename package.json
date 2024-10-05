@@ -20,8 +20,7 @@
   "scripts": {
     "start": "npm-run-all --parallel start-frontend start-backend",
     "start-frontend": "craco start",
-    "start-backend": "craco server",
-    "server": "node backend/server.js",
+    "start-backend": "node backend/server.js",
     "build": "craco build",
     "test": "craco test --env=jsdom",
     "eject": "craco eject",
