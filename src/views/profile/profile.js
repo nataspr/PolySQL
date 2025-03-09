@@ -16,6 +16,7 @@ import RolePanel from "../../components/layout/adminPage/role-panel";
 const Profile = (props) => {
   const navigate = useNavigate();
   //данные для передачи в профиль карточку
+//   TODO
     const [completedThemes, setCompletedThemes] = useState(0);
     const [completedTests, setCompletedTests] = useState(0);
     const userFio = Cookies.get('fio');
@@ -23,6 +24,7 @@ const Profile = (props) => {
     useEffect(() => {
         const fetchProgress = async () => {
             try {
+                // TODO проверить апи
                 const response = await fetch('/api/user-progress');
                 if (!response.ok) {
                     throw new Error('Failed to fetch user progress');
