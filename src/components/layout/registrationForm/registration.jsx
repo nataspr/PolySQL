@@ -10,6 +10,7 @@ const Registration = (props) => {
   const [password, setPassword] = useState('');
   const [login, setLogin] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [group, setGroup] = useState('');
 
   //для работы с формой, отправить ее компоненты на сервер для занесения в бд
   const handleSubmit = async (event) => {
@@ -22,10 +23,11 @@ const Registration = (props) => {
     const data = {
       login: event.target[3].value,
       password: event.target[5].value,
-      fio: `${event.target[0].value} ${event.target[1].value}`
+      fio: `${event.target[0].value} ${event.target[1].value}`,
+      group: event.target[6].value
     };
     try {
-      const response = await fetch('/api/register', { // измените URL на правильный
+      const response = await fetch('/api/register', { 
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -123,7 +125,18 @@ const Registration = (props) => {
             placeholder={props.textInputPlaceholder2}
             className="registration-text-input2 thq-grid-2"
         />
-
+        {/* добавленная строка для ввода группы */}
+        <label htmlFor="contact-form-7-first-name" className="thq-body-small">
+          {props.text6}
+        </label>
+        <input
+              type="text"
+              value={group}
+              onChange={(e) => setGroup(e.target.value)}
+              required="true"
+              placeholder={props.textInputPlaceholder5}
+              className="registration-text-input2 thq-grid-2"
+          />
         <span>{props.text5}</span>
         <div className="registration-container">
           <div className="registration-container1">
@@ -152,6 +165,8 @@ Registration.defaultProps = {
   textInputPlaceholder: 'Введите email',
   text2: 'Введите свой логин',
   textInputPlaceholder2: 'Повторите пароль',
+  textInputPlaceholder5: 'Введите номер группы (например 5130903/10302)',
+  text6: 'Введите номер группы',
 }
 
 Registration.propTypes = {

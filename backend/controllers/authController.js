@@ -37,9 +37,10 @@ const login = async (req, res) => {
 };
 
 const register = async (req, res) => {
-    const { login, password, fio } = req.body;
+    // передача в функцию регистрации необходимых данных пользователя
+    const { login, password, fio, group } = req.body;
     try {
-        const result = await authService.register(login, password, fio);
+        const result = await authService.register(login, password, fio, group);
         res.status(201).json(result);
     } catch (error) {
         res.status(500).json({ message: 'Error registering user' });
