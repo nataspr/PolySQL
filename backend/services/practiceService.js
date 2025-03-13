@@ -15,6 +15,7 @@ const getPractice = async (theory_id) => {
     `;
 
     const result = await pool.query(query, [theory_id]);
+    console.log(result.rows); // Логируем результат
     return result.rows;
 };
 

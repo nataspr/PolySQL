@@ -24,18 +24,19 @@ const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions, testSta
                 const response = await fetch('/api/get-practice', {
                     headers: {
                         'Content-Type': 'application/json',
-                        'theory-id': selectedTheme.id // идентификатор выбранной темы
+                        //'theory-id': selectedTheme.id // идентификатор выбранной темы - NEW заголовок удален, тк контроллер берет значение из cookie
                     }
                 });
                 if (!response.ok) {
                     throw new Error('Failed to fetch practices');
                 }
                 const data = await response.json();
-                if (data.practices) {
-                    setPractices(data.practices);
-                } else {
-                    console.error('Failed to fetch practices:', data.error);
-                }
+                setPractices(data); // сервер возвращает массив напрямую
+                // if (data.practices) {
+                //     setPractices(data.practices);
+                // } else {
+                //     console.error('Failed to fetch practices:', data.error);
+                // }
             } catch (error) {
                 console.error('Error fetching practices:', error);
             }
@@ -113,7 +114,7 @@ const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions, testSta
                         key={practice.practice_id}
                         taskNumber={practice.practice_id}
                         taskName={`${practice.practice_name}`}
-                        taskComment={`${practice.practice_comment}`}
+                        taskComment={`${practice.comment}`}
                         taskDescription={practice.practice_text}
                     />
                 ))}

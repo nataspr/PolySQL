@@ -80,6 +80,13 @@ const Profile = (props) => {
               </>
           ) : parseInt(Cookies.get('role_id'), 10) === 3 ? (
               <>
+              {/*у администратора тоже есть карточка профиля с выходом*/}
+                  <ProfileCard
+                      user={userFio}
+                      completedThemes={completedThemes}
+                      completedTests={completedTests}
+                      onClick={handleLogout}
+                  />
                   <RolePanel />
                   <TeacherPanel />
                   <AdminPanel />
