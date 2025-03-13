@@ -83,6 +83,10 @@ const submitAnswers = async (answers, theory_id, user_id) => {
     `;
 
     const result = await pool.query(query, [theory_id]);
+// проверка на отсутствие верного результата теста
+    if (!result.rows || result.rows.length === 0) {
+        throw new Error('No correct answers found for the given theory_id (test)');
+    }
 
     const correctAnswers = result.rows.reduce((acc, row) => {
         acc[row.task_id] = row.correct_answers;
@@ -115,5 +119,3 @@ const submitAnswers = async (answers, theory_id, user_id) => {
 };
 
 module.exports = { getPractice, submitPractice, submitAnswers };
-
-module.exports = { getPractice, submitPractice };
