@@ -23,4 +23,21 @@ const submitPractice = async (req, res) => {
     }
 };
 
+// submitPractice такого апи пока нет, есть апи для отправки отвветов пользователя на тест
+const submitAnswers = async (req, res) => {
+    const { answers } = req.body;
+    const theory_id = req.cookies.theory_id;
+    const user_id = req.cookies.user_id;
+
+    try {
+        const result = await practiceService.submitAnswers(answers, theory_id, user_id);
+        res.json(result);
+    } catch (err) {
+        console.error('Ошибка выполнения запроса:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+module.exports = { getPractice, submitPractice, submitAnswers };
+
 module.exports = { getPractice, submitPractice };
