@@ -109,7 +109,8 @@ const ThemePanel = ({ isExpanded, onIconClick, selectedTheme, questions, testSta
                 </div>
             )}
             <div className={"TaskContainer"}>
-                {selectedTheme && parseInt(Cookies.get('theory_id'), 10) !== 1 && practices.map(practice => (
+            {/* {добавлена проверка на авторизованного пользователя у заданий тоже, видно только если зарегистрирован} */}
+                {isAuthenticated && selectedTheme && parseInt(Cookies.get('theory_id'), 10) !== 1 && practices.map(practice => (
                     <Task
                         key={practice.practice_id}
                         taskNumber={practice.practice_id}
