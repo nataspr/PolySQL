@@ -30,4 +30,14 @@ const getCorrectAnswers = async (req, res) => {
     }
 };
 
-module.exports = { getThemes, getQuestions, getCorrectAnswers };
+const getExplanations = async (req, res) => {
+    try {
+        const explanations = await theoryService.getExplanations();
+        res.json(explanations);
+    } catch (err) {
+        console.error('Ошибка выполнения запроса:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+module.exports = { getThemes, getQuestions, getCorrectAnswers, getExplanations };

@@ -80,4 +80,21 @@ const getCorrectAnswers = async (theory_id) => {
     return result.rows;
 };
 
-module.exports = { getThemes, getQuestions, getCorrectAnswers };
+const getExplanations = async () => {
+    const query = `
+        SELECT 
+            a.answer AS answer,
+            a.task_id AS task_id,
+            ea.explanation_answer AS explanation_answer,
+            ea.answer_id AS answer_id
+        FROM 
+            USERS.EXPLANATION_ANSWERS ea
+        JOIN 
+            USERS.ANSWERS a ON a.answer_id = ea.answer_id;
+    `;
+
+    const result = await pool.query(query);
+    return result.rows;
+};
+
+module.exports = { getThemes, getQuestions, getCorrectAnswers, getExplanations };
