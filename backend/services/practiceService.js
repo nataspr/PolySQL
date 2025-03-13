@@ -83,7 +83,7 @@ const submitAnswers = async (answers, theory_id, user_id) => {
     `;
 
     const result = await pool.query(query, [theory_id]);
-// проверка на отсутствие верного результата теста
+    // проверка на отсутствие верного результата теста
     if (!result.rows || result.rows.length === 0) {
         throw new Error('No correct answers found for the given theory_id (test)');
     }
@@ -93,17 +93,38 @@ const submitAnswers = async (answers, theory_id, user_id) => {
         return acc;
     }, {});
 
+    // Проверка данных
+    if (!answers || !Array.isArray(answers)) {
+        throw new Error("Invalid answers format");
+    }
+
     const userResults = answers.map(answer => {
-        const isCorrect = correctAnswers[answer.task_id].some(correctAnswer => correctAnswer === answer.answer);
+        // Проверяем, что task_id и answer существуют
+        if (answer.task_id === undefined || answer.answer === undefined) {
+            console.error("Invalid answer data:", answer);
+            throw new Error("Missing task_id or answer");
+        }
+
+        // Преобразуем task_id в число
+        const task_id = Number(answer.task_id);
+        const correctAnswersForTask = correctAnswers[task_id] || [];
+
+        // Проверяем, есть ли ответ в списке правильных
+        const isCorrect = correctAnswersForTask.includes(answer.answer.trim());
+
         return {
-            task_id: answer.task_id,
-            user_answer: answer.user_answer,
+            task_id: task_id,
+            user_answer: answer.answer,
             correct: isCorrect
         };
     });
 
+    // console.log("Updating tasks:", userResults);
+
     const totalQuestions = userResults.length;
     const correctAnswersCount = userResults.filter(result => result.correct).length;
+
+    // console.log('Updating task:', result.task_id, 'for user:', user_id, 'with correct:', result.correct); 
 
     const updateQueries = userResults.map(result => {
         return pool.query(`

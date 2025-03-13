@@ -49,33 +49,66 @@ const TestComponent = ({ questions_ar, onTestResult, onEndTest, rootClassName })
         event.preventDefault();
         console.log('questions_ar',questions_ar);
         const formData = new FormData(formRef.current);
-        const answers = questions_ar.map((question, index) => ({
-            task_id: question.task_id,
-            answer: formData.get(`question${index}`)
-        }));
 
-        const response = await fetch('/api/submit-answers', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ answers })
+        // Формируем массив ответов с проверкой данных
+        const answers = questions_ar.map((question, index) => {
+            // Проверяем, что task_id существует и является числом
+            const task_id = Number(question.task_id);
+            if (isNaN(task_id)) {
+                console.error('Invalid task_id:', question.task_id);
+                throw new Error(`Invalid task_id for question ${index}`);
+            }
+
+            // Получаем ответ из формы
+            const answerIndex = formData.get(`question${index}`);
+            if (answerIndex === null) {
+                console.error('No answer selected for question:', index);
+                throw new Error(`Answer for question ${index} is missing`);
+            }
+
+            // Получаем текст ответа из массива question.answers
+            const answer = question.answers[Number(answerIndex)];
+            if (!answer) {
+                console.error('Invalid answer index:', answerIndex);
+                throw new Error(`Invalid answer for question ${index}`);
+            }
+
+            return {
+                task_id: Number(question.task_id), // Явное преобразование в число
+                answer: question.answers[answerIndex] // Получаем текст ответа
+            };
         });
 
-        const result = await response.json();
+        console.log('Submitting answers:', answers); // Логируем данные перед отправкой
+        
+        // отправка данных на сервер
+        try {
+            const response = await fetch('/api/submit-answers', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ answers })
+            });
+    
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Failed to submit answers');
+            }
+    
+            const result = await response.json();
+            console.log('Server response:', result);
+    
+            // Обновляем состояние
+            setUserAnswers(answers.map(a => ({ task_id: a.task_id, answer: a.answer })));
+            setResultData(result);
+            onTestResult(result);
+            onEndTest(result);
+    
+        } catch (error) {
+            console.error('Error submitting answers:', error);
+            alert('Произошла ошибка при отправке ответов. Попробуйте еще раз.');
+        }
 
-        const answers_text = questions_ar.map((question, index) => ({
-            task_id: question.task_id,
-            answer: question.answers[formData.get(`question${index}`)]
-        }));
-
-        console.log('answers_text',answers_text);
-        console.log('result',result);
-
-        setUserAnswers(answers_text);
-        setResultData(result); // Сохраняем результат
-        onTestResult(result); // Передаем результат теста в родительский компонент
-        onEndTest(result); // Переключаем состояние теста на завершенный
+        
     };
 
     const handleClear = () => {

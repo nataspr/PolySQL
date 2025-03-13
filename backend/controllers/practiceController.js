@@ -39,5 +39,3 @@ const submitAnswers = async (req, res) => {
 };
 
 module.exports = { getPractice, submitPractice, submitAnswers };
-
-// module.exports = { getPractice, submitPractice };
