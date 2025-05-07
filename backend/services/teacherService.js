@@ -1,17 +1,17 @@
-const db = require('../db');
+const pool = require('../dbconfig');
 
-exports.getAllStudents = async () => {
+const getAllStudents = async () => {
     const query = `
         SELECT u.user_id, u.fio, u.login, u.role_id, g.group_name
         FROM USERS.USERS u
         LEFT JOIN USERS.GROUPS g ON u.group_id = g.group_id
         WHERE u.role_id = 2;
     `;
-    const result = await db.query(query);
+    const result = await pool.query(query);
     return result.rows;
 };
 
-exports.getStudentPractices = async (userId) => {
+const getStudentPractices = async (userId) => {
     const query = `
         SELECT 
             cp.user_id,
@@ -25,12 +25,12 @@ exports.getStudentPractices = async (userId) => {
         JOIN USERS.PRACTICE p ON cp.practice_id = p.practice_id
         WHERE cp.user_id = $1;
     `;
-    const result = await db.query(query, [userId]);
+    const result = await pool.query(query, [userId]);
     return result.rows;
 };
 
-exports.updateStudentPractices = async (userId, tasks) => {
-    const client = await db.getClient();
+const updateStudentPractices = async (userId, tasks) => {
+    const client = await pool.getClient();
     try {
         await client.query('BEGIN');
         
