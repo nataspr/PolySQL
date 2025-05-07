@@ -10,6 +10,7 @@ const theoryRoutes = require('./routes/theoryRoutes');
 const practiceRoutes = require('./routes/practiceRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const userRoutes = require('./routes/userRoutes');
+const teacherRoutes = require('./routes/teacherRoutes');
 
 // Настройка Express
 const app = express();
@@ -26,6 +27,7 @@ app.use('/api', theoryRoutes);
 app.use('/api', practiceRoutes);
 app.use('/api', adminRoutes);
 app.use('/api', userRoutes);
+app.use('/api', teacherRoutes);
 
 // Проверка подключения к базе данных
 pool.query('SELECT NOW()', (err, res) => {
