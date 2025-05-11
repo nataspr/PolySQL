@@ -4,7 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-const pool = require('./dbconfig'); // Импорт пула соединений из dbconfig.js
+const {pool, testPool} = require('./dbconfig'); // Импорт пула соединений из dbconfig.js
 
 // Импорт маршрутов
 const authRoutes = require('./routes/authRoutes');
@@ -40,6 +40,14 @@ app.use('/api', teacherRoutes);
 
 // Проверка подключения к базе данных
 pool.query('SELECT NOW()', (err, res) => {
+    if (err) {
+        console.error('Error connecting to the database:', err);
+    } else {
+        console.log('Database connection successful:', res.rows[0]);
+    }
+});
+
+testPool.query('SELECT NOW()', (err, res) => {
     if (err) {
         console.error('Error connecting to the database:', err);
     } else {
