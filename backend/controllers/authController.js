@@ -27,12 +27,17 @@ const login = async (req, res) => {
             console.log('fio:', user.fio);
             console.log('role_id:', user.role_id);
 
-            res.status(200).json({ success: true, user });
+            // В ответе возврат токена
+            res.status(200).json({ 
+                success: true, 
+                user,
+                token: result.token // Отправить JWT клиенту
+            });
         } else {
             res.status(401).json(result);
         }
     } catch (error) {
-        res.status(500).json({ success: false, message: 'Error during login' });
+        res.status(500).json({ success: false, message: 'Error during login', error: error.message });
     }
 };
 

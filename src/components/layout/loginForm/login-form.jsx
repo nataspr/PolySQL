@@ -46,6 +46,8 @@ const LoginForm = (props) => {
         setLoginSuccess(result.success);
         if (result.success) {
           console.log('Login successful');
+          // Сохранить токен в localStorage
+            localStorage.setItem('jwtToken', result.token);
           // Выполняем дополнительные действия при успешном входе
           props.setIsLoggedIn(true);
           navigate('/profile');

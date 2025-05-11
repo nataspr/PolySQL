@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -12,6 +14,8 @@ const adminRoutes = require('./routes/adminRoutes');
 const userRoutes = require('./routes/userRoutes');
 const teacherRoutes = require('./routes/teacherRoutes');
 
+const { authenticateJWT } = require('./middleware/authMiddleware');
+
 // Настройка Express
 const app = express();
 
@@ -20,6 +24,11 @@ app.use(cookieParser());
 app.use(cors());
 app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
+
+// Защищенный маршрут Middleware
+app.get('/api/protected-route', authenticateJWT, (req, res) => {
+    res.json({ message: 'Protected data', user: req.user });
+});
 
 // Подключение маршрутов
 app.use('/api', authRoutes);
