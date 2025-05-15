@@ -451,7 +451,7 @@ const taskService = {
   // Получение эталонного правильного решения из базы
   async getReferenceSolution(taskId) {
     const res = await pool.query(
-      'SELECT correct_answer FROM USERS.PRACTICES WHERE practice_id = $1',
+      'SELECT correct_answer FROM USERS.CORRECT_PRACTICE_ANSWERS WHERE practice_id = $1',
       [taskId]
     );
     return res.rows[0];
