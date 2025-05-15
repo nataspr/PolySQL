@@ -107,7 +107,7 @@
 .login-form-button {
   color: var(--dl-color-gray-white);
   width: 100%;
-  outlinr: none;
+  outline: none;
   font-size: 0.75rem;
   font-style: normal;
   transition: all .15s ease-in;

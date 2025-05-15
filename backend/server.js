@@ -4,7 +4,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-const {pool, testPool} = require('./dbconfig'); // Импорт пула соединений из dbconfig.js
+const pool = require('./dbconfig');
+const testPool = require('./testdbconfig');
 
 // Импорт маршрутов
 const authRoutes = require('./routes/authRoutes');
@@ -13,6 +14,7 @@ const practiceRoutes = require('./routes/practiceRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const userRoutes = require('./routes/userRoutes');
 const teacherRoutes = require('./routes/teacherRoutes');
+const taskRoutes = require('./routes/taskRoutes');
 
 const { authenticateJWT } = require('./middleware/authMiddleware');
 
@@ -37,6 +39,7 @@ app.use('/api', practiceRoutes);
 app.use('/api', adminRoutes);
 app.use('/api', userRoutes);
 app.use('/api', teacherRoutes);
+app.use('/api', taskRoutes);
 
 // Проверка подключения к базе данных
 pool.query('SELECT NOW()', (err, res) => {
