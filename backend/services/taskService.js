@@ -8,35 +8,6 @@ const levenshtein = require('fast-levenshtein');
  * чтобы избежать проблем с this внутри методов
  */
 
-// Сравнение двух узлов AST с глубокой рекурсией
-function compareNodesDeep(n1, n2) {
-  if (!n1 || !n2 || typeof n1 !== 'object' || typeof n2 !== 'object') return false;
-
-  const keys1 = Object.keys(n1).sort();
-  const keys2 = Object.keys(n2).sort();
-  if (keys1.length !== keys2.length) return false;
-  if (!keys1.every((k, i) => k === keys2[i])) return false;
-
-  for (const key of keys1) {
-    const v1 = n1[key];
-    const v2 = n2[key];
-
-    if (typeof v1 === 'object' && typeof v2 === 'object') {
-      if (Array.isArray(v1) && Array.isArray(v2)) {
-        if (v1.length !== v2.length) return false;
-        for (let i = 0; i < v1.length; i++) {
-          if (!compareNodesDeep(v1[i], v2[i])) return false;
-        }
-      } else if (!compareNodesDeep(v1, v2)) {
-        return false;
-      }
-    } else if (v1 !== v2) {
-      return false;
-    }
-  }
-  return true;
-}
-
 // Извлечение дочерних узлов из AST-узла
 function extractChildren(node) {
   if (!node || typeof node !== 'object') return [];
@@ -145,63 +116,6 @@ async function checkSyntaxWithLevenshtein(userSql, referenceSql) {
   }
 }
 
-// Семантический анализ с обходом AST
-// async function checkSemanticsWithAST(userSql, referenceSql) {
-//   try {
-//     // Парсим SQL в AST-деревья
-//     const userAst = parse(userSql);
-//     const refAst = parse(referenceSql);
-//     // Сравниваем AST в ширину
-//     const { totalNodes, matchedNodes, similarity } = compareASTBreadthFirst(userAst, refAst);
-//     const semanticThreshold = 0.6; // Порог похожести
-//     return {
-//       isValid: similarity >= semanticThreshold,
-//       similarity,
-//       totalNodes,
-//       matchedNodes,
-//       userAst,
-//       refAst
-//     };
-//   } catch (error) {
-//     return { isValid: false, error: error.message };
-//   }
-// }
-
-// Обход AST в ширину и сравнение узлов с накоплением частичных совпадений
-function compareASTBreadthFirst(ast1, ast2) {
-  let totalNodes = 0;
-  let similarityScore = 0;
-
-  const queue1 = Array.isArray(ast1) ? [...ast1] : [ast1];
-  const queue2 = Array.isArray(ast2) ? [...ast2] : [ast2];
-
-  while (queue1.length > 0 && queue2.length > 0) {
-    const node1 = queue1.shift();
-    const node2 = queue2.shift();
-    totalNodes++;
-
-    const score = compareNodesFuzzy(node1, node2);
-    similarityScore += score;
-
-    const children1 = extractChildren(node1);
-    const children2 = extractChildren(node2);
-
-    queue1.push(...children1);
-    queue2.push(...children2);
-  }
-
-  // Остатки считаем за несовпадения
-  totalNodes += queue1.length + queue2.length;
-
-  const similarity = totalNodes === 0 ? 0 : similarityScore / totalNodes;
-
-  return {
-    totalNodes,
-    matchedNodes: similarityScore,
-    similarity
-  };
-}
-
 // сортировка строк
 function sortRows(matrix) {
   return matrix
@@ -219,83 +133,6 @@ function* getPermutations(arr, n = arr.length) {
     }
   }
 }
-
-//применение перестановки к матрице
-function permuteColumns(matrix, perm) {
-  return matrix.map(row => perm.map(i => row[i] ?? 0));
-}
-function calculateMatrixSimilarity(mat1, mat2) {
-  const rows = Math.min(mat1.length, mat2.length);
-  const cols = Math.min(mat1[0]?.length || 0, mat2[0]?.length || 0);
-  let total = rows * cols;
-  let matches = 0;
-
-  for (let i = 0; i < rows; i++) {
-    for (let j = 0; j < cols; j++) {
-      if (mat1[i][j] === mat2[i][j]) matches++;
-    }
-  }
-
-  return total ? matches / total : 0;
-}
-
-function astToMatrix(ast) {
-  const matrix = [];
-  const queue = Array.isArray(ast) ? [...ast] : [ast];
-
-  while (queue.length > 0) {
-    const node = queue.shift();
-    const row = [];
-
-    for (const key in node) {
-      const val = node[key];
-      if (typeof val === 'object' && val !== null) {
-        queue.push(val);
-        row.push(1); // структура
-      } else if (typeof val === 'string') {
-        row.push(val.length); // строка по длине
-      } else if (typeof val === 'number') {
-        row.push(val);
-      } else {
-        row.push(0); // всё остальное
-      }
-    }
-
-    matrix.push(row);
-  }
-
-  return matrix;
-}
-
-// async function checkSemanticsWithAST(userSql, referenceSql) {
-//   try {
-//     const userAst = parse(userSql);
-//     const refAst = parse(referenceSql);
-
-//     const mat1 = astToMatrix(userAst);
-//     const mat2 = astToMatrix(refAst);
-
-//     if (mat1[0].length !== mat2[0].length) {
-//       return { isValid: false, similarity: 0, reason: 'Перепутаны размерности матриц' };
-//     }
-
-//     let maxSim = 0;
-//     const colIndices = [...Array(mat1[0].length).keys()];
-
-//     for (const perm of getPermutations(colIndices)) {
-//       const permuted = permuteColumns(mat1, perm);
-//       const sim = calculateMatrixSimilarity(sortRows(permuted), sortRows(mat2));
-//       if (sim > maxSim) maxSim = sim;
-//     }
-
-//     return {
-//       isValid: maxSim >= 0.6,
-//       similarity: maxSim
-//     };
-//   } catch (err) {
-//     return { isValid: false, error: err.message };
-//   }
-// }
 
 function calculateFlexibleSimilarity(mat1, mat2) {
   const rows = Math.min(mat1.length, mat2.length);
@@ -563,36 +400,43 @@ const taskService = {
     }
   },
 
-  // Проверка производительности запроса с помощью EXPLAIN ANALYZE
-  async checkPerformance(userSql, referenceSql) {
-    try {
-      const startUser = Date.now();
-      await testPool.query('EXPLAIN ANALYZE ' + userSql);
-      const userTime = Date.now() - startUser;
+  // Проверка производительности запроса с помощью EXPLAIN ANALYZE (FORMAT JSON)
+  async checkPerformance(userSql, referenceSql)  {
+  try {
+    // План выполнения эталонного запроса
+    const refPlanRes = await testPool.query("EXPLAIN (ANALYZE, FORMAT JSON) " + referenceSql);
+    const refJson = refPlanRes.rows[0]['QUERY PLAN'];
+    const refPlan = typeof refJson === 'string' ? JSON.parse(refJson) : refJson;
+    const refTime = refPlan[0]['Execution Time'];
 
-      const startRef = Date.now();
-      await testPool.query('EXPLAIN ANALYZE ' + referenceSql);
-      const refTime = Date.now() - startRef;
+    // План выполнения пользовательского запроса
+    const userPlanRes = await testPool.query("EXPLAIN (ANALYZE, FORMAT JSON) " + userSql);
+    const userJson = userPlanRes.rows[0]['QUERY PLAN'];
+    const userPlan = typeof userJson === 'string' ? JSON.parse(userJson) : userJson;
+    const userTime = userPlan[0]['Execution Time'];
 
-      // Процент допустимого превышения времени (50%)
-      const isValid = userTime < refTime * 1.5;
-      const percentage = isValid ? 100 : Math.round((refTime * 1.5 / userTime) * 100);
+    // Допустимое превышение — до 1.5x времени эталона
+    const isValid = userTime <= refTime * 1.5;
 
-      return {
-        isValid,
-        userTime,
-        refTime,
-        percentage,
-        message: `Производительность: ${isValid ? 'зачет' : 'незачет'} (${percentage}%)`
-      };
-    } catch (error) {
-      return {
-        isValid: false,
-        error: error.message,
-        message: 'Проверка производительности не удалась: ' + error.message
-      };
-    }
-  },
+    // Расчёт процента производительности
+    const ratio = refTime * 1.5 / userTime;
+    const percentage = isValid ? 100 : Math.round(ratio * 100);
+
+    return {
+      isValid,
+      userTime,
+      refTime,
+      percentage,
+      message: `Производительность: ${isValid ? 'зачет' : 'незачет'} (${percentage}%)`
+    };
+  } catch (error) {
+    return {
+      isValid: false,
+      error: error.message,
+      message: 'Проверка производительности не удалась: ' + error.message
+    };
+  }
+},
 
   // Проверка совпадения данных выборки между запросами
   async checkDataSelection(userSql, referenceSql) {
