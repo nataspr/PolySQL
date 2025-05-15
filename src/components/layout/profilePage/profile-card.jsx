@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from "react-router-dom";
 import NextButton from "../../UI/nextButton/next-button";
 
-const ProfileCard = ({ user, completedThemes, completedTests, onClick }) => {
+const ProfileCard = ({ user, completedThemes, completedTests, completedPractices, onClick }) => {
     return (
         <div className="profile-profile">
             <img
@@ -28,10 +28,10 @@ const ProfileCard = ({ user, completedThemes, completedTests, onClick }) => {
               <span>Тестов выполнено: </span>
               <span className="profile-text05">{completedTests}</span>
             </span>
-                    {/*        <span>*/}
-                    {/*  <span>Практик сделано: </span>*/}
-            {/*  <span className="profile-text08">2</span>*/}
-            {/*</span>*/}
+            <span className="profile-text07">
+            <span>Практик сделано: </span>
+            <span className="profile-text05">{completedPractices}</span>
+            </span>
                 </div>
                 <span className="Medium">
             Возможно здесь будет написано что-то о курсах? Но никто не уверен,

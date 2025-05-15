@@ -45,7 +45,7 @@ const login = async (login, password) => {
 let group_id = '0';
 
 const register = async (login, password, fio, group) => {
-    const client = await mainPool.connect();
+    const client = await pool.connect();
     try {
         await client.query('BEGIN');
 

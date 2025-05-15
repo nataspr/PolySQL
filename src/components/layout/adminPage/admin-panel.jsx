@@ -26,7 +26,7 @@ const AdminPanel = () => {
     //все данные должны быть введены
     const handleSave = () => {
             // Отправка данных на сервер
-            fetch('/api/admin/add', {
+            fetch('/api/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

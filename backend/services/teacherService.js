@@ -30,7 +30,7 @@ const getStudentPractices = async (userId) => {
 };
 
 const updateStudentPractices = async (userId, tasks) => {
-    const client = await pool.getClient();
+    const client = await pool.connect();
     try {
         await client.query('BEGIN');
         

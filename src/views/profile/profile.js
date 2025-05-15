@@ -19,20 +19,24 @@ const Profile = (props) => {
 //   TODO
     const [completedThemes, setCompletedThemes] = useState(0);
     const [completedTests, setCompletedTests] = useState(0);
+    const [completedPractices, setCompletedPractices] = useState(0);
+
     const userFio = Cookies.get('fio');
 
     useEffect(() => {
         const fetchProgress = async () => {
             try {
-                // TODO проверить апи
                 const response = await fetch('/api/user-progress');
                 if (!response.ok) {
                     throw new Error('Failed to fetch user progress');
                 }
                 const data = await response.json();
+                console.log("Полученные данные прогресса:", data);
                 if (data) {
                     setCompletedThemes(data.completed_theories);
                     setCompletedTests(data.completed_theories); // выполненные тесты = выполненные темы (практики не учитывать)
+                    setCompletedPractices(data.completed_practices);
+                    console.log("Установлены completedPractices:", data.completed_practices);
                 } else {
                     console.error('Failed to fetch progress:', data.error);
                 }
@@ -73,6 +77,7 @@ const Profile = (props) => {
                       user={userFio}
                       completedThemes={completedThemes}
                       completedTests={completedTests}
+                      completedPractices={completedPractices}
                       onClick={handleLogout}
                   />
                   <TeacherPanel />
@@ -85,6 +90,7 @@ const Profile = (props) => {
                       user={userFio}
                       completedThemes={completedThemes}
                       completedTests={completedTests}
+                      completedPractices={completedPractices}
                       onClick={handleLogout}
                   />
                   <RolePanel />
@@ -97,6 +103,7 @@ const Profile = (props) => {
                   user={userFio}
                   completedThemes={completedThemes}
                   completedTests={completedTests}
+                  completedPractices={completedPractices}
                   onClick={handleLogout}
               />
               <Contact />
