@@ -57,6 +57,36 @@ function extractChildren(node) {
   return children;
 }
 
+// более ПРИБЛИЖЕННАЯ оценка семантического метода (проверяет все узлы и не выдает false при одном несовпадении)
+// --- Новый метод сравнения AST-узлов — устойчивый к мелким опечаткам ---
+function compareNodesFuzzy(n1, n2) {
+  if (!n1 || !n2 || typeof n1 !== 'object' || typeof n2 !== 'object') return 0;
+
+  const keys1 = Object.keys(n1);
+  const keys2 = Object.keys(n2);
+  const allKeys = Array.from(new Set([...keys1, ...keys2]));
+
+  let matches = 0;
+  let total = allKeys.length;
+
+  for (const key of allKeys) {
+    const v1 = n1[key];
+    const v2 = n2[key];
+
+    if (v1 === undefined || v2 === undefined) continue;
+
+    if (typeof v1 === 'object' && typeof v2 === 'object') {
+      matches += compareNodesFuzzy(v1, v2); // рекурсивно
+    } else if (typeof v1 === 'string' && typeof v2 === 'string') {
+      matches += 1 - levenshtein.get(v1.toLowerCase(), v2.toLowerCase()) / Math.max(v1.length, v2.length);
+    } else {
+      matches += v1 === v2 ? 1 : 0;
+    }
+  }
+
+  return total === 0 ? 0 : matches / total;
+}
+
 // Проверка, содержит ли запрос только SELECT
 function isSelectOnly(sql) {
   // Убираем комментарии и пробелы
@@ -116,32 +146,31 @@ async function checkSyntaxWithLevenshtein(userSql, referenceSql) {
 }
 
 // Семантический анализ с обходом AST
-async function checkSemanticsWithAST(userSql, referenceSql) {
-  try {
-    // Парсим SQL в AST-деревья
-    const userAst = parse(userSql);
-    const refAst = parse(referenceSql);
-    // Сравниваем AST в ширину
-    const { totalNodes, matchedNodes } = compareASTBreadthFirst(userAst, refAst);
-    const similarity = matchedNodes / totalNodes;
-    const semanticThreshold = 0.7; // Порог похожести
-    return {
-      isValid: similarity >= semanticThreshold,
-      similarity,
-      totalNodes,
-      matchedNodes,
-      userAst,
-      refAst
-    };
-  } catch (error) {
-    return { isValid: false, error: error.message };
-  }
-}
+// async function checkSemanticsWithAST(userSql, referenceSql) {
+//   try {
+//     // Парсим SQL в AST-деревья
+//     const userAst = parse(userSql);
+//     const refAst = parse(referenceSql);
+//     // Сравниваем AST в ширину
+//     const { totalNodes, matchedNodes, similarity } = compareASTBreadthFirst(userAst, refAst);
+//     const semanticThreshold = 0.6; // Порог похожести
+//     return {
+//       isValid: similarity >= semanticThreshold,
+//       similarity,
+//       totalNodes,
+//       matchedNodes,
+//       userAst,
+//       refAst
+//     };
+//   } catch (error) {
+//     return { isValid: false, error: error.message };
+//   }
+// }
 
-// Обход AST в ширину и сравнение узлов
+// Обход AST в ширину и сравнение узлов с накоплением частичных совпадений
 function compareASTBreadthFirst(ast1, ast2) {
   let totalNodes = 0;
-  let matchedNodes = 0;
+  let similarityScore = 0;
 
   const queue1 = Array.isArray(ast1) ? [...ast1] : [ast1];
   const queue2 = Array.isArray(ast2) ? [...ast2] : [ast2];
@@ -151,21 +180,198 @@ function compareASTBreadthFirst(ast1, ast2) {
     const node2 = queue2.shift();
     totalNodes++;
 
-    if (compareNodesDeep(node1, node2)) {
-      matchedNodes++;
+    const score = compareNodesFuzzy(node1, node2);
+    similarityScore += score;
 
-      const children1 = extractChildren(node1);
-      const children2 = extractChildren(node2);
+    const children1 = extractChildren(node1);
+    const children2 = extractChildren(node2);
 
-      queue1.push(...children1);
-      queue2.push(...children2);
+    queue1.push(...children1);
+    queue2.push(...children2);
+  }
+
+  // Остатки считаем за несовпадения
+  totalNodes += queue1.length + queue2.length;
+
+  const similarity = totalNodes === 0 ? 0 : similarityScore / totalNodes;
+
+  return {
+    totalNodes,
+    matchedNodes: similarityScore,
+    similarity
+  };
+}
+
+// сортировка строк
+function sortRows(matrix) {
+  return matrix
+    .map(row => [...row])
+    .sort((a, b) => a.join(',').localeCompare(b.join(',')));
+}
+//перестановка колонок
+function* getPermutations(arr, n = arr.length) {
+  if (n <= 1) yield arr.slice();
+  else {
+    for (let i = 0; i < n; i++) {
+      yield* getPermutations(arr, n - 1);
+      const j = n % 2 ? 0 : i;
+      [arr[n - 1], arr[j]] = [arr[j], arr[n - 1]];
+    }
+  }
+}
+
+//применение перестановки к матрице
+function permuteColumns(matrix, perm) {
+  return matrix.map(row => perm.map(i => row[i] ?? 0));
+}
+function calculateMatrixSimilarity(mat1, mat2) {
+  const rows = Math.min(mat1.length, mat2.length);
+  const cols = Math.min(mat1[0]?.length || 0, mat2[0]?.length || 0);
+  let total = rows * cols;
+  let matches = 0;
+
+  for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < cols; j++) {
+      if (mat1[i][j] === mat2[i][j]) matches++;
     }
   }
 
-  // Добавляем оставшиеся узлы в очередях как несовпадения
-  totalNodes += queue1.length + queue2.length;
+  return total ? matches / total : 0;
+}
 
-  return { totalNodes, matchedNodes };
+function astToMatrix(ast) {
+  const matrix = [];
+  const queue = Array.isArray(ast) ? [...ast] : [ast];
+
+  while (queue.length > 0) {
+    const node = queue.shift();
+    const row = [];
+
+    for (const key in node) {
+      const val = node[key];
+      if (typeof val === 'object' && val !== null) {
+        queue.push(val);
+        row.push(1); // структура
+      } else if (typeof val === 'string') {
+        row.push(val.length); // строка по длине
+      } else if (typeof val === 'number') {
+        row.push(val);
+      } else {
+        row.push(0); // всё остальное
+      }
+    }
+
+    matrix.push(row);
+  }
+
+  return matrix;
+}
+
+// async function checkSemanticsWithAST(userSql, referenceSql) {
+//   try {
+//     const userAst = parse(userSql);
+//     const refAst = parse(referenceSql);
+
+//     const mat1 = astToMatrix(userAst);
+//     const mat2 = astToMatrix(refAst);
+
+//     if (mat1[0].length !== mat2[0].length) {
+//       return { isValid: false, similarity: 0, reason: 'Перепутаны размерности матриц' };
+//     }
+
+//     let maxSim = 0;
+//     const colIndices = [...Array(mat1[0].length).keys()];
+
+//     for (const perm of getPermutations(colIndices)) {
+//       const permuted = permuteColumns(mat1, perm);
+//       const sim = calculateMatrixSimilarity(sortRows(permuted), sortRows(mat2));
+//       if (sim > maxSim) maxSim = sim;
+//     }
+
+//     return {
+//       isValid: maxSim >= 0.6,
+//       similarity: maxSim
+//     };
+//   } catch (err) {
+//     return { isValid: false, error: err.message };
+//   }
+// }
+
+function calculateFlexibleSimilarity(mat1, mat2) {
+  const rows = Math.min(mat1.length, mat2.length);
+  const cols = Math.min(mat1[0]?.length || 0, mat2[0]?.length || 0);
+  let total = 0;
+  let matched = 0;
+
+  for (let i = 0; i < rows; i++) {
+    const row1 = mat1[i];
+    const row2 = mat2[i];
+
+    for (let j = 0; j < cols; j++) {
+      total++;
+      const val1 = row1[j] ?? '';
+      const val2 = row2[j] ?? '';
+
+      if (typeof val1 === 'number' && typeof val2 === 'number') {
+        if (val1 === val2) matched++;
+      } else {
+        const str1 = String(val1).toLowerCase();
+        const str2 = String(val2).toLowerCase();
+        const len = Math.max(str1.length, str2.length, 1);
+        const dist = levenshtein.get(str1, str2);
+        const sim = 1 - dist / len;
+
+        if (sim > 0.6) matched += sim; // нечеткое совпадение
+      }
+    }
+  }
+
+  return total ? matched / total : 0;
+}
+
+function astToEnhancedMatrix(ast) {
+  const matrix = [];
+  const queue = Array.isArray(ast) ? [...ast] : [ast];
+
+  while (queue.length > 0) {
+    const node = queue.shift();
+    const row = [];
+
+    for (const key in node) {
+      const val = node[key];
+      if (typeof val === 'object' && val !== null) {
+        queue.push(val);
+        row.push(key); // учитываем тип узла
+      } else {
+        row.push(val ?? '');
+      }
+    }
+
+    matrix.push(row);
+  }
+
+  return matrix;
+}
+
+async function checkSemanticsWithAST(userSql, referenceSql) {
+  try {
+    const userAst = parse(userSql);
+    const refAst = parse(referenceSql);
+
+    const mat1 = astToEnhancedMatrix(userAst);
+    const mat2 = astToEnhancedMatrix(refAst);
+
+    const similarity = calculateFlexibleSimilarity(mat1, mat2);
+
+    return {
+      isValid: similarity >= 0.6,
+      similarity,
+      matrix1: mat1,
+      matrix2: mat2
+    };
+  } catch (err) {
+    return { isValid: false, error: err.message };
+  }
 }
 
 /**
@@ -283,7 +489,7 @@ const taskService = {
 
       // Если в запросе запрещённые символы - ручная проверка
       if (dangerCheck.reason === 'invalid_chars') {
-        await taskService.updateCompletionStatus(client, userId, taskId, false, 0);
+        await taskService.updateCompletionStatus(client, userId, taskId, sqlQuery, false, 'Ручная проверка!');
         await client.query('COMMIT');
         return {
           status: 'manual_check_required',
@@ -327,7 +533,7 @@ const taskService = {
       const isComplete = totalScore >= 60;
 
       // Обновляем статус выполнения
-      await taskService.updateCompletionStatus(client, userId, taskId, isComplete, totalScore);
+      await taskService.updateCompletionStatus(client, userId, taskId, sqlQuery, isComplete, checkResults.join('\n') + `\nИтоговый балл: ${totalScore}%`);
       await client.query('COMMIT');
 
       // Формируем статусное сообщение
