@@ -55,7 +55,8 @@ const Profile = (props) => {
     Cookies.remove('user_id', { path: '/' });
     Cookies.remove('login', { path: '/' });
     Cookies.remove('fio', { path: '/' });
-
+    Cookies.remove('role_id', { path: '/' });
+    Cookies.remove('token', {path: '/'});
     // Перенаправление на страницу входа
     navigate('/register');
   };

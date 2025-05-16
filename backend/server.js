@@ -58,6 +58,16 @@ testPool.query('SELECT NOW()', (err, res) => {
     }
 });
 
+// После всех роутов middleware для обработки ошибок
+app.use((err, req, res, next) => {
+    const statusCode = err.statusCode || 500;
+    res.status(statusCode).json({
+        message: err.message,
+        error: err.name || "ServerError",
+        statusCode: statusCode
+    });
+});
+
 // Запуск сервера
 const port = process.env.PORT || 5009;
 app.listen(port, () => {

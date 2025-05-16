@@ -13,12 +13,20 @@ const login = async (req, res) => {
             res.clearCookie('login', { path: '/' });
             res.clearCookie('fio', { path: '/' });
             res.clearCookie('role_id', { path: '/' });
-
+            res.clearCookie('token', { path: '/' });
             // Установить новые куки, доступные на стороне клиента
             res.cookie('user_id', user.user_id, { path: '/' });
             res.cookie('login', user.login, { path: '/' });
             res.cookie('fio', user.fio, { path: '/' });
             res.cookie('role_id', user.role_id, { path: '/' });
+            // Установка токена в cookie
+            res.cookie('token', result.token, {
+                httpOnly: true, // Защищает от XSS атак
+                secure: process.env.NODE_ENV === 'production', // Только HTTPS в production
+                sameSite: 'strict', // Защита от CSRF
+                maxAge: 2 * 60 * 60 * 1000, // 2 часа в миллисекундах
+                path: '/', // Доступен для всех путей
+            });
 
             // Вывод установленных cookies в консоль
             console.log('Cookies set:');

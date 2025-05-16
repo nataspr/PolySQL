@@ -51,7 +51,10 @@ const register = async (login, password, fio, group) => {
 
         const checkUser = await pool.query('SELECT * FROM USERS.USERS WHERE login = $1', [login]);
         if (checkUser.rows.length > 0) {
-            throw new Error('User with this login already exists');
+            // Явно создать ошибку с нужным статусом - ТЕСТ
+            const error = new Error(`User with login ${login} already exists`);
+            error.statusCode = 409;
+            throw error;
         }
 
         // добавлена проверка группы, если такая группа существует в базе, то студент может в нее записаться, если нет, то это ошибка
@@ -105,7 +108,18 @@ const register = async (login, password, fio, group) => {
         return { message: 'User registered successfully', user: newUser, token };
     }catch (error) {
         await client.query('ROLLBACK');
-        throw error;
+        // Стандартизированный формат ошибки
+        const statusCode = error.statusCode || 500;
+        const errorResponse = {
+            message: error.message || 'Error registering user',
+            error: error.name || 'RegistrationError',
+            statusCode: statusCode
+        };
+        
+        // Перебрасывание ошибки с дополнительными свойствами
+        const newError = new Error(errorResponse.message);
+        Object.assign(newError, errorResponse);
+        throw newError;
     } finally {
         client.release();
     }
