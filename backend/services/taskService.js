@@ -91,20 +91,76 @@ function calculateScore(syntax, semantic, performance, data) {
 }
 
 // Синтаксическая проверка с метрикой Левенштейна
+// async function checkSyntaxWithLevenshtein(userSql, referenceSql) {
+//   try {
+//   // Нормализация строк
+//     const normalizedUser = userSql.toLowerCase().replace(/\s+/g, '');
+//     const normalizedRef = referenceSql.toLowerCase().replace(/\s+/g, '');
+// 	// Расчет расстояния Левенштейна -минимальное количество операций (вставка, удаление, замена)
+//     const distance = levenshtein.get(normalizedUser, normalizedRef);
+// 	// Расчет схожести - 1 - (расстояние / максимальная длина)
+//     const maxLength = Math.max(normalizedUser.length, normalizedRef.length);
+//     const similarity = 1 - (distance / maxLength);
+	
+//     const syntaxThreshold = 0.6; // Порог похожести
+    
+// 	return {
+//       isValid: similarity >= syntaxThreshold,
+//       similarity,
+//       distance,
+//       normalizedUser,
+//       normalizedRef
+//     };
+//   } catch (error) {
+//     return { isValid: false, error: error.message };
+//   }
+// }
+
+// функция Левенштейна, но с реализацией алгоритма вручную
 async function checkSyntaxWithLevenshtein(userSql, referenceSql) {
   try {
-  // Нормализация строк
+    // Нормализация строк
     const normalizedUser = userSql.toLowerCase().replace(/\s+/g, '');
     const normalizedRef = referenceSql.toLowerCase().replace(/\s+/g, '');
-	// Расчет расстояния Левенштейна -минимальное количество операций (вставка, удаление, замена)
-    const distance = levenshtein.get(normalizedUser, normalizedRef);
-	// Расчет схожести - 1 - (расстояние / максимальная длина)
+    
+    // Реализация алгоритма Вагнера-Фишера
+    function levenshteinDistance(s1, s2) {
+      const m = s1.length;
+      const n = s2.length;
+      
+      // Создать матрицу (m+1) x (n+1)
+      const dp = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0));
+      
+      // Инициализация базовых случаев
+      for (let i = 0; i <= m; i++) {
+        dp[i][0] = i;
+      }
+      for (let j = 0; j <= n; j++) {
+        dp[0][j] = j;
+      }
+      
+      // Заполнение матрицы
+      for (let i = 1; i <= m; i++) {
+        for (let j = 1; j <= n; j++) {
+          const cost = s1[i - 1] === s2[j - 1] ? 0 : 1;
+          dp[i][j] = Math.min(
+            dp[i - 1][j] + 1,     // Удаление
+            dp[i][j - 1] + 1,     // Вставка
+            dp[i - 1][j - 1] + cost // Замена или совпадение
+          );
+        }
+      }
+      
+      return dp[m][n];
+    }
+    
+    const distance = levenshteinDistance(normalizedUser, normalizedRef);
     const maxLength = Math.max(normalizedUser.length, normalizedRef.length);
     const similarity = 1 - (distance / maxLength);
-	
-    const syntaxThreshold = 0.6; // Порог похожести
     
-	return {
+    const syntaxThreshold = 0.6;
+    
+    return {
       isValid: similarity >= syntaxThreshold,
       similarity,
       distance,
@@ -115,8 +171,6 @@ async function checkSyntaxWithLevenshtein(userSql, referenceSql) {
     return { isValid: false, error: error.message };
   }
 }
-
-
 // сортировка строк
 function sortRows(matrix) {
   return matrix
