@@ -80,14 +80,83 @@ function formatCheckResult(checkName, checkResult) {
   return `${checkName}: ${status} (${percentage}%)`;
 }
 
-// Расчет итогового балла с учетом всех проверок
-function calculateScore(syntax, semantic, performance, data) {
-  let score = 0;
-  if (syntax.isValid) score += 20;    // 20% за синтаксис
-  if (semantic.isValid) score += 30;  // 30% за семантику
-  if (data.isValid) score += 30;      // 30% за данные
-  if (performance.isValid) score += 20; // 20% за производительность
-  return score;
+// // Расчет итогового балла с учетом всех проверок
+// старая версия, просто ориентировка на isValid
+// function calculateScore(syntax, semantic, performance, data) {
+//   let score = 0;
+//   if (syntax.isValid) score += 20;    // 20% за синтаксис
+//   if (semantic.isValid) score += 30;  // 30% за семантику
+//   if (data.isValid) score += 30;      // 30% за данные
+//   if (performance.isValid) score += 20; // 20% за производительность
+//   return score;
+// }
+
+// Расчет итогового балла для опасных запросов (только синтаксис и семантика)
+function calculateDangerousScore(syntax, semantic) {
+  // Веса: семантика - 60%, синтаксис - 40%
+  const semanticWeight = 0.6;
+  const syntaxWeight = 0.4;
+  
+  // Используем similarity если есть, иначе isValid ? 100 : 0
+  const semanticScore = semantic.similarity !== undefined ? 
+    semantic.similarity * 100 : 
+    (semantic.isValid ? 100 : 0);
+  
+  const syntaxScore = syntax.similarity !== undefined ? 
+    syntax.similarity * 100 : 
+    (syntax.isValid ? 100 : 0);
+  
+  return Math.round(semanticScore * semanticWeight + syntaxScore * syntaxWeight);
+}
+
+// Расчет итогового балла для SELECT запросов (все проверки)
+function calculateSelectScore(syntax, semantic, performance, data) {
+  // Веса:
+  // синтаксис - 20%
+  // семантика - 30%
+  // данные - 30%
+  // производительность - 20%
+  const weights = {
+    syntax: 0.2,
+    semantic: 0.3,
+    data: 0.3,
+    performance: 0.2
+  };
+  
+  // Получаем процентные значения для каждой метрики
+  const syntaxScore = syntax.similarity !== undefined ? 
+    syntax.similarity * 100 : 
+    (syntax.isValid ? 100 : 0);
+  
+  const semanticScore = semantic.similarity !== undefined ? 
+    semantic.similarity * 100 : 
+    (semantic.isValid ? 100 : 0);
+  
+  const dataScore = data.percentage !== undefined ? 
+    data.percentage : 
+    (data.isValid ? 100 : 0);
+  
+  const performanceScore = performance.percentage !== undefined ? 
+    performance.percentage : 
+    (performance.isValid ? 100 : 0);
+  
+  // Расчет взвешенной суммы
+  const weightedSum = 
+    syntaxScore * weights.syntax +
+    semanticScore * weights.semantic +
+    dataScore * weights.data +
+    performanceScore * weights.performance;
+  
+  return Math.round(weightedSum);
+}
+
+// Общая функция расчета балла
+function calculateScore(syntax, semantic, performance, data, isDangerous = false) {
+  if (isDangerous) {
+    return calculateDangerousScore(syntax, semantic);
+  } else {
+    return calculateSelectScore(syntax, semantic, performance, data);
+  }
 }
 
 // Синтаксическая проверка с метрикой Левенштейна
@@ -313,7 +382,7 @@ const taskService = {
       ];
 
       // Расчет итогового балла и статус завершения
-      const score = calculateScore(syntaxCheck, semanticCheck, performanceCheck, dataCheck);
+      const score = calculateScore(syntaxCheck, semanticCheck, performanceCheck, dataCheck, false);
       const isComplete = score >= 60; // Порог прохождения 60%
 
       // Формируем итоговое сообщение для базы и клиента
@@ -421,7 +490,7 @@ const taskService = {
       }
 
       // Расчет итогового балла и статус завершения
-      const totalScore = calculateScore(syntaxCheck, semanticCheck, performanceCheck, dataCheck);
+      const totalScore = calculateScore(syntaxCheck, semanticCheck, performanceCheck, dataCheck, true);
       const isComplete = totalScore >= 60;
 
       // Обновляем статус выполнения
