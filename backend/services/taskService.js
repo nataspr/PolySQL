@@ -116,6 +116,7 @@ async function checkSyntaxWithLevenshtein(userSql, referenceSql) {
   }
 }
 
+
 // сортировка строк
 function sortRows(matrix) {
   return matrix
